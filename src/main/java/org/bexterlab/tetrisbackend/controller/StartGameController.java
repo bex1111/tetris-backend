@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.controller;
 
 import org.bexterlab.tetrisbackend.controller.dto.StartGameDto;
-import org.bexterlab.tetrisbackend.core.StartGameInteractor;
+import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,8 +19,7 @@ public class StartGameController {
     }
 
     @PostMapping("/startGame")
-    public String startGame(@RequestBody StartGameDto startGameDto)
-    {
+    public String startGame(@RequestBody StartGameDto startGameDto) {
         logger.info(startGameDto.toString());
         return startGameInteractor.start(startGameDto.username());
     }

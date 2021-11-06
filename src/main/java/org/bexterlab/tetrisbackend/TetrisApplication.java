@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TerisApplication {
+public class TetrisApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TerisApplication.class, args);
+        SpringApplication.run(TetrisApplication.class, args);
     }
 }

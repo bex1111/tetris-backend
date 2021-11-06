@@ -5,6 +5,7 @@ public abstract class CoreException extends RuntimeException {
     public final String errorMessage;
 
     protected CoreException(String errorMessage) {
+        super(errorMessage);
         this.errorMessage = errorMessage;
     }
 }
