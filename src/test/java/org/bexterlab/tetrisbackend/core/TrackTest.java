@@ -72,38 +72,6 @@ class TrackTest {
         assertTwoTrack(expectedTrack, actualTrack);
     }
 
-    @Test
-    void rotateSquare() {
-        TrackElement[][] actualTrack = trackHandler.rotateLeft(new TrackElement[][]{
-                new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
-                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
-                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
-                new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
-        });
-        TrackElement[][] expectedTrack = new TrackElement[][]{
-                new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
-                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
-                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
-                new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
-        };
-        assertTwoTrack(actualTrack, expectedTrack);
-    }
-
-    @Test
-    void rotateL1() {
-        TrackElement[][] actualTrack = trackHandler.rotateLeft(new TrackElement[][]{
-                new TrackElement[]{EMPTY, L_UP_MIDDLE, L_UP_RIGHT},
-                new TrackElement[]{EMPTY, L_MIDDLE_MIDDLE, EMPTY},
-                new TrackElement[]{EMPTY, L_DOWN_MIDDLE, EMPTY}
-        });
-        TrackElement[][] expectedTrack = new TrackElement[][]{
-                new TrackElement[]{L_UP_LEFT, EMPTY, EMPTY},
-                new TrackElement[]{L_MIDDLE_LEFT, L_MIDDLE_MIDDLE, L_MIDDLE_RIGHT},
-                new TrackElement[]{EMPTY, EMPTY, EMPTY}
-        };
-        assertTwoTrack(actualTrack, expectedTrack);
-    }
-
 
     private void assertTwoTrack(TrackElement[][] actualTrack, TrackElement[][] expectedTrack) {
         Assertions.assertEquals(expectedTrack.length, actualTrack.length);
@@ -120,4 +88,5 @@ class TrackTest {
     private String generateReadableStringFromTrack(TrackElement[][] track) {
         return Arrays.stream(track).map(Arrays::deepToString).collect(Collectors.joining("\n"));
     }
+
 }

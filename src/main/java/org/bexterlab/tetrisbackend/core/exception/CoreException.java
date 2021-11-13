@@ -8,4 +8,9 @@ public abstract class CoreException extends RuntimeException {
         super(errorMessage);
         this.errorMessage = errorMessage;
     }
+
+    protected CoreException(String errorMessage, Throwable cause) {
+        super(errorMessage, cause);
+        this.errorMessage = errorMessage;
+    }
 }

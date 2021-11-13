@@ -35,103 +35,103 @@ public enum TrackElement {
             return SQUARE_POINT;
         }
     },
-    L_MIDDLE_MIDDLE(0, 0, 0, 0, true) {
+    THREE_LONG_ELEMENT_MIDDLE_MIDDLE(0, 0, 0, 0, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_MIDDLE_MIDDLE;
+            return THREE_LONG_ELEMENT_MIDDLE_MIDDLE;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_MIDDLE_MIDDLE;
+            return THREE_LONG_ELEMENT_MIDDLE_MIDDLE;
         }
     },
-    L_UP_LEFT(0, 2, -2, 0, true) {
+    THREE_LONG_ELEMENT_UP_LEFT(0, 2, 2, 0, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_DOWN_LEFT;
+            return THREE_LONG_ELEMENT_DOWN_LEFT;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_UP_RIGHT;
+            return THREE_LONG_ELEMENT_UP_RIGHT;
         }
     },
-    L_MIDDLE_LEFT(-1, 1, 1, 1, true) {
+    THREE_LONG_ELEMENT_MIDDLE_LEFT(-1, 1, 1, 1, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_DOWN_MIDDLE;
+            return THREE_LONG_ELEMENT_DOWN_MIDDLE;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_UP_MIDDLE;
+            return THREE_LONG_ELEMENT_UP_MIDDLE;
         }
     },
-    L_DOWN_LEFT(-2, 0, 0, 2, true) {
+    THREE_LONG_ELEMENT_DOWN_LEFT(-2, 0, 0, 2, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_DOWN_RIGHT;
+            return THREE_LONG_ELEMENT_DOWN_RIGHT;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_UP_LEFT;
+            return THREE_LONG_ELEMENT_UP_LEFT;
         }
     },
-    L_UP_MIDDLE(1, 1, 1, -1, true) {
+    THREE_LONG_ELEMENT_UP_MIDDLE(1, 1, 1, -1, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_MIDDLE_LEFT;
+            return THREE_LONG_ELEMENT_MIDDLE_LEFT;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_MIDDLE_RIGHT;
+            return THREE_LONG_ELEMENT_MIDDLE_RIGHT;
         }
     },
-    L_DOWN_MIDDLE(-1, -1, -1, 1, true) {
+    THREE_LONG_ELEMENT_DOWN_MIDDLE(-1, -1, -1, 1, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_MIDDLE_RIGHT;
+            return THREE_LONG_ELEMENT_MIDDLE_RIGHT;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_MIDDLE_LEFT;
+            return THREE_LONG_ELEMENT_MIDDLE_LEFT;
         }
     },
-    L_UP_RIGHT(2, 0, 0, -2, true) {
+    THREE_LONG_ELEMENT_UP_RIGHT(2, 0, 0, -2, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_UP_LEFT;
+            return THREE_LONG_ELEMENT_UP_LEFT;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_DOWN_RIGHT;
+            return THREE_LONG_ELEMENT_DOWN_RIGHT;
         }
     },
-    L_MIDDLE_RIGHT(1, -1, -1, -1, true) {
+    THREE_LONG_ELEMENT_MIDDLE_RIGHT(1, -1, -1, -1, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_UP_MIDDLE;
+            return THREE_LONG_ELEMENT_UP_MIDDLE;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_DOWN_MIDDLE;
+            return THREE_LONG_ELEMENT_DOWN_MIDDLE;
         }
     },
-    L_DOWN_RIGHT(0, -2, -2, 0, true) {
+    THREE_LONG_ELEMENT_DOWN_RIGHT(0, -2, -2, 0, true) {
         @Override
         public TrackElement getLeftNewType() {
-            return L_UP_RIGHT;
+            return THREE_LONG_ELEMENT_UP_RIGHT;
         }
 
         @Override
         public TrackElement getRightNewType() {
-            return L_DOWN_LEFT;
+            return THREE_LONG_ELEMENT_DOWN_LEFT;
         }
     };
 

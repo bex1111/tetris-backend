@@ -25,6 +25,6 @@ class GameStoreImplTest {
 
     @Test
     public void hasNotGameWithUserTest() {
-        Assertions.assertTrue(gameStore.hasGameWithUser("test"));
+        Assertions.assertFalse(gameStore.hasGameWithUser("test"));
     }
 }
