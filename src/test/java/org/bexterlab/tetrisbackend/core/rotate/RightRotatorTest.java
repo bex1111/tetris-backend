@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.core.rotate;
 
 import org.bexterlab.tetrisbackend.core.TrackElement;
-import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
+import org.bexterlab.tetrisbackend.core.exception.CanNotRotateException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -99,7 +99,7 @@ class RightRotatorTest {
 
     @Test
     void canNotRotateRightThreeLongElement() {
-        Assertions.assertThrows(CanNotMoveException.class, () -> rightRotator.rotate(new TrackElement[][]{
+        Assertions.assertThrows(CanNotRotateException.class, () -> rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}

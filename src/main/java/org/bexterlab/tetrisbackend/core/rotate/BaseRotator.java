@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.core.rotate;
 
 import org.bexterlab.tetrisbackend.core.TrackElement;
-import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
+import org.bexterlab.tetrisbackend.core.exception.CanNotRotateException;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ public abstract class BaseRotator {
         try {
             return rotateIterator(track);
         } catch (IndexOutOfBoundsException e) {
-            throw new CanNotMoveException(e);
+            throw new CanNotRotateException(e);
         }
     }
 
