@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public class GameStoreImpl implements GameStore {
@@ -24,9 +23,14 @@ public class GameStoreImpl implements GameStore {
     }
 
     @Override
-    public String createNewGame(String username) {
-        Game game = new Game(username, UUID.randomUUID().toString());
+    public void createNewGame(Game game) {
         gameList.add(game);
-        return game.token();
     }
+
+    @Override
+    public List<Game> getGames() {
+        return gameList;
+    }
+
+
 }

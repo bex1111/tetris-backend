@@ -3,7 +3,13 @@ package org.bexterlab.tetrisbackend.core;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
+import org.bexterlab.tetrisbackend.entity.Game;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.UUID;
+
+import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
 
 @Service
 public class StartGameInteractorImpl implements StartGameInteractor {
@@ -16,23 +22,36 @@ public class StartGameInteractorImpl implements StartGameInteractor {
         this.gameStore = gameStore;
     }
 
-    public String start(String username)
-    {
+    public String start(String username) {
         validateUserName(username);
-        chackPlayHasAlreadyAGame(username);
-        return gameStore.createNewGame(username);
+        checkPlayHasAlreadyAGame(username);
+        Game game = createNewGame(username);
+        gameStore.createNewGame(game);
+        return game.token();
     }
 
-    private void chackPlayHasAlreadyAGame(String username) {
-        if (gameStore.hasGameWithUser(username))
-        {
+    private Game createNewGame(String username) {
+        return new Game(username,
+                UUID.randomUUID().toString(),
+                createEmptyTrack());
+    }
+
+    private TrackElement[][] createEmptyTrack() {
+        TrackElement[][] track = new TrackElement[24][20];
+        for (TrackElement[] trackElements : track) {
+            Arrays.fill(trackElements, EMPTY);
+        }
+        return track;
+    }
+
+    private void checkPlayHasAlreadyAGame(String username) {
+        if (gameStore.hasGameWithUser(username)) {
             throw new YouAlreadyHaveAGameException();
         }
     }
 
     private void validateUserName(String username) {
-        if (!username.matches(USER_NAME_VALIDATOR_REGEXP))
-        {
+        if (!username.matches(USER_NAME_VALIDATOR_REGEXP)) {
             throw new InvalidUsernameException();
         }
     }

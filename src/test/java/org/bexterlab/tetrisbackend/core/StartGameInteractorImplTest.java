@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 class StartGameInteractorImplTest {
 
     private GameStoreFake gameStore;
@@ -36,8 +38,14 @@ class StartGameInteractorImplTest {
     }
 
     @Test
-    public void successTestTest() {
+    public void successTest() {
         gameStore.hasGameWithUser = false;
-        Assertions.assertEquals("test", startGameInteractor.start("valid_user"));
+        String token = startGameInteractor.start("valid_user");
+        Assertions.assertNotNull(token, gameStore.game.token());
+        Assertions.assertEquals("valid_user", gameStore.game.username());
+        Assertions.assertTrue(Arrays.stream(gameStore.game.track())
+                        .allMatch(x -> Arrays.stream(x)
+                                .allMatch(y -> y == TrackElement.EMPTY)),
+                Arrays.deepToString(gameStore.game.track()));
     }
 }

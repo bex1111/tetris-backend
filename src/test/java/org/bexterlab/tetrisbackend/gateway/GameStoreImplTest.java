@@ -1,6 +1,8 @@
 package org.bexterlab.tetrisbackend.gateway;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
+import org.bexterlab.tetrisbackend.core.TrackElement;
+import org.bexterlab.tetrisbackend.entity.Game;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,10 +19,9 @@ class GameStoreImplTest {
 
     @Test
     public void hasGameWithUserTest() {
-
-        String username = "test";
-        gameStore.createNewGame(username);
-        Assertions.assertTrue(gameStore.hasGameWithUser(username));
+        Game game = new Game("test", "test", new TrackElement[1][1]);
+        gameStore.createNewGame(game);
+        Assertions.assertEquals(game, gameStore.getGames().get(0));
     }
 
     @Test

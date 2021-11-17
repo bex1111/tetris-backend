@@ -1,32 +1,38 @@
-# Backlog
+# Backlog (Hungarian)
 
-1. pit test
-2. Pálya 10x20
-3. Elemek kellenek
-4. Nem esik le ha ha nincs alatta akkor sem
-5. Mozgás/forgás->Teljes csík törlése->Elemek leesése
-6. Mozgatás végpont
+- Start game kiegészítése
+- Mozgás/forgás->Teljes csík törlése->Elemek leesése
+- Pálya 10x20
+- Mozgatás Api fogad egy username, token, mozgás típusa
+- Sorokat kitörlő metódus
+- Movedown kiegészítése azzal, hogy ha pointra érkezik valami akkor átkonvertálódjon
+- pit test
+-  Z elem forgatás még nincs meg
+- az elemek oldalra mozgatásnál vagy forgatásnál a már fix pontokkal nem ütköznek
 
 
-# Elemek:
+# Elements:
 
 ## Square:
 OO\
-OO\
+OO
 
 ## L
 O\
 O\
+OO
+
+## Pyramid
+O\
 OO\
+O
 
-O\
-OO\
-O\
-
+## straight
 O\
 O\
 O\
 
+## Z
 O\
 OO\
  O
