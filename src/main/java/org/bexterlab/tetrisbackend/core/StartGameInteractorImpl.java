@@ -4,12 +4,14 @@ import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.entity.Game;
+import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.UUID;
 
-import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
 
 @Service
 public class StartGameInteractorImpl implements StartGameInteractor {
@@ -33,7 +35,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private Game createNewGame(String username) {
         return new Game(username,
                 UUID.randomUUID().toString(),
-                createEmptyTrack());
+                createEmptyTrack(), new LinkedList<>());
     }
 
     private TrackElement[][] createEmptyTrack() {

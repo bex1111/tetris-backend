@@ -1,12 +1,12 @@
 package org.bexterlab.tetrisbackend.core.move;
 
-import org.bexterlab.tetrisbackend.core.TrackElement;
+import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.core.TrackElement.POINT;
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.POINT;
 
 class DownMoverTest {
 

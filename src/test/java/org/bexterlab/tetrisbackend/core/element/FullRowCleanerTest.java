@@ -1,10 +1,10 @@
 package org.bexterlab.tetrisbackend.core.element;
 
-import org.bexterlab.tetrisbackend.core.TrackElement;
+import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.Test;
 
-import static org.bexterlab.tetrisbackend.core.TrackElement.*;
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.*;
 
 class FullRowCleanerTest {
 

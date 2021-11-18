@@ -1,11 +1,11 @@
 package org.bexterlab.tetrisbackend.core.element;
 
-import org.bexterlab.tetrisbackend.core.TrackElement;
+import org.bexterlab.tetrisbackend.entity.TrackElement;
 
 import java.util.Arrays;
 
-import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.core.TrackElement.POINT;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.POINT;
 
 public class FullRowCleaner {
 

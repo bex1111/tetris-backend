@@ -1,12 +1,12 @@
 package org.bexterlab.tetrisbackend.core.move;
 
-import org.bexterlab.tetrisbackend.core.TrackElement;
 import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
+import org.bexterlab.tetrisbackend.entity.TrackElement;
 
 import java.util.Arrays;
 
-import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.core.TrackElement.POINT;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.POINT;
 
 public abstract class BaseSideMover {
 

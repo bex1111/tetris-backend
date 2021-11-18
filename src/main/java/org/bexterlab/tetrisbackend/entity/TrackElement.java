@@ -1,4 +1,4 @@
-package org.bexterlab.tetrisbackend.core;
+package org.bexterlab.tetrisbackend.entity;
 
 public enum TrackElement {
 

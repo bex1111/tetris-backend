@@ -1,10 +1,10 @@
 package org.bexterlab.tetrisbackend.core.move;
 
-import org.bexterlab.tetrisbackend.core.TrackElement;
+import org.bexterlab.tetrisbackend.entity.TrackElement;
 
 import java.util.Arrays;
 
-import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
 
 public class DownMover {
 

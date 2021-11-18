@@ -18,9 +18,13 @@ public class TrackHandler {
 
     private void moveTrack(Game game) {
         try {
-            
+            controlElement();
         } catch (CoreException e) {
             //do nothing
         }
+    }
+
+    private void controlElement() {
+        // FIXME implement me
     }
 }
