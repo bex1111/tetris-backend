@@ -6,6 +6,7 @@ import org.bexterlab.tetrisbackend.core.exception.CanNotRotateException;
 import java.util.Arrays;
 
 import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.core.TrackElement.POINT;
 
 public abstract class BaseRotator {
 
@@ -22,11 +23,20 @@ public abstract class BaseRotator {
         for (int i = 0; i < track.length; i++) {
             for (int j = 0; j < track[i].length; j++) {
                 if (track[i][j] != EMPTY) {
+                    checkIsRotetColliedWithPoint(track, rotatedTrack, i, j);
                     rotatedTrack = replaceElement(rotatedTrack, track, i, j);
                 }
             }
         }
         return rotatedTrack;
+    }
+
+    private void checkIsRotetColliedWithPoint(TrackElement[][] track, TrackElement[][] rotatedTrack, int i, int j) {
+        if (rotatedTrack
+                [i + track[i][j].rotateLeftRowIndex]
+                [j + track[i][j].rotateLeftColumnIndex] == POINT) {
+            throw new CanNotRotateException();
+        }
     }
 
     protected abstract TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, TrackElement[][] track, int i, int j);

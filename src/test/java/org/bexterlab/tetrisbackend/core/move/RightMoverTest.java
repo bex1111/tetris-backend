@@ -32,7 +32,7 @@ class RightMoverTest {
     }
 
     @Test
-    void notMoveRight() {
+    void moveRightNoSpaceTest() {
         TrackElement[][] actualTrack = new TrackElement[][]{
                 new TrackElement[]{SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT},
@@ -43,6 +43,23 @@ class RightMoverTest {
         TrackElement[][] expectedTrack = new TrackElement[][]{
                 new TrackElement[]{SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT},
+                new TrackElement[]{POINT, EMPTY}
+        };
+        assertTwoTrack(expectedTrack, actualTrack);
+    }
+
+    @Test
+    void moveRightCollideTest() {
+        TrackElement[][] actualTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, SQUARE_POINT},
+                new TrackElement[]{POINT, SQUARE_POINT},
+                new TrackElement[]{POINT, EMPTY}
+        };
+
+        Assertions.assertThrows(CanNotMoveException.class, () -> rightMover.moveRight(actualTrack));
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, SQUARE_POINT},
+                new TrackElement[]{POINT, SQUARE_POINT},
                 new TrackElement[]{POINT, EMPTY}
         };
         assertTwoTrack(expectedTrack, actualTrack);

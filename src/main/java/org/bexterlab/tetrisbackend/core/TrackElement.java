@@ -136,16 +136,16 @@ public enum TrackElement {
     };
 
     public final int rotateRightRowIndex, rotateRightColumnIndex, rotateLeftRowIndex, rotateLeftColumnIndex;
-    public final boolean canMoveToTheSide;
+    public final boolean isNotFix;
 
     TrackElement(int rotateRightRowIndex, int rotateRightColumnIndex,
                  int rotateLeftRowIndex, int rotateLeftColumnIndex,
-                 boolean canMoveToTheSide) {
+                 boolean isNotFix) {
         this.rotateRightRowIndex = rotateRightRowIndex;
         this.rotateRightColumnIndex = rotateRightColumnIndex;
         this.rotateLeftRowIndex = rotateLeftRowIndex;
         this.rotateLeftColumnIndex = rotateLeftColumnIndex;
-        this.canMoveToTheSide = canMoveToTheSide;
+        this.isNotFix = isNotFix;
     }
 
 

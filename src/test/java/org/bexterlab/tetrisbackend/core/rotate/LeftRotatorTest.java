@@ -19,7 +19,7 @@ class LeftRotatorTest {
     }
 
     @Test
-    void rotateLeftThreeLongElement1() {
+    void rotateLeftThreeLongElement1Test() {
         TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
@@ -35,7 +35,7 @@ class LeftRotatorTest {
 
 
     @Test
-    void rotateLeftThreeLongElement2() {
+    void rotateLeftThreeLongElement2Test() {
         TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_LEFT, EMPTY, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
@@ -50,7 +50,7 @@ class LeftRotatorTest {
     }
 
     @Test
-    void rotateLeftThreeLongElement3() {
+    void rotateLeftThreeLongElement3Test() {
         TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
@@ -65,7 +65,7 @@ class LeftRotatorTest {
     }
 
     @Test
-    void rotateLeftThreeLongElement4() {
+    void rotateLeftThreeLongElement4Test() {
         TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
@@ -80,7 +80,7 @@ class LeftRotatorTest {
     }
 
     @Test
-    void rotateSquare() {
+    void rotateSquareTest() {
         TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
@@ -97,11 +97,20 @@ class LeftRotatorTest {
     }
 
     @Test
-    void canNotRotateRightThreeLongElement() {
+    void canNotRotateRightThreeLongElementNoSpaceTest() {
         Assertions.assertThrows(CanNotRotateException.class, () -> leftRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
+        }));
+    }
+
+    @Test
+    void canNotRotateRightThreeLongCollideElementTest() {
+        Assertions.assertThrows(CanNotRotateException.class, () -> leftRotator.rotate(new TrackElement[][]{
+                new TrackElement[]{POINT, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
         }));
     }
 

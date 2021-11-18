@@ -18,7 +18,7 @@ class DownMoverTest {
     }
 
     @Test
-    void moveDown() {
+    void moveDownTest() {
         TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
                 new TrackElement[]{POINT},
                 new TrackElement[]{EMPTY}
@@ -31,14 +31,31 @@ class DownMoverTest {
     }
 
     @Test
-    void moveDown2() {
+    void moveDown2Test() {
         TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
                 new TrackElement[]{POINT, POINT},
                 new TrackElement[]{EMPTY, POINT}
         });
         TrackElement[][] expectedTrack = new TrackElement[][]{
-                new TrackElement[]{EMPTY, POINT},
-                new TrackElement[]{POINT, POINT}
+                new TrackElement[]{POINT, POINT},
+                new TrackElement[]{EMPTY, POINT}
+        };
+        assertTwoTrack(expectedTrack, actualTrack);
+    }
+
+    @Test
+    void moveDown3Test() {
+        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+                new TrackElement[]{POINT, POINT},
+                new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, POINT}
+        });
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{POINT, POINT},
+                new TrackElement[]{EMPTY, POINT}
         };
         assertTwoTrack(expectedTrack, actualTrack);
     }

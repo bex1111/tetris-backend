@@ -9,7 +9,6 @@ import static org.bexterlab.tetrisbackend.core.TrackElement.POINT;
 
 public class FullRowCleaner {
 
-
     public TrackElement[][] clean(TrackElement[][] track) {
         for (TrackElement[] row : track) {
             if (Arrays.stream(row).allMatch(x -> POINT == x)) {

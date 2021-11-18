@@ -6,6 +6,7 @@ import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
 import java.util.Arrays;
 
 import static org.bexterlab.tetrisbackend.core.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.core.TrackElement.POINT;
 
 public abstract class BaseSideMover {
 
@@ -17,13 +18,20 @@ public abstract class BaseSideMover {
         TrackElement[][] movedTrack = deepCopy(track);
         for (int i = 0; i < movedTrack.length; i++) {
             for (int j = 0; j < movedTrack[i].length; j++) {
-                if (track[i][j].canMoveToTheSide && track[i][j + direction] == EMPTY) {
+                if (track[i][j].isNotFix && !track[i][j + direction].isNotFix) {
+                    checkIsElementCollideWithPoint(track, direction, i, j);
                     movedTrack[i][j + direction] = movedTrack[i][j];
                     movedTrack[i][j] = EMPTY;
                 }
             }
         }
         return movedTrack;
+    }
+
+    private void checkIsElementCollideWithPoint(TrackElement[][] track, int direction, int i, int j) {
+        if (track[i][j + direction] == POINT) {
+            throw new CanNotMoveException();
+        }
     }
 
 
