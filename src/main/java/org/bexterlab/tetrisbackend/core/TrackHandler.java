@@ -5,41 +5,57 @@ import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.slf4j.Logger;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 public class TrackHandler {
 
     private final GameStore gameStore;
     private final TetrisStepFactory tetrisStepFactory;
+    private final Logger logger;
 
 
-    public TrackHandler(GameStore gameStore, TetrisStepFactory tetrisStepFactory) {
+    public TrackHandler(GameStore gameStore, TetrisStepFactory tetrisStepFactory, Logger logger) {
         this.gameStore = gameStore;
         this.tetrisStepFactory = tetrisStepFactory;
+        this.logger = logger;
     }
 
-    public void move() {
-        this.gameStore.getGames().forEach(this::moveTrack);
+    public void maintenanceTracks() {
+        this.gameStore.getGames().forEach(this::maintenanceTrack);
     }
 
-    private void moveTrack(Game game) {
+    private void maintenanceTrack(Game game) {
         try {
-            TrackElement[][] track = game.track();
-            track = controlElement(game.movementQueue().pop(), track);
-            track = tetrisStepFactory.moveDown(track);
-            track = tetrisStepFactory.collideElement(track);
-            track = tetrisStepFactory.clearFullRow(track);
-            Optional<NewElementSpawner.TetrisElement> tetrisElement =
-                    tetrisStepFactory.drawNewElementIfNotExist(track);
-            if (tetrisElement.isPresent()) {
-                track = tetrisStepFactory
-                        .spawnNewElement(track, game.tetrisElements().next());
-                gameStore.storeNewTetrisElement(game, tetrisElement.get());
-            }
+            doSteps(game);
         } catch (CoreException e) {
-            //do nothing
+            logger.debug("Core exception occurred while maintenance track: ", e);
+        } catch (Exception e) {
+            logger.error("Exception occurred while maintenance track: ", e);
         }
+    }
+
+    private void doSteps(Game game) {
+        TrackElement[][] track = game.track();
+        track = controlElement(game.movementQueue().pop(), track);
+        track = tetrisStepFactory.moveDown(track);
+        track = tetrisStepFactory.collideElement(track);
+        track = tetrisStepFactory.clearFullRow(track);
+        if (isNotTetrisElementInTheTrack(track)) {
+            NewElementSpawner.TetrisElement tetrisElement =
+                    tetrisStepFactory.drawTetrisElement();
+            track = tetrisStepFactory
+                    .spawnNewElement(track, game.tetrisElements().next());
+            gameStore.storeNewTetrisElement(game, tetrisElement);
+        }
+    }
+
+    private boolean isNotTetrisElementInTheTrack(TrackElement[][] track) {
+        return Arrays.stream(track)
+                .allMatch(row ->
+                        Arrays.stream(row)
+                                .noneMatch(column -> column.isNotFix));
     }
 
     private TrackElement[][] controlElement(Movement movement, TrackElement[][] track) {

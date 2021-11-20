@@ -11,8 +11,6 @@ import org.bexterlab.tetrisbackend.core.rotate.LeftRotator;
 import org.bexterlab.tetrisbackend.core.rotate.RightRotator;
 import org.bexterlab.tetrisbackend.entity.TrackElement;
 
-import java.util.Optional;
-
 public class TetrisStepFactory {
 
 
@@ -48,8 +46,8 @@ public class TetrisStepFactory {
         return new NewElementSpawner().swapNew(track, tetrisElement);
     }
 
-    public Optional<NewElementSpawner.TetrisElement> drawNewElementIfNotExist(TrackElement[][] track) {
-        return new TetrisElementLottery().drawIfNotElementInTheTrack(track);
+    public NewElementSpawner.TetrisElement drawTetrisElement() {
+        return new TetrisElementLottery().draw();
     }
 
 

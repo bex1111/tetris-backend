@@ -6,7 +6,6 @@ import org.bexterlab.tetrisbackend.entity.TrackElement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class TetrisStepFactoryFake extends TetrisStepFactory {
 
@@ -73,9 +72,9 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     }
 
     @Override
-    public Optional<NewElementSpawner.TetrisElement> drawNewElementIfNotExist(TrackElement[][] track) {
+    public NewElementSpawner.TetrisElement drawTetrisElement() {
         steps.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
-        return Optional.empty();
+        return null;
     }
 }
