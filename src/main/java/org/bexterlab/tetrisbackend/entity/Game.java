@@ -1,8 +1,11 @@
 package org.bexterlab.tetrisbackend.entity;
 
-import java.util.Queue;
+import java.util.LinkedList;
 
-public record Game(String username, String token, TrackElement[][] track, Queue<Movement> movementQueue) {
-
+public record Game(Player player,
+                   TrackElement[][] track,
+                   LinkedList<Movement> movementQueue,
+                   TetrisElements tetrisElements) {
+    
 
 }

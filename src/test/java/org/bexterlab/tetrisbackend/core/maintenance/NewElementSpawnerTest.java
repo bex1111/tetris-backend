@@ -1,11 +1,11 @@
-package org.bexterlab.tetrisbackend.core.element;
+package org.bexterlab.tetrisbackend.core.maintenance;
 
 import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
-import static org.bexterlab.tetrisbackend.core.element.NewElementSpawner.TetrisElement.*;
+import static org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner.TetrisElement.*;
 import static org.bexterlab.tetrisbackend.entity.TrackElement.*;
 
 class NewElementSpawnerTest {
@@ -19,7 +19,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewSquareTest() {
-        TrackElement[][] actualTrack = newElementSpawner.swapNewIfNotExist(new TrackElement[][]{
+        TrackElement[][] actualTrack = newElementSpawner.swapNew(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
@@ -37,7 +37,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementRightLTest() {
-        TrackElement[][] actualTrack = newElementSpawner.swapNewIfNotExist(new TrackElement[][]{
+        TrackElement[][] actualTrack = newElementSpawner.swapNew(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -52,7 +52,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementLeftLTest() {
-        TrackElement[][] actualTrack = newElementSpawner.swapNewIfNotExist(new TrackElement[][]{
+        TrackElement[][] actualTrack = newElementSpawner.swapNew(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -67,7 +67,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementRightPyramidTest() {
-        TrackElement[][] actualTrack = newElementSpawner.swapNewIfNotExist(new TrackElement[][]{
+        TrackElement[][] actualTrack = newElementSpawner.swapNew(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -82,7 +82,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementLeftPyramidTest() {
-        TrackElement[][] actualTrack = newElementSpawner.swapNewIfNotExist(new TrackElement[][]{
+        TrackElement[][] actualTrack = newElementSpawner.swapNew(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -97,7 +97,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementStraightTest() {
-        TrackElement[][] actualTrack = newElementSpawner.swapNewIfNotExist(new TrackElement[][]{
+        TrackElement[][] actualTrack = newElementSpawner.swapNew(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}

@@ -1,16 +1,11 @@
-package org.bexterlab.tetrisbackend.core.element;
+package org.bexterlab.tetrisbackend.core.maintenance;
 
 import org.bexterlab.tetrisbackend.entity.TrackElement;
 
-import java.util.Arrays;
-
 public class NewElementSpawner {
 
-    public TrackElement[][] swapNewIfNotExist(TrackElement[][] track, TetrisElement tetrisElement) {
-        if (Arrays.stream(track).allMatch(row -> Arrays.stream(row).noneMatch(column -> column.isNotFix))) {
-            return tetrisElement.spawnNew(track);
-        }
-        return track;
+    public TrackElement[][] swapNew(TrackElement[][] track, TetrisElement tetrisElement) {
+        return tetrisElement.spawnNew(track);
     }
 
     public enum TetrisElement {
@@ -79,7 +74,6 @@ public class NewElementSpawner {
         };
 
         public abstract TrackElement[][] spawnNew(TrackElement[][] track);
-
     }
 
 }

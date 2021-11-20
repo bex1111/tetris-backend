@@ -1,4 +1,4 @@
-package org.bexterlab.tetrisbackend.core.element;
+package org.bexterlab.tetrisbackend.core.maintenance;
 
 import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.Test;

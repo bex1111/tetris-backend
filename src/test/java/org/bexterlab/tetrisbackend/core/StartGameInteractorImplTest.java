@@ -42,8 +42,8 @@ class StartGameInteractorImplTest {
     public void successTest() {
         gameStore.hasGameWithUser = false;
         String token = startGameInteractor.start("valid_user");
-        Assertions.assertNotNull(token, gameStore.game.token());
-        Assertions.assertEquals("valid_user", gameStore.game.username());
+        Assertions.assertNotNull(token, gameStore.game.player().token());
+        Assertions.assertEquals("valid_user", gameStore.game.player().username());
         Assertions.assertTrue(Arrays.stream(gameStore.game.track())
                         .allMatch(x -> Arrays.stream(x)
                                 .allMatch(y -> y == TrackElement.EMPTY)),

@@ -1,7 +1,9 @@
 package org.bexterlab.tetrisbackend.gateway;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
+import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
 import org.bexterlab.tetrisbackend.entity.Game;
+import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ public class GameStoreImpl implements GameStore {
 
     @Override
     public boolean hasGameWithUser(String username) {
-        return gameList.stream().anyMatch(x -> x.username().equals(username));
+        return gameList.stream().anyMatch(x -> x.player().username().equals(username));
     }
 
     @Override
@@ -32,5 +34,11 @@ public class GameStoreImpl implements GameStore {
         return gameList;
     }
 
-
+    @Override
+    public Game storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement nextTetrisElement) {
+        return new Game(game.player(),
+                game.track(),
+                game.movementQueue(),
+                new TetrisElements(game.tetrisElements().next(), nextTetrisElement));
+    }
 }
