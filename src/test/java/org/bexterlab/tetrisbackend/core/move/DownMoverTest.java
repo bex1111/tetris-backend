@@ -53,8 +53,8 @@ class DownMoverTest {
         });
         TrackElement[][] expectedTrack = new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY},
-                new TrackElement[]{EMPTY, EMPTY},
                 new TrackElement[]{POINT, POINT},
+                new TrackElement[]{EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, POINT}
         };
         assertTwoTrack(expectedTrack, actualTrack);

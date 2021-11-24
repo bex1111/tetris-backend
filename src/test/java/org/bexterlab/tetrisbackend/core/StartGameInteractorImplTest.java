@@ -4,6 +4,7 @@ package org.bexterlab.tetrisbackend.core;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
+import org.bexterlab.tetrisbackend.core.mock.AsyncGameHandlerSpy;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
 import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.Assertions;
@@ -15,12 +16,14 @@ import java.util.Arrays;
 class StartGameInteractorImplTest {
 
     private GameStoreFake gameStore;
-    StartGameInteractor startGameInteractor;
+    private StartGameInteractor startGameInteractor;
+    private AsyncGameHandlerSpy asyncGameHandler;
 
     @BeforeEach
     void setUp() {
         gameStore = new GameStoreFake();
-        startGameInteractor = new StartGameInteractorImpl(gameStore);
+        asyncGameHandler = new AsyncGameHandlerSpy();
+        startGameInteractor = new StartGameInteractorImpl(gameStore, asyncGameHandler);
     }
 
     @Test
@@ -35,7 +38,9 @@ class StartGameInteractorImplTest {
     @Test
     public void hasAGameTest() {
         gameStore.hasGameWithUser = true;
-        Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("valid_user"));
+        Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("validuser"));
+        Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("ValidUser"));
+        Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("ValidUser15"));
     }
 
     @Test
@@ -48,5 +53,6 @@ class StartGameInteractorImplTest {
                         .allMatch(x -> Arrays.stream(x)
                                 .allMatch(y -> y == TrackElement.EMPTY)),
                 Arrays.deepToString(gameStore.game.track()));
+        Assertions.assertTrue(asyncGameHandler.isStartGameCalled);
     }
 }

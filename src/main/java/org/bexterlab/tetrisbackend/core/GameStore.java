@@ -12,5 +12,7 @@ public interface GameStore {
 
     List<Game> getGames();
 
-    Game storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement tetrisElement);
+    void storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement tetrisElement);
+
+    boolean hasGame();
 }

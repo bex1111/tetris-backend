@@ -27,7 +27,12 @@ public class GameStoreFake implements GameStore {
     }
 
     @Override
-    public Game storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement tetrisElement) {
-        return null;
+    public void storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement tetrisElement) {
+        
+    }
+
+    @Override
+    public boolean hasGame() {
+        return false;
     }
 }

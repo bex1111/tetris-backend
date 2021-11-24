@@ -8,6 +8,8 @@ import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.slf4j.Logger;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.stream.Collectors;
 
 public class TrackHandler {
 
@@ -38,7 +40,7 @@ public class TrackHandler {
 
     private void doSteps(Game game) {
         TrackElement[][] track = game.track();
-        track = controlElement(game.movementQueue().pop(), track);
+        track = controlElement(game.movementQueue(), track);
         track = tetrisStepFactory.moveDown(track);
         track = tetrisStepFactory.collideElement(track);
         track = tetrisStepFactory.clearFullRow(track);
@@ -49,6 +51,13 @@ public class TrackHandler {
                     .spawnNewElement(track, game.tetrisElements().next());
             gameStore.storeNewTetrisElement(game, tetrisElement);
         }
+        logger.info("\n-------------------\n" +
+                Arrays.stream(game.track())
+                        .map(x -> Arrays.stream(x)
+                                .map(Enum::name)
+                                .collect(Collectors.joining(" ")))
+                        .collect(Collectors.joining("|\n")) +
+                "\n-------------------\n");
     }
 
     private boolean isNotTetrisElementInTheTrack(TrackElement[][] track) {
@@ -58,23 +67,28 @@ public class TrackHandler {
                                 .noneMatch(column -> column.isNotFix));
     }
 
-    private TrackElement[][] controlElement(Movement movement, TrackElement[][] track) {
-        switch (movement) {
-            case ROTATE_RIGHT -> {
-                return tetrisStepFactory.rotateRight(track);
-            }
-            case ROTATE_LEFT -> {
-                return tetrisStepFactory.rotateLeft(track);
-            }
-            case MOVE_RIGHT -> {
-                return tetrisStepFactory.moveRight(track);
-            }
-            case MOVE_LEFT -> {
-                return tetrisStepFactory.moveLeft(track);
-            }
-            default -> {
-                throw new AssertionError("Not implemented movement");
+    private TrackElement[][] controlElement(LinkedList<Movement> movements, TrackElement[][] track) {
+        if (!movements.isEmpty()) {
+            switch (movements.pop()) {
+                case ROTATE_RIGHT -> {
+                    return tetrisStepFactory.rotateRight(track);
+                }
+                case ROTATE_LEFT -> {
+                    return tetrisStepFactory.rotateLeft(track);
+                }
+                case MOVE_RIGHT -> {
+                    return tetrisStepFactory.moveRight(track);
+                }
+                case MOVE_LEFT -> {
+                    return tetrisStepFactory.moveLeft(track);
+                }
+                default -> {
+                    throw new AssertionError("Not implemented movement");
+                }
             }
         }
+        return track;
     }
+
+
 }

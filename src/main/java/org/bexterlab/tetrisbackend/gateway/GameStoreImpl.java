@@ -4,19 +4,16 @@ import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
-import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Repository
 public class GameStoreImpl implements GameStore {
 
     private final List<Game> gameList;
 
-    public GameStoreImpl() {
-        this.gameList = Collections.synchronizedList(new ArrayList<>());
+    public GameStoreImpl(List<Game> gameList) {
+        this.gameList = Collections.synchronizedList(gameList);
     }
 
     @Override
@@ -35,10 +32,17 @@ public class GameStoreImpl implements GameStore {
     }
 
     @Override
-    public Game storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement nextTetrisElement) {
-        return new Game(game.player(),
+    public void storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement nextTetrisElement) {
+        game = new Game(game.player(),
                 game.track(),
                 game.movementQueue(),
                 new TetrisElements(game.tetrisElements().next(), nextTetrisElement));
     }
+
+    @Override
+    public boolean hasGame() {
+        return !gameList.isEmpty();
+    }
+
+
 }

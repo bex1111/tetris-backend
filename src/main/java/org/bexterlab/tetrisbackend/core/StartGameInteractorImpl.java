@@ -8,7 +8,6 @@ import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Player;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.TrackElement;
-import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,15 +15,17 @@ import java.util.UUID;
 
 import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
 
-@Service
+
 public class StartGameInteractorImpl implements StartGameInteractor {
 
-    public static final String USER_NAME_VALIDATOR_REGEXP = "^[a-zA-Z0-9](_(?!(\\.|_))|\\.(?!(_|\\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$";
+    public static final String USER_NAME_VALIDATOR_REGEXP = "^[\\w]{6,20}$";
     private final GameStore gameStore;
+    private final AsyncGameHandler asyncGameHandler;
 
 
-    public StartGameInteractorImpl(GameStore gameStore) {
+    public StartGameInteractorImpl(GameStore gameStore, AsyncGameHandler asyncGameHandler) {
         this.gameStore = gameStore;
+        this.asyncGameHandler = asyncGameHandler;
     }
 
     public String start(String username) {
@@ -32,6 +33,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
         checkPlayHasAlreadyAGame(username);
         Game game = createNewGame(username);
         gameStore.createNewGame(game);
+        asyncGameHandler.startGame();
         return game.player().token();
     }
 

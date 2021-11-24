@@ -7,10 +7,34 @@ import java.util.List;
 
 public class ElementCollider {
 
+    private boolean isCollide;
+    private final List<Integer[]> elementIndex;
+
+    public ElementCollider() {
+        this.isCollide = false;
+        this.elementIndex = new ArrayList<>();
+    }
+
 
     public TrackElement[][] collide(TrackElement[][] track) {
-        boolean isCollide = false;
-        List<Integer[]> elementIndex = new ArrayList<>();
+        checkElementCollideWithOtherPoiont(track);
+        checkElementReachLastRow(track);
+        if (isCollide) {
+            transformElemntToPoint(track, elementIndex);
+        }
+        return track;
+    }
+
+    private void checkElementReachLastRow(TrackElement[][] track) {
+        for (int j = 0; j < track[track.length - 1].length; j++) {
+            if (track[track.length - 1][j].isNotFix) {
+                isCollide = true;
+                elementIndex.add(new Integer[]{track.length - 1, j});
+            }
+        }
+    }
+
+    private void checkElementCollideWithOtherPoiont(TrackElement[][] track) {
         for (int i = 0; i < track.length - 1; i++) {
             for (int j = 0; j < track[i].length; j++) {
                 if (isElementCollide(track, i, j)) {
@@ -21,10 +45,6 @@ public class ElementCollider {
                 }
             }
         }
-        if (isCollide) {
-            transformElemntToPoint(track, elementIndex);
-        }
-        return track;
     }
 
     private boolean isElementCollide(TrackElement[][] track, int i, int j) {

@@ -16,6 +16,7 @@ public class DownMover {
                     track[i + 1][j] = track[i][j];
                     track[i][j] = EMPTY;
                 }
+                i++;
             }
         }
         return track;

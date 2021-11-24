@@ -2,32 +2,30 @@ package org.bexterlab.tetrisbackend.controller;
 
 import org.bexterlab.tetrisbackend.controller.dto.SocketDto;
 import org.slf4j.Logger;
-import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
-@Component
 public class WebsocketHandler extends TextWebSocketHandler {
 
-    private List<SocketDto> socketDtoList = new CopyOnWriteArrayList<>();
+    private CopyOnWriteArrayList<SocketDto> socketDtoList;
     private final Logger logger;
 
-    public WebsocketHandler(Logger logger) {
+    public WebsocketHandler(CopyOnWriteArrayList<SocketDto> socketDtoList, Logger logger) {
+        this.socketDtoList = socketDtoList;
         this.logger = logger;
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable throwable) throws Exception {
-        logger.error("eError occurred at sender " + session, throwable);
+        logger.error("Error occurred at sender " + session, throwable);
     }
 
     @Override
@@ -36,7 +34,7 @@ public class WebsocketHandler extends TextWebSocketHandler {
         socketDtoList = socketDtoList
                 .stream()
                 .filter(x -> !x.sessionId().equals(session.getId()))
-                .collect(Collectors.toList());
+                .collect(Collectors.toCollection(CopyOnWriteArrayList::new));
     }
 
     @Override

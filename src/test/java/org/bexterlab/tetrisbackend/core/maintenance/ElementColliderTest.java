@@ -9,7 +9,7 @@ import static org.bexterlab.tetrisbackend.entity.TrackElement.*;
 class ElementColliderTest {
 
     @Test
-    void clearCollideTest() {
+    void collideTest() {
         ElementCollider elementCollider = new ElementCollider();
         TrackElement[][] actualTrack = elementCollider.collide(new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
@@ -29,7 +29,7 @@ class ElementColliderTest {
     }
 
     @Test
-    void clearNotCollideTest() {
+    void notCollideTest() {
         ElementCollider elementCollider = new ElementCollider();
         TrackElement[][] actualTrack = elementCollider.collide(new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
@@ -44,6 +44,22 @@ class ElementColliderTest {
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{POINT, EMPTY, POINT, EMPTY},
                 new TrackElement[]{POINT, POINT, POINT, POINT}
+        };
+        assertTwoTrack(actualTrack, expectedTrack);
+    }
+
+    @Test
+    void lastRowCollideTest() {
+        ElementCollider elementCollider = new ElementCollider();
+        TrackElement[][] actualTrack = elementCollider.collide(new TrackElement[][]{
+                new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
+                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
+        });
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, POINT, POINT, EMPTY},
+                new TrackElement[]{EMPTY, POINT, POINT, EMPTY}
         };
         assertTwoTrack(actualTrack, expectedTrack);
     }
