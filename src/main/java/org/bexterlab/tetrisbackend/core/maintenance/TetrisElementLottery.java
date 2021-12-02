@@ -5,10 +5,10 @@ import java.security.SecureRandom;
 public class TetrisElementLottery {
     private static final SecureRandom random = new SecureRandom();
 
-    public NewElementSpawner.TetrisElement draw() {
-        return NewElementSpawner.TetrisElement.values()[
+    public TetrisElement draw() {
+        return TetrisElement.values()[
                 random.nextInt(
-                        NewElementSpawner.TetrisElement.values().length)];
+                        TetrisElement.values().length)];
     }
 
 }

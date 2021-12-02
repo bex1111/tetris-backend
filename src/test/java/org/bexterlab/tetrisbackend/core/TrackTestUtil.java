@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.Arrays;

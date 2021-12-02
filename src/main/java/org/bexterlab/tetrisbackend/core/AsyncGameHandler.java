@@ -12,8 +12,10 @@ import static java.util.Objects.isNull;
 
 public class AsyncGameHandler {
 
-    public static final long THREAD_RUN_TIME = 1000;
-    public static final long MOVING_AVERAGE_SIZE = 5;
+    private static final long THREAD_RUN_TIME = 1000;
+    private static final long MOVING_AVERAGE_SIZE = 5;
+
+    private final TrackSender trackSender;
     private final ExecutorService executor;
     private final List<Long> runTimeList;
     private final TrackHandler trackHandler;
@@ -21,9 +23,10 @@ public class AsyncGameHandler {
     private final Logger logger;
     private Future<Void> future;
 
-    public AsyncGameHandler(ExecutorService executor,
+    public AsyncGameHandler(TrackSender trackSender, ExecutorService executor,
                             TrackHandler trackHandler,
                             GameStore gameStore, Logger logger) {
+        this.trackSender = trackSender;
         this.executor = executor;
         this.trackHandler = trackHandler;
         this.gameStore = gameStore;
@@ -38,6 +41,7 @@ public class AsyncGameHandler {
                 while (gameStore.hasGame()) {
                     long start = System.currentTimeMillis();
                     trackHandler.maintenanceTracks();
+                    gameStore.getGames().forEach(trackSender::sendTrackForUser);
                     calculateRunTime(start);
                     sleepThread();
                 }

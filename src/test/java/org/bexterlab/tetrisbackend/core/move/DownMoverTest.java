@@ -1,12 +1,10 @@
 package org.bexterlab.tetrisbackend.core.move;
 
-import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
-import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.entity.TrackElement.POINT;
+import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class DownMoverTest {
 
@@ -55,6 +53,23 @@ class DownMoverTest {
                 new TrackElement[]{EMPTY, EMPTY},
                 new TrackElement[]{POINT, POINT},
                 new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, POINT}
+        };
+        assertTwoTrack(expectedTrack, actualTrack);
+    }
+
+    @Test
+    void moveDown4Test() {
+        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+                new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
+                new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{EMPTY, POINT}
+        });
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, POINT}
         };
         assertTwoTrack(expectedTrack, actualTrack);

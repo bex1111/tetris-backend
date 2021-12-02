@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.configuration;
 
 
-import org.bexterlab.tetrisbackend.controller.WebsocketHandler;
+import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;

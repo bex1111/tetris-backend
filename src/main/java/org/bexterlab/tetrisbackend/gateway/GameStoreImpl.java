@@ -1,7 +1,8 @@
 package org.bexterlab.tetrisbackend.gateway;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
-import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
+import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 
@@ -32,11 +33,19 @@ public class GameStoreImpl implements GameStore {
     }
 
     @Override
-    public void storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement nextTetrisElement) {
+    public void storeNewTetrisElement(Game game, TetrisElement nextTetrisElement) {
         game = new Game(game.player(),
                 game.track(),
                 game.movementQueue(),
                 new TetrisElements(game.tetrisElements().next(), nextTetrisElement));
+    }
+
+    @Override
+    public void storeNewTrack(Game game, TrackElement[][] track) {
+        game = new Game(game.player(),
+                track,
+                game.movementQueue(),
+                game.tetrisElements());
     }
 
     @Override

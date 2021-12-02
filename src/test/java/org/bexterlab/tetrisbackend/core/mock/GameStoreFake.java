@@ -1,7 +1,8 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
-import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
+import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 
 import java.util.List;
@@ -27,7 +28,12 @@ public class GameStoreFake implements GameStore {
     }
 
     @Override
-    public void storeNewTetrisElement(Game game, NewElementSpawner.TetrisElement tetrisElement) {
+    public void storeNewTetrisElement(Game game, TetrisElement tetrisElement) {
+
+    }
+
+    @Override
+    public void storeNewTrack(Game game, TrackElement[][] track) {
         
     }
 

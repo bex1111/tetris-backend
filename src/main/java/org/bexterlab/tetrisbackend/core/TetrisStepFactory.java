@@ -2,14 +2,14 @@ package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.core.maintenance.ElementCollider;
 import org.bexterlab.tetrisbackend.core.maintenance.FullRowCleaner;
-import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
+import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElementLottery;
 import org.bexterlab.tetrisbackend.core.move.DownMover;
 import org.bexterlab.tetrisbackend.core.move.LeftMover;
 import org.bexterlab.tetrisbackend.core.move.RightMover;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.core.rotate.LeftRotator;
 import org.bexterlab.tetrisbackend.core.rotate.RightRotator;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
 
 public class TetrisStepFactory {
 
@@ -43,12 +43,12 @@ public class TetrisStepFactory {
     }
 
     public TrackElement[][] spawnNewElement(TrackElement[][] track, NewElementSpawner.TetrisElement tetrisElement) {
-        return new NewElementSpawner().swapNew(track, tetrisElement);
+    public TrackElement[][] spawnNewElement(TrackElement[][] track, TetrisElement tetrisElement) {
+        return tetrisElement.spawnNew(track);
     }
 
-    public NewElementSpawner.TetrisElement drawTetrisElement() {
+    public TetrisElement drawTetrisElement() {
         return new TetrisElementLottery().draw();
     }
-
 
 }

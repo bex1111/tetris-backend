@@ -6,5 +6,4 @@ public enum Movement {
     ROTATE_LEFT,
     MOVE_RIGHT,
     MOVE_LEFT;
-
 }

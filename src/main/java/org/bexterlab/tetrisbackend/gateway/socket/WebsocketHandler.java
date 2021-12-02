@@ -1,6 +1,8 @@
-package org.bexterlab.tetrisbackend.controller;
+package org.bexterlab.tetrisbackend.gateway.socket;
 
 import org.bexterlab.tetrisbackend.controller.dto.SocketDto;
+import org.bexterlab.tetrisbackend.core.TrackSender;
+import org.bexterlab.tetrisbackend.entity.Game;
 import org.slf4j.Logger;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -13,13 +15,17 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
-public class WebsocketHandler extends TextWebSocketHandler {
+public class WebsocketHandler extends TextWebSocketHandler implements TrackSender {
 
-    private CopyOnWriteArrayList<SocketDto> socketDtoList;
+    // fixme test me
+
+    private final CopyOnWriteArrayList<SocketDto> socketDtoList;
+    private final GameToSocketTextMapper gameToSocketTextMapper;
     private final Logger logger;
 
-    public WebsocketHandler(CopyOnWriteArrayList<SocketDto> socketDtoList, Logger logger) {
+    public WebsocketHandler(CopyOnWriteArrayList<SocketDto> socketDtoList, GameToSocketTextMapper gameToSocketTextMapper, Logger logger) {
         this.socketDtoList = socketDtoList;
+        this.gameToSocketTextMapper = gameToSocketTextMapper;
         this.logger = logger;
     }
 
@@ -31,10 +37,9 @@ public class WebsocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
         logger.info(String.format("Session %s closed because of %s", session.getId(), status.getReason()));
-        socketDtoList = socketDtoList
-                .stream()
-                .filter(x -> !x.sessionId().equals(session.getId()))
-                .collect(Collectors.toCollection(CopyOnWriteArrayList::new));
+        socketDtoList.removeAll(socketDtoList.stream()
+                .filter(x -> x.sessionId().equals(session.getId()))
+                .collect(Collectors.toList()));
     }
 
     @Override
@@ -49,10 +54,11 @@ public class WebsocketHandler extends TextWebSocketHandler {
         socketDtoList.add(socketDto);
     }
 
-    public void sendMessage(String userName, String text) {
+    @Override
+    public void sendTrackForUser(Game game) {
         socketDtoList.stream()
-                .filter(x -> x.userName().equals(userName))
-                .forEach(x -> sendMessage(text, x));
+                .filter(x -> x.userName().equals(game.player().username()))
+                .forEach(x -> sendMessage(gameToSocketTextMapper.map(game), x));
     }
 
     private void sendMessage(String text, SocketDto socketDto) {

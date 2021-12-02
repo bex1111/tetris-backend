@@ -1,8 +1,8 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
-import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,14 +65,14 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     }
 
     @Override
-    public TrackElement[][] spawnNewElement(TrackElement[][] track, NewElementSpawner.TetrisElement tetrisElement) {
+    public TrackElement[][] spawnNewElement(TrackElement[][] track, TetrisElement tetrisElement) {
         steps.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         return track;
     }
 
     @Override
-    public NewElementSpawner.TetrisElement drawTetrisElement() {
+    public TetrisElement drawTetrisElement() {
         steps.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         return null;

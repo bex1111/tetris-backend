@@ -5,7 +5,7 @@ import org.bexterlab.tetrisbackend.core.mock.TetrisStepFactoryFake;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.bexterlab.tetrisbackend.entity.Movement.*;
-import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.entity.TrackElement.THREE_LONG_ELEMENT_MIDDLE_MIDDLE;
+import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.core.move.TrackElement.THREE_LONG_ELEMENT_MIDDLE_MIDDLE;
 
 class TrackHandlerTest {
 

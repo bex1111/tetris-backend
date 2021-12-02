@@ -6,7 +6,7 @@ import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.mock.AsyncGameHandlerSpy;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

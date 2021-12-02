@@ -7,7 +7,7 @@ public class AsyncGameHandlerSpy extends AsyncGameHandler {
     public boolean isStartGameCalled;
 
     public AsyncGameHandlerSpy() {
-        super(null, null, null, null);
+        super(null, null, null, null, null);
     }
 
     @Override

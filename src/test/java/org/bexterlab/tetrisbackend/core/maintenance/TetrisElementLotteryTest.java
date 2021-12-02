@@ -12,11 +12,11 @@ class TetrisElementLotteryTest {
     @Test
     void drawAllTest() {
         int capacity = 100;
-        List<NewElementSpawner.TetrisElement> tetrisElements = new ArrayList<>(capacity);
+        List<TetrisElement> tetrisElements = new ArrayList<>(capacity);
         for (int i = 0; i < capacity; i++) {
             tetrisElements.add(new TetrisElementLottery().draw());
         }
-        Assertions.assertEquals(NewElementSpawner.TetrisElement.values().length, new HashSet<>(tetrisElements).size());
+        Assertions.assertEquals(TetrisElement.values().length, new HashSet<>(tetrisElements).size());
     }
 
 

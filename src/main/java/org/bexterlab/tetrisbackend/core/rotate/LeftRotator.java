@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.rotate;
 
-import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 public class LeftRotator extends BaseRotator {
     @Override

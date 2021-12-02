@@ -1,10 +1,10 @@
 package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.core.exception.CoreException;
-import org.bexterlab.tetrisbackend.core.maintenance.NewElementSpawner;
+import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Movement;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.slf4j.Logger;
 
 import java.util.Arrays;
@@ -45,19 +45,37 @@ public class TrackHandler {
         track = tetrisStepFactory.collideElement(track);
         track = tetrisStepFactory.clearFullRow(track);
         if (isNotTetrisElementInTheTrack(track)) {
-            NewElementSpawner.TetrisElement tetrisElement =
+            TetrisElement tetrisElement =
                     tetrisStepFactory.drawTetrisElement();
-            track = tetrisStepFactory
-                    .spawnNewElement(track, game.tetrisElements().next());
+            track = tetrisStepFactory.spawnNewElement(track, game.tetrisElements().next());
             gameStore.storeNewTetrisElement(game, tetrisElement);
         }
-        logger.info("\n-------------------\n" +
+        gameStore.storeNewTrack(game, track);
+        logTrackForDevelop(game);
+    }
+
+    //Todo delete me
+    private void logTrackForDevelop(Game game) {
+        logger.info("\n" + "-".repeat(game.track().length) + "\n" +
                 Arrays.stream(game.track())
-                        .map(x -> Arrays.stream(x)
-                                .map(Enum::name)
+                        .map(row -> Arrays.stream(row)
+                                .map(column -> {
+                                            switch (column) {
+                                                case POINT -> {
+                                                    return "P";
+                                                }
+                                                case EMPTY -> {
+                                                    return " ";
+                                                }
+                                                default -> {
+                                                    return "X";
+                                                }
+                                            }
+                                        }
+                                )
                                 .collect(Collectors.joining(" ")))
                         .collect(Collectors.joining("|\n")) +
-                "\n-------------------\n");
+                "\n" + "-".repeat(game.track().length) + "\n");
     }
 
     private boolean isNotTetrisElementInTheTrack(TrackElement[][] track) {

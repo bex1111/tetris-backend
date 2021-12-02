@@ -1,13 +1,12 @@
 package org.bexterlab.tetrisbackend.core.move;
 
 import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
-import static org.bexterlab.tetrisbackend.entity.TrackElement.*;
+import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class RightMoverTest {
 

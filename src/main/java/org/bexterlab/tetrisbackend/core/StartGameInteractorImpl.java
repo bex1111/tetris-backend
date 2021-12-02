@@ -4,16 +4,16 @@ import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElementLottery;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Player;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
-import org.bexterlab.tetrisbackend.entity.TrackElement;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.UUID;
 
-import static org.bexterlab.tetrisbackend.entity.TrackElement.EMPTY;
+import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
 
 public class StartGameInteractorImpl implements StartGameInteractor {

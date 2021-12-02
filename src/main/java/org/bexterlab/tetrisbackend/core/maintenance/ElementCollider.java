@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.maintenance;
 
-import org.bexterlab.tetrisbackend.entity.TrackElement;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.ArrayList;
 import java.util.List;
