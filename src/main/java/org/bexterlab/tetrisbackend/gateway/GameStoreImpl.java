@@ -6,7 +6,6 @@ import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 
-import java.util.Collections;
 import java.util.List;
 
 public class GameStoreImpl implements GameStore {
@@ -14,7 +13,7 @@ public class GameStoreImpl implements GameStore {
     private final List<Game> gameList;
 
     public GameStoreImpl(List<Game> gameList) {
-        this.gameList = Collections.synchronizedList(gameList);
+        this.gameList = gameList;
     }
 
     @Override
@@ -33,19 +32,24 @@ public class GameStoreImpl implements GameStore {
     }
 
     @Override
-    public void storeNewTetrisElement(Game game, TetrisElement nextTetrisElement) {
+    public Game storeNewTetrisElement(Game game, TetrisElement nextTetrisElement) {
+        gameList.remove(game);
         game = new Game(game.player(),
                 game.track(),
                 game.movementQueue(),
                 new TetrisElements(game.tetrisElements().next(), nextTetrisElement));
+        gameList.add(game);
+        return game;
     }
 
     @Override
     public void storeNewTrack(Game game, TrackElement[][] track) {
+        gameList.remove(game);
         game = new Game(game.player(),
                 track,
                 game.movementQueue(),
                 game.tetrisElements());
+        gameList.add(game);
     }
 
     @Override

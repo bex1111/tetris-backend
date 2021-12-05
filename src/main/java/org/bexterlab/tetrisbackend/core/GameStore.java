@@ -13,7 +13,7 @@ public interface GameStore {
 
     List<Game> getGames();
 
-    void storeNewTetrisElement(Game game, TetrisElement tetrisElement);
+    Game storeNewTetrisElement(Game game, TetrisElement tetrisElement);
 
     void storeNewTrack(Game game, TrackElement[][] track);
 

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 
@@ -60,7 +59,7 @@ public class MainConfiguration {
 
     @Bean
     public GameStore gameStore() {
-        return new GameStoreImpl(new ArrayList<>());
+        return new GameStoreImpl(new CopyOnWriteArrayList<>());
     }
 
     @Bean

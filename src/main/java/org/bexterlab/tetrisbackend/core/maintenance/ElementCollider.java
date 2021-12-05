@@ -8,11 +8,11 @@ import java.util.List;
 public class ElementCollider {
 
     private boolean isCollide;
-    private final List<Integer[]> elementIndex;
+    private final List<Integer[]> elementPosition;
 
     public ElementCollider() {
         this.isCollide = false;
-        this.elementIndex = new ArrayList<>();
+        this.elementPosition = new ArrayList<>();
     }
 
 
@@ -20,7 +20,7 @@ public class ElementCollider {
         checkElementCollideWithOtherPoiont(track);
         checkElementReachLastRow(track);
         if (isCollide) {
-            transformElemntToPoint(track, elementIndex);
+            transformElemntToPoint(track, elementPosition);
         }
         return track;
     }
@@ -29,7 +29,7 @@ public class ElementCollider {
         for (int j = 0; j < track[track.length - 1].length; j++) {
             if (track[track.length - 1][j].isNotFix) {
                 isCollide = true;
-                elementIndex.add(new Integer[]{track.length - 1, j});
+                elementPosition.add(new Integer[]{track.length - 1, j});
             }
         }
     }
@@ -41,7 +41,7 @@ public class ElementCollider {
                     isCollide = true;
                 }
                 if (track[i][j].isNotFix) {
-                    elementIndex.add(new Integer[]{i, j});
+                    elementPosition.add(new Integer[]{i, j});
                 }
             }
         }

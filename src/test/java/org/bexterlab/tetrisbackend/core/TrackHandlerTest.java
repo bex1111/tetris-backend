@@ -1,11 +1,12 @@
 package org.bexterlab.tetrisbackend.core;
 
+import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.TetrisStepFactoryFake;
+import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
-import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.bexterlab.tetrisbackend.entity.Movement.*;
+import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_L;
+import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_PYRAMID;
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.THREE_LONG_ELEMENT_MIDDLE_MIDDLE;
+import static org.bexterlab.tetrisbackend.entity.Movement.*;
 
 class TrackHandlerTest {
 
@@ -84,23 +87,31 @@ class TrackHandlerTest {
 
     @Test
     void newElementSpawnTest() {
-        gameStore.game = createGame(MOVE_LEFT, EMPTY);
+        tetrisStepFactoryFake.draw = LEFT_PYRAMID;
+        gameStore.game = createGame(MOVE_LEFT, EMPTY, TetrisElement.SQUARE, TetrisElement.LEFT_L);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("moveLeft",
                         "moveDown",
                         "collideElement",
                         "clearFullRow",
-                        "drawTetrisElement",
-                        "spawnNewElement"
+                        "spawnNewElement",
+                        "drawTetrisElement"
                 ),
                 tetrisStepFactoryFake.steps);
+        Assertions.assertEquals(tetrisStepFactoryFake.spawnNewTetrisElement, LEFT_L);
+        Assertions.assertEquals(tetrisStepFactoryFake.draw, gameStore.tetrisNewElement);
+
     }
 
     private Game createGame(Movement movement, TrackElement trackElement) {
+        return createGame(movement, trackElement, null, null);
+    }
+
+    private Game createGame(Movement movement, TrackElement trackElement, TetrisElement current, TetrisElement next) {
         return new Game(null,
                 new TrackElement[][]{
                         new TrackElement[]{trackElement}}
                 , new LinkedList<>(List.of(movement)),
-                new TetrisElements(null, null));
+                new TetrisElements(current, next));
     }
 }

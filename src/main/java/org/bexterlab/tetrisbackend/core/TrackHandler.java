@@ -45,10 +45,10 @@ public class TrackHandler {
         track = tetrisStepFactory.collideElement(track);
         track = tetrisStepFactory.clearFullRow(track);
         if (isNotTetrisElementInTheTrack(track)) {
+            track = tetrisStepFactory.spawnNewElement(track, game.tetrisElements().next());
             TetrisElement tetrisElement =
                     tetrisStepFactory.drawTetrisElement();
-            track = tetrisStepFactory.spawnNewElement(track, game.tetrisElements().next());
-            gameStore.storeNewTetrisElement(game, tetrisElement);
+            game = gameStore.storeNewTetrisElement(game, tetrisElement);
         }
         gameStore.storeNewTrack(game, track);
         logTrackForDevelop(game);

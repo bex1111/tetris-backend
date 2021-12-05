@@ -10,6 +10,8 @@ import java.util.List;
 public class TetrisStepFactoryFake extends TetrisStepFactory {
 
     public List<String> steps;
+    public TetrisElement draw;
+    public TetrisElement spawnNewTetrisElement;
 
     public TetrisStepFactoryFake() {
         this.steps = new ArrayList<>();
@@ -68,6 +70,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     public TrackElement[][] spawnNewElement(TrackElement[][] track, TetrisElement tetrisElement) {
         steps.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
+        spawnNewTetrisElement = tetrisElement;
         return track;
     }
 
@@ -75,6 +78,6 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     public TetrisElement drawTetrisElement() {
         steps.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
-        return null;
+        return draw;
     }
 }

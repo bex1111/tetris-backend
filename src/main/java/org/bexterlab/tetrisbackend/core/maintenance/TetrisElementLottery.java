@@ -7,8 +7,7 @@ public class TetrisElementLottery {
 
     public TetrisElement draw() {
         return TetrisElement.values()[
-                random.nextInt(
-                        TetrisElement.values().length)];
+                random.nextInt(TetrisElement.values().length)];
     }
 
 }

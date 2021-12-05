@@ -12,7 +12,7 @@ public class TrackTestUtil {
     }
 
 
-    public static void assertTwoTrack(TrackElement[][] actualTrack, TrackElement[][] expectedTrack) {
+    public static void assertTwoTrack(TrackElement[][] expectedTrack, TrackElement[][] actualTrack) {
         Assertions.assertEquals(expectedTrack.length, actualTrack.length);
         for (int i = 0; i < expectedTrack.length; i++) {
             Assertions.assertEquals(expectedTrack[i].length, actualTrack[i].length);

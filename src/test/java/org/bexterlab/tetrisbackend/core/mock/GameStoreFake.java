@@ -11,6 +11,7 @@ public class GameStoreFake implements GameStore {
 
     public boolean hasGameWithUser;
     public Game game;
+    public TetrisElement tetrisNewElement;
 
     @Override
     public boolean hasGameWithUser(String username) {
@@ -28,13 +29,14 @@ public class GameStoreFake implements GameStore {
     }
 
     @Override
-    public void storeNewTetrisElement(Game game, TetrisElement tetrisElement) {
-
+    public Game storeNewTetrisElement(Game game, TetrisElement tetrisElement) {
+        this.tetrisNewElement = tetrisElement;
+        return game;
     }
 
     @Override
     public void storeNewTrack(Game game, TrackElement[][] track) {
-        
+
     }
 
     @Override

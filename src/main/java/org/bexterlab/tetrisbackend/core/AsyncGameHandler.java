@@ -12,7 +12,7 @@ import static java.util.Objects.isNull;
 
 public class AsyncGameHandler {
 
-    private static final long THREAD_RUN_TIME = 1000;
+    private static final long THREAD_RUN_TIME = 200;
     private static final long MOVING_AVERAGE_SIZE = 5;
 
     private final TrackSender trackSender;
@@ -31,22 +31,34 @@ public class AsyncGameHandler {
         this.trackHandler = trackHandler;
         this.gameStore = gameStore;
         this.logger = logger;
-        runTimeList = Collections.synchronizedList(new ArrayList<>());
+        this.runTimeList = Collections.synchronizedList(new ArrayList<>());
     }
 
 
     public void startGame() {
-        if (isNull(future) || future.isDone()) {
+        if (hasARunningThread()) {
             future = executor.submit(() -> {
-                while (gameStore.hasGame()) {
-                    long start = System.currentTimeMillis();
-                    trackHandler.maintenanceTracks();
-                    gameStore.getGames().forEach(trackSender::sendTrackForUser);
-                    calculateRunTime(start);
-                    sleepThread();
+                try {
+                    runGame();
+                } catch (Exception e) {
+                    logger.error("Error occurred while run game", e);
                 }
                 return null;
             });
+        }
+    }
+
+    private boolean hasARunningThread() {
+        return isNull(future) || future.isDone();
+    }
+
+    private void runGame() {
+        while (gameStore.hasGame()) {
+            long start = System.currentTimeMillis();
+            trackHandler.maintenanceTracks();
+            gameStore.getGames().forEach(trackSender::sendTrackForUser);
+            calculateRunTime(start);
+            sleepThread();
         }
     }
 
