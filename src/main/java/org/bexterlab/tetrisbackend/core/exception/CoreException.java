@@ -1,6 +1,8 @@
 package org.bexterlab.tetrisbackend.core.exception;
 
-public abstract class CoreException extends RuntimeException {
+import org.bexterlab.tetrisbackend.exception.TetrisException;
+
+public abstract class CoreException extends TetrisException {
 
     public final String errorMessage;
 

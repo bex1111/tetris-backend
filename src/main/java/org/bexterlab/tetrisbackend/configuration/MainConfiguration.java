@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 public class MainConfiguration {
 
     @Bean
-    public Logger initLogger() {
+    public Logger logger() {
         return LoggerFactory.getLogger("Tetris Logger");
     }
 
@@ -28,7 +28,7 @@ public class MainConfiguration {
                                              Logger logger,
                                              WebsocketHandler trackSender
     ) {
-        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(), trackHandler, gameStore, logger);
+        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(), trackHandler, gameStore, logger, 1000L);
     }
 
     @Bean
