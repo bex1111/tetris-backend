@@ -28,7 +28,7 @@ public class MainConfiguration {
                                              Logger logger,
                                              WebsocketHandler trackSender
     ) {
-        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(), trackHandler, gameStore, logger, 1000L);
+        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(), trackHandler, gameStore, logger, new Delayer(500L, logger));
     }
 
     @Bean

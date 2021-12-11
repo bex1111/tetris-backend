@@ -6,16 +6,22 @@ import org.bexterlab.tetrisbackend.entity.Game;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class TrackSenderSpy implements TrackSender {
+import static java.util.Objects.nonNull;
+
+public class TrackSenderFake implements TrackSender {
 
     public final List<Game> gameList;
+    public volatile RuntimeException exception;
 
-    public TrackSenderSpy() {
+    public TrackSenderFake() {
         gameList = new CopyOnWriteArrayList<>();
     }
 
     @Override
     public void sendTrackForUser(Game game) {
+        if (nonNull(exception)) {
+            throw exception;
+        }
         gameList.add(game);
     }
 }

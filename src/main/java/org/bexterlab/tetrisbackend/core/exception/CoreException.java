@@ -15,4 +15,9 @@ public abstract class CoreException extends TetrisException {
         super(errorMessage, cause);
         this.errorMessage = errorMessage;
     }
+
+    public CoreException(Throwable cause) {
+        super(cause);
+        this.errorMessage = "Empty";
+    }
 }

@@ -8,4 +8,8 @@ public abstract class TetrisException extends RuntimeException {
     public TetrisException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public TetrisException(Throwable cause) {
+        super(cause);
+    }
 }

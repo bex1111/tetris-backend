@@ -14,6 +14,6 @@ public class TrackHandlerSpy extends TrackHandler {
 
     @Override
     public void maintenanceTracks() {
-        maintenanceCallCount.incrementAndGet();
+        System.out.println(maintenanceCallCount.incrementAndGet());
     }
 }
