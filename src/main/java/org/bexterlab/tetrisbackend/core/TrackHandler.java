@@ -8,7 +8,7 @@ import org.bexterlab.tetrisbackend.entity.Movement;
 import org.slf4j.Logger;
 
 import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
 public class TrackHandler {
@@ -85,9 +85,9 @@ public class TrackHandler {
                                 .noneMatch(column -> column.isNotFix));
     }
 
-    private TrackElement[][] controlElement(LinkedList<Movement> movements, TrackElement[][] track) {
+    private TrackElement[][] controlElement(ConcurrentLinkedQueue<Movement> movements, TrackElement[][] track) {
         if (!movements.isEmpty()) {
-            switch (movements.pop()) {
+            switch (movements.poll()) {
                 case ROTATE_RIGHT -> {
                     return tetrisStepFactory.rotateRight(track);
                 }

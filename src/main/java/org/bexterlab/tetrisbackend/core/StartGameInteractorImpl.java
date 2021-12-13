@@ -10,8 +10,8 @@ import org.bexterlab.tetrisbackend.entity.Player;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
@@ -40,7 +40,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private Game createNewGame(String username) {
         return new Game(new Player(username,
                 UUID.randomUUID().toString()),
-                createEmptyTrack(), new LinkedList<>(),
+                createEmptyTrack(), new ConcurrentLinkedQueue<>(),
                 new TetrisElements(new TetrisElementLottery().draw(), new TetrisElementLottery().draw()));
     }
 

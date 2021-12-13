@@ -1,10 +1,8 @@
 # Backlog (Hungarian)
 
-- Mozgás/forgás->Teljes csík törlése->Elemek leesése
 - Mozgatás Api fogad egy username, token, mozgás típusa
 - pit test
-- Z elem betétele a játékba
-- csak akkor mehet lejebb ha teljesen üres a sor
+- delayer
 
 
 # Elements:

@@ -12,13 +12,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_L;
 import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_PYRAMID;
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.core.move.TrackElement.THREE_LONG_ELEMENT_MIDDLE_MIDDLE;
 import static org.bexterlab.tetrisbackend.entity.Movement.*;
 
 class TrackHandlerTest {
@@ -39,7 +38,7 @@ class TrackHandlerTest {
 
     @Test
     void rotateLeftTest() {
-        gameStore.game = createGame(ROTATE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE);
+        gameStore.game = createGame(ROTATE_LEFT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("rotateLeft",
                         "moveDown",
@@ -51,7 +50,7 @@ class TrackHandlerTest {
 
     @Test
     void rotateRightTest() {
-        gameStore.game = createGame(ROTATE_RIGHT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE);
+        gameStore.game = createGame(ROTATE_RIGHT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("rotateRight",
                         "moveDown",
@@ -63,7 +62,7 @@ class TrackHandlerTest {
 
     @Test
     void moveRightTest() {
-        gameStore.game = createGame(MOVE_RIGHT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE);
+        gameStore.game = createGame(MOVE_RIGHT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("moveRight",
                         "moveDown",
@@ -75,7 +74,7 @@ class TrackHandlerTest {
 
     @Test
     void moveLeftTest() {
-        gameStore.game = createGame(MOVE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE);
+        gameStore.game = createGame(MOVE_LEFT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("moveLeft",
                         "moveDown",
@@ -103,15 +102,15 @@ class TrackHandlerTest {
 
     }
 
-    private Game createGame(Movement movement, TrackElement trackElement) {
-        return createGame(movement, trackElement, null, null);
+    private Game createGame(Movement movement) {
+        return createGame(movement, TrackElement.THREE_LONG_ELEMENT_MIDDLE_MIDDLE, null, null);
     }
 
     private Game createGame(Movement movement, TrackElement trackElement, TetrisElement current, TetrisElement next) {
         return new Game(null,
                 new TrackElement[][]{
                         new TrackElement[]{trackElement}}
-                , new LinkedList<>(List.of(movement)),
+                , new ConcurrentLinkedQueue<>(List.of(movement)),
                 new TetrisElements(current, next));
     }
 }

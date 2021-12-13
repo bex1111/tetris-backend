@@ -1,4 +1,4 @@
-package org.bexterlab.tetrisbackend.controller.dto;
+package org.bexterlab.tetrisbackend.gateway.socket;
 
 import org.springframework.web.socket.WebSocketSession;
 

@@ -1,6 +1,5 @@
 package org.bexterlab.tetrisbackend.gateway.socket;
 
-import org.bexterlab.tetrisbackend.controller.dto.SocketDto;
 import org.bexterlab.tetrisbackend.core.TrackSender;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.slf4j.Logger;

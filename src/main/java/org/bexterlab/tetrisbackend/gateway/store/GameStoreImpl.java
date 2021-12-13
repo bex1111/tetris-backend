@@ -1,9 +1,10 @@
-package org.bexterlab.tetrisbackend.gateway;
+package org.bexterlab.tetrisbackend.gateway.store;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
+import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 
 import java.util.List;
@@ -55,6 +56,19 @@ public class GameStoreImpl implements GameStore {
     @Override
     public boolean hasGame() {
         return !gameList.isEmpty();
+    }
+
+    @Override
+    public boolean hasGameWithUserAndToken(String username, String token) {
+        return gameList.stream()
+                .anyMatch(x -> x.player().username().equals(username) &&
+                        x.player().token().equals(token));
+    }
+
+    @Override
+    public void addNewMovement(String username, Movement movement) {
+        gameList.stream().filter(x -> x.player().username().equals(username))
+                .findFirst().get().movementQueue().add(movement);
     }
 
 

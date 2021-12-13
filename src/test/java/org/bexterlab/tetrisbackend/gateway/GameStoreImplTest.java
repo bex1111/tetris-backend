@@ -2,6 +2,7 @@ package org.bexterlab.tetrisbackend.gateway;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.entity.Game;
+import org.bexterlab.tetrisbackend.gateway.store.GameStoreImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

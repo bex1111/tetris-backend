@@ -2,9 +2,9 @@ package org.bexterlab.tetrisbackend.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bexterlab.tetrisbackend.core.*;
-import org.bexterlab.tetrisbackend.gateway.GameStoreImpl;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
+import org.bexterlab.tetrisbackend.gateway.store.GameStoreImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
