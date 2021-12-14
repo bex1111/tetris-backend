@@ -6,8 +6,8 @@ import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElementLottery;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
-import org.bexterlab.tetrisbackend.entity.Player;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
+import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -38,12 +38,13 @@ public class StartGameInteractorImpl implements StartGameInteractor {
         Game game = createNewGame(username);
         gameStore.createNewGame(game);
         asyncGameHandler.startGame();
-        return game.player().token();
+        return game.user().token();
     }
 
     private Game createNewGame(String username) {
-        return new Game(new Player(username,
-                UUID.randomUUID().toString()),
+        return new Game(new User(username,
+                UUID.randomUUID().toString(),
+                0L),
                 createEmptyTrack(), new ConcurrentLinkedQueue<>(),
                 new TetrisElements(new TetrisElementLottery().draw(), new TetrisElementLottery().draw()));
     }

@@ -1,9 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.core.maintenance.ElementCollider;
-import org.bexterlab.tetrisbackend.core.maintenance.FullRowCleaner;
-import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
-import org.bexterlab.tetrisbackend.core.maintenance.TetrisElementLottery;
+import org.bexterlab.tetrisbackend.core.maintenance.*;
 import org.bexterlab.tetrisbackend.core.move.DownMover;
 import org.bexterlab.tetrisbackend.core.move.LeftMover;
 import org.bexterlab.tetrisbackend.core.move.RightMover;
@@ -50,4 +47,7 @@ public class TetrisStepFactory {
         return new TetrisElementLottery().draw();
     }
 
+    public Long countPoints(TrackElement[][] track) {
+        return new PointCounter().count(track);
+    }
 }

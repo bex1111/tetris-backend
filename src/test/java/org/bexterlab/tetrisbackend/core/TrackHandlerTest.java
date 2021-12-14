@@ -3,6 +3,7 @@ package org.bexterlab.tetrisbackend.core;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.TetrisStepFactoryFake;
+import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Movement;
@@ -23,22 +24,24 @@ import static org.bexterlab.tetrisbackend.entity.Movement.*;
 class TrackHandlerTest {
 
 
-    private GameStoreFake gameStore;
+    private GameStoreFake gameStoreFake;
+    private UserStoreFake userStoreFake;
     private TetrisStepFactoryFake tetrisStepFactoryFake;
     private TrackHandler trackHandler;
 
     @BeforeEach
     void setUp() {
         tetrisStepFactoryFake = new TetrisStepFactoryFake();
-        gameStore = new GameStoreFake();
-        trackHandler = new TrackHandler(gameStore,
-                tetrisStepFactoryFake,
+        gameStoreFake = new GameStoreFake();
+        userStoreFake = new UserStoreFake();
+        trackHandler = new TrackHandler(gameStoreFake,
+                userStoreFake, tetrisStepFactoryFake,
                 LoggerFactory.getLogger("Tetris logger"));
     }
 
     @Test
     void rotateLeftTest() {
-        gameStore.game = createGame(ROTATE_LEFT);
+        gameStoreFake.game = createGame(ROTATE_LEFT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("rotateLeft",
                         "moveDown",
@@ -50,7 +53,7 @@ class TrackHandlerTest {
 
     @Test
     void rotateRightTest() {
-        gameStore.game = createGame(ROTATE_RIGHT);
+        gameStoreFake.game = createGame(ROTATE_RIGHT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("rotateRight",
                         "moveDown",
@@ -62,7 +65,7 @@ class TrackHandlerTest {
 
     @Test
     void moveRightTest() {
-        gameStore.game = createGame(MOVE_RIGHT);
+        gameStoreFake.game = createGame(MOVE_RIGHT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("moveRight",
                         "moveDown",
@@ -74,7 +77,7 @@ class TrackHandlerTest {
 
     @Test
     void moveLeftTest() {
-        gameStore.game = createGame(MOVE_LEFT);
+        gameStoreFake.game = createGame(MOVE_LEFT);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("moveLeft",
                         "moveDown",
@@ -87,18 +90,22 @@ class TrackHandlerTest {
     @Test
     void newElementSpawnTest() {
         tetrisStepFactoryFake.draw = LEFT_PYRAMID;
-        gameStore.game = createGame(MOVE_LEFT, EMPTY, TetrisElement.SQUARE, TetrisElement.LEFT_L);
+        tetrisStepFactoryFake.count = 10L;
+        gameStoreFake.game = createGame(MOVE_LEFT, EMPTY, TetrisElement.SQUARE, TetrisElement.LEFT_L);
         trackHandler.maintenanceTracks();
         Assertions.assertEquals(List.of("moveLeft",
                         "moveDown",
                         "collideElement",
                         "clearFullRow",
                         "spawnNewElement",
-                        "drawTetrisElement"
+                        "drawTetrisElement",
+                        "countPoints"
                 ),
                 tetrisStepFactoryFake.steps);
         Assertions.assertEquals(tetrisStepFactoryFake.spawnNewTetrisElement, LEFT_L);
-        Assertions.assertEquals(tetrisStepFactoryFake.draw, gameStore.tetrisNewElement);
+        Assertions.assertEquals(tetrisStepFactoryFake.draw, gameStoreFake.tetrisNewElement);
+        Assertions.assertEquals(userStoreFake.game, gameStoreFake.game);
+        Assertions.assertEquals(tetrisStepFactoryFake.count, userStoreFake.point);
 
     }
 

@@ -14,12 +14,15 @@ import java.util.stream.Collectors;
 public class TrackHandler {
 
     private final GameStore gameStore;
+    private final UserStore userStore;
     private final TetrisStepFactory tetrisStepFactory;
     private final Logger logger;
 
 
-    public TrackHandler(GameStore gameStore, TetrisStepFactory tetrisStepFactory, Logger logger) {
+    public TrackHandler(GameStore gameStore, UserStore userStore,
+                        TetrisStepFactory tetrisStepFactory, Logger logger) {
         this.gameStore = gameStore;
+        this.userStore = userStore;
         this.tetrisStepFactory = tetrisStepFactory;
         this.logger = logger;
     }
@@ -49,6 +52,7 @@ public class TrackHandler {
             TetrisElement tetrisElement =
                     tetrisStepFactory.drawTetrisElement();
             game = gameStore.storeNewTetrisElement(game, tetrisElement);
+            userStore.storePoint(game, tetrisStepFactory.countPoints(track));
         }
         gameStore.storeNewTrack(game, track);
         logTrackForDevelop(game);
@@ -100,9 +104,7 @@ public class TrackHandler {
                 case MOVE_LEFT -> {
                     return tetrisStepFactory.moveLeft(track);
                 }
-                default -> {
-                    throw new AssertionError("Not implemented movement");
-                }
+                default -> throw new AssertionError("Not implemented movement");
             }
         }
         return track;

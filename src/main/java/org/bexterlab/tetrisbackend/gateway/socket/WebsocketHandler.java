@@ -56,7 +56,7 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
     @Override
     public void sendTrackForUser(Game game) {
         socketDtoList.stream()
-                .filter(x -> x.userName().equals(game.player().username()))
+                .filter(x -> x.userName().equals(game.user().username()))
                 .forEach(x -> sendMessage(gameToSocketTextMapper.map(game), x));
     }
 

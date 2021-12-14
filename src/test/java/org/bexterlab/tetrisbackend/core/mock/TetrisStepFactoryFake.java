@@ -12,6 +12,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     public List<String> steps;
     public TetrisElement draw;
     public TetrisElement spawnNewTetrisElement;
+    public Long count;
 
     public TetrisStepFactoryFake() {
         this.steps = new ArrayList<>();
@@ -79,5 +80,12 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
         steps.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         return draw;
+    }
+
+    @Override
+    public Long countPoints(TrackElement[][] track) {
+        steps.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        return count;
     }
 }

@@ -8,6 +8,7 @@ import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
+import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     @Override
     public boolean hasGameWithUser(String username) {
-        return gameList.stream().anyMatch(x -> x.player().username().equals(username));
+        return gameList.stream().anyMatch(x -> x.user().username().equals(username));
     }
 
     @Override
@@ -36,23 +37,23 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     @Override
     public Game storeNewTetrisElement(Game game, TetrisElement nextTetrisElement) {
-        gameList.remove(game);
-        game = new Game(game.player(),
+        gameList.add(new Game(game.user(),
                 game.track(),
                 game.movementQueue(),
-                new TetrisElements(game.tetrisElements().next(), nextTetrisElement));
-        gameList.add(game);
+                new TetrisElements(
+                        game.tetrisElements().next(),
+                        nextTetrisElement)));
+        gameList.remove(game);
         return game;
     }
 
     @Override
     public void storeNewTrack(Game game, TrackElement[][] track) {
-        gameList.remove(game);
-        game = new Game(game.player(),
+        gameList.add(new Game(game.user(),
                 track,
                 game.movementQueue(),
-                game.tetrisElements());
-        gameList.add(game);
+                game.tetrisElements()));
+        gameList.remove(game);
     }
 
     @Override
@@ -63,8 +64,21 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     @Override
     public boolean hasGameWithUserAndToken(String username, String token) {
         return gameList.stream()
-                .anyMatch(x -> x.player().username().equals(username) &&
-                        x.player().token().equals(token));
+                .anyMatch(x -> x.user().username().equals(username) &&
+                        x.user().token().equals(token));
+    }
+
+    @Override
+    public void storePoint(Game game, Long point) {
+        gameList.add(new Game(
+                new User(
+                        game.user().username(),
+                        game.user().token(),
+                        game.user().points() + point),
+                game.track(),
+                game.movementQueue(),
+                game.tetrisElements()));
+        gameList.remove(game);
     }
 
     @Override
@@ -78,9 +92,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     private Game findUser(String username) {
-        return gameList.stream().filter(x -> x.player().username().equals(username))
+        return gameList.stream().filter(x -> x.user().username().equals(username))
                 .findFirst().orElseThrow(() -> new AssertionError("Not find user"));
     }
-
-
 }

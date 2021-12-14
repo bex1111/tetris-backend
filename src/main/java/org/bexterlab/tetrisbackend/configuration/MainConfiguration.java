@@ -59,7 +59,7 @@ public class MainConfiguration {
     @Bean
     public TrackHandler trackHandler(StoreImpl store, Logger logger,
                                      TetrisStepFactory tetrisStepFactory) {
-        return new TrackHandler(store, tetrisStepFactory, logger);
+        return new TrackHandler(store, store, tetrisStepFactory, logger);
     }
 
     @Bean

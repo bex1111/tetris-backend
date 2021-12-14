@@ -9,7 +9,8 @@ public class TrackHandlerSpy extends TrackHandler {
     public AtomicInteger maintenanceCallCount = new AtomicInteger(0);
 
     public TrackHandlerSpy() {
-        super(null, null, null);
+        super(null, null,
+                null, null);
     }
 
     @Override
