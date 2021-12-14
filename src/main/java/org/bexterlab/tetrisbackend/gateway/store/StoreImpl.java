@@ -1,6 +1,8 @@
 package org.bexterlab.tetrisbackend.gateway.store;
 
 import org.bexterlab.tetrisbackend.core.GameStore;
+import org.bexterlab.tetrisbackend.core.MovementStore;
+import org.bexterlab.tetrisbackend.core.UserStore;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
@@ -9,11 +11,11 @@ import org.bexterlab.tetrisbackend.entity.TetrisElements;
 
 import java.util.List;
 
-public class GameStoreImpl implements GameStore {
+public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     private final List<Game> gameList;
 
-    public GameStoreImpl(List<Game> gameList) {
+    public StoreImpl(List<Game> gameList) {
         this.gameList = gameList;
     }
 
@@ -66,9 +68,18 @@ public class GameStoreImpl implements GameStore {
     }
 
     @Override
-    public void addNewMovement(String username, Movement movement) {
-        gameList.stream().filter(x -> x.player().username().equals(username))
-                .findFirst().get().movementQueue().add(movement);
+    public void addNew(String username, Movement movement) {
+        findUser(username).movementQueue().add(movement);
+    }
+
+    @Override
+    public int count(String username) {
+        return findUser(username).movementQueue().size();
+    }
+
+    private Game findUser(String username) {
+        return gameList.stream().filter(x -> x.player().username().equals(username))
+                .findFirst().orElseThrow(() -> new AssertionError("Not find user"));
     }
 
 

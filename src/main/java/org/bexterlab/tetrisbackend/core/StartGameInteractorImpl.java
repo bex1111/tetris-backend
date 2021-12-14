@@ -20,11 +20,15 @@ public class StartGameInteractorImpl implements StartGameInteractor {
 
     public static final String USER_NAME_VALIDATOR_REGEXP = "^[\\w]{6,20}$";
     private final GameStore gameStore;
+    private final UserStore userStore;
     private final AsyncGameHandler asyncGameHandler;
 
 
-    public StartGameInteractorImpl(GameStore gameStore, AsyncGameHandler asyncGameHandler) {
+    public StartGameInteractorImpl(GameStore gameStore,
+                                   UserStore userStore,
+                                   AsyncGameHandler asyncGameHandler) {
         this.gameStore = gameStore;
+        this.userStore = userStore;
         this.asyncGameHandler = asyncGameHandler;
     }
 
@@ -53,7 +57,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     }
 
     private void checkPlayHasAlreadyAGame(String username) {
-        if (gameStore.hasGameWithUser(username)) {
+        if (userStore.hasGameWithUser(username)) {
             throw new YouAlreadyHaveAGameException();
         }
     }

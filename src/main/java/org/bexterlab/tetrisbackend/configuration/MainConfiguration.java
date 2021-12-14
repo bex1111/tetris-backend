@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bexterlab.tetrisbackend.core.*;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
-import org.bexterlab.tetrisbackend.gateway.store.GameStoreImpl;
+import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -24,16 +24,20 @@ public class MainConfiguration {
 
     @Bean
     public AsyncGameHandler asyncGameHandler(TrackHandler trackHandler,
-                                             GameStore gameStore,
+                                             StoreImpl store,
                                              Logger logger,
                                              WebsocketHandler trackSender
     ) {
-        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(), trackHandler, gameStore, logger, new Delayer(500L, logger));
+        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(),
+                trackHandler, store,
+                logger, new Delayer(500L, logger));
     }
 
     @Bean
-    public WebsocketHandler websocketHandler(Logger logger, GameToSocketTextMapper gameToSocketTextMapper) {
-        return new WebsocketHandler(new CopyOnWriteArrayList<>(), gameToSocketTextMapper, logger);
+    public WebsocketHandler websocketHandler(Logger logger,
+                                             GameToSocketTextMapper gameToSocketTextMapper) {
+        return new WebsocketHandler(new CopyOnWriteArrayList<>(),
+                gameToSocketTextMapper, logger);
     }
 
     @Bean
@@ -42,8 +46,9 @@ public class MainConfiguration {
     }
 
     @Bean
-    public StartGameInteractorImpl startGameInteractor(GameStore gameStore, AsyncGameHandler asyncGameHandler) {
-        return new StartGameInteractorImpl(gameStore, asyncGameHandler);
+    public StartGameInteractorImpl startGameInteractor(StoreImpl store,
+                                                       AsyncGameHandler asyncGameHandler) {
+        return new StartGameInteractorImpl(store, store, asyncGameHandler);
     }
 
     @Bean
@@ -52,14 +57,14 @@ public class MainConfiguration {
     }
 
     @Bean
-    public TrackHandler trackHandler(GameStore gameStore, Logger logger,
+    public TrackHandler trackHandler(StoreImpl store, Logger logger,
                                      TetrisStepFactory tetrisStepFactory) {
-        return new TrackHandler(gameStore, tetrisStepFactory, logger);
+        return new TrackHandler(store, tetrisStepFactory, logger);
     }
 
     @Bean
-    public GameStore gameStore() {
-        return new GameStoreImpl(new CopyOnWriteArrayList<>());
+    public StoreImpl gameStore() {
+        return new StoreImpl(new CopyOnWriteArrayList<>());
     }
 
     @Bean

@@ -1,22 +1,29 @@
 package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.controller.ControlInteractor;
-import org.bexterlab.tetrisbackend.core.exception.PleaseControllYourGameException;
+import org.bexterlab.tetrisbackend.core.exception.NotYourGameException;
+import org.bexterlab.tetrisbackend.core.exception.TooManyMovementException;
 import org.bexterlab.tetrisbackend.entity.Movement;
 
 public class ControlInteractorImpl implements ControlInteractor {
 
-    private final GameStore gameStore;
+    private final MovementStore movementStore;
+    private final UserStore userStore;
 
-    public ControlInteractorImpl(GameStore gameStore) {
-        this.gameStore = gameStore;
+    public ControlInteractorImpl(MovementStore movementStore,
+                                 UserStore userStore) {
+        this.movementStore = movementStore;
+        this.userStore = userStore;
     }
 
     @Override
     public void addMovement(String username, String token, Movement movement) {
-        if (gameStore.hasGameWithUserAndToken(username, token)) {
-            throw new PleaseControllYourGameException();
+        if (!userStore.hasGameWithUserAndToken(username, token)) {
+            throw new NotYourGameException();
         }
-        gameStore.addNewMovement(username, movement);
+        if (movementStore.count(username) > 30) {
+            throw new TooManyMovementException();
+        }
+        movementStore.addNew(username, movement);
     }
 }

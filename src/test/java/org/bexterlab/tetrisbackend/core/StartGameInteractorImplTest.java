@@ -6,6 +6,7 @@ import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.mock.AsyncGameHandlerSpy;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
+import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,14 +17,16 @@ import java.util.Arrays;
 class StartGameInteractorImplTest {
 
     private GameStoreFake gameStore;
+    private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
     private AsyncGameHandlerSpy asyncGameHandler;
 
     @BeforeEach
     void setUp() {
         gameStore = new GameStoreFake();
+        userStore = new UserStoreFake();
         asyncGameHandler = new AsyncGameHandlerSpy();
-        startGameInteractor = new StartGameInteractorImpl(gameStore, asyncGameHandler);
+        startGameInteractor = new StartGameInteractorImpl(gameStore, userStore, asyncGameHandler);
     }
 
     @Test
@@ -37,7 +40,7 @@ class StartGameInteractorImplTest {
 
     @Test
     public void hasAGameTest() {
-        gameStore.hasGameWithUser = true;
+        userStore.hasGameWithUser = true;
         Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("validuser"));
         Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("ValidUser"));
         Assertions.assertThrows(YouAlreadyHaveAGameException.class, () -> startGameInteractor.start("ValidUser15"));
@@ -45,7 +48,7 @@ class StartGameInteractorImplTest {
 
     @Test
     public void successTest() {
-        gameStore.hasGameWithUser = false;
+        userStore.hasGameWithUser = false;
         String token = startGameInteractor.start("valid_user");
         Assertions.assertNotNull(token, gameStore.game.player().token());
         Assertions.assertEquals("valid_user", gameStore.game.player().username());
