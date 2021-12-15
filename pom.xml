@@ -12,6 +12,7 @@
         <java.version>17</java.version>
         <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
         <springframework.version>5.3.13</springframework.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>
@@ -58,6 +59,7 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
         </plugins>
