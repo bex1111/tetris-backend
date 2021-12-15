@@ -24,10 +24,10 @@ O
 ## straight
 O\
 O\
-O\
+O
 
 ## Z
 O\
 OO\
- O
+ O
 
