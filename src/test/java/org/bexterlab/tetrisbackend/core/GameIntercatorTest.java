@@ -21,20 +21,20 @@ import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_PY
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 import static org.bexterlab.tetrisbackend.entity.Movement.*;
 
-class TrackHandlerTest {
+class GameIntercatorTest {
 
 
     private GameStoreFake gameStoreFake;
     private UserStoreFake userStoreFake;
     private TetrisStepFactoryFake tetrisStepFactoryFake;
-    private TrackHandler trackHandler;
+    private GameIntercator gameIntercator;
 
     @BeforeEach
     void setUp() {
         tetrisStepFactoryFake = new TetrisStepFactoryFake();
         gameStoreFake = new GameStoreFake();
         userStoreFake = new UserStoreFake();
-        trackHandler = new TrackHandler(gameStoreFake,
+        gameIntercator = new GameIntercator(gameStoreFake,
                 userStoreFake, tetrisStepFactoryFake,
                 LoggerFactory.getLogger("Tetris logger"));
     }
@@ -42,7 +42,7 @@ class TrackHandlerTest {
     @Test
     void rotateLeftTest() {
         gameStoreFake.game = createGame(ROTATE_LEFT);
-        trackHandler.maintenanceTracks();
+        gameIntercator.maintenanceTracks();
         Assertions.assertEquals(List.of("rotateLeft",
                         "moveDown",
                         "collideElement",
@@ -54,7 +54,7 @@ class TrackHandlerTest {
     @Test
     void rotateRightTest() {
         gameStoreFake.game = createGame(ROTATE_RIGHT);
-        trackHandler.maintenanceTracks();
+        gameIntercator.maintenanceTracks();
         Assertions.assertEquals(List.of("rotateRight",
                         "moveDown",
                         "collideElement",
@@ -66,7 +66,7 @@ class TrackHandlerTest {
     @Test
     void moveRightTest() {
         gameStoreFake.game = createGame(MOVE_RIGHT);
-        trackHandler.maintenanceTracks();
+        gameIntercator.maintenanceTracks();
         Assertions.assertEquals(List.of("moveRight",
                         "moveDown",
                         "collideElement",
@@ -78,7 +78,7 @@ class TrackHandlerTest {
     @Test
     void moveLeftTest() {
         gameStoreFake.game = createGame(MOVE_LEFT);
-        trackHandler.maintenanceTracks();
+        gameIntercator.maintenanceTracks();
         Assertions.assertEquals(List.of("moveLeft",
                         "moveDown",
                         "collideElement",
@@ -92,7 +92,7 @@ class TrackHandlerTest {
         tetrisStepFactoryFake.draw = LEFT_PYRAMID;
         tetrisStepFactoryFake.count = 10L;
         gameStoreFake.game = createGame(MOVE_LEFT, EMPTY, TetrisElement.SQUARE, TetrisElement.LEFT_L);
-        trackHandler.maintenanceTracks();
+        gameIntercator.maintenanceTracks();
         Assertions.assertEquals(List.of("moveLeft",
                         "moveDown",
                         "collideElement",

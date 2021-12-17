@@ -9,22 +9,22 @@ import java.util.concurrent.Future;
 
 import static java.util.Objects.isNull;
 
-public class AsyncGameHandler {
+public class AsyncGameRunnerInteractor {
 
     private final TrackSender trackSender;
     private final ExecutorService executor;
-    private final TrackHandler trackHandler;
+    private final GameIntercator gameIntercator;
     private final GameStore gameStore;
     private final Logger logger;
     private final Delayer delayer;
     private Future<Void> future;
 
-    public AsyncGameHandler(TrackSender trackSender, ExecutorService executor,
-                            TrackHandler trackHandler, GameStore gameStore,
-                            Logger logger, Delayer delayer) {
+    public AsyncGameRunnerInteractor(TrackSender trackSender, ExecutorService executor,
+                                     GameIntercator gameIntercator, GameStore gameStore,
+                                     Logger logger, Delayer delayer) {
         this.trackSender = trackSender;
         this.executor = executor;
-        this.trackHandler = trackHandler;
+        this.gameIntercator = gameIntercator;
         this.gameStore = gameStore;
         this.logger = logger;
         this.delayer = delayer;
@@ -53,7 +53,7 @@ public class AsyncGameHandler {
 
     private void runGame() {
         while (gameStore.hasGame()) {
-            trackHandler.maintenanceTracks();
+            gameIntercator.maintenanceTracks();
             gameStore.getGames().forEach(trackSender::sendTrackForUser);
             delayer.delay();
         }

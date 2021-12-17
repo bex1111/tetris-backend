@@ -23,13 +23,13 @@ public class MainConfiguration {
     }
 
     @Bean
-    public AsyncGameHandler asyncGameHandler(TrackHandler trackHandler,
-                                             StoreImpl store,
-                                             Logger logger,
-                                             WebsocketHandler trackSender
+    public AsyncGameRunnerInteractor asyncGameHandler(GameIntercator gameIntercator,
+                                                      StoreImpl store,
+                                                      Logger logger,
+                                                      WebsocketHandler trackSender
     ) {
-        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(),
-                trackHandler, store,
+        return new AsyncGameRunnerInteractor(trackSender, Executors.newSingleThreadExecutor(),
+                gameIntercator, store,
                 logger, new Delayer(500L, logger));
     }
 
@@ -47,8 +47,8 @@ public class MainConfiguration {
 
     @Bean
     public StartGameInteractorImpl startGameInteractor(StoreImpl store,
-                                                       AsyncGameHandler asyncGameHandler) {
-        return new StartGameInteractorImpl(store, store, asyncGameHandler);
+                                                       AsyncGameRunnerInteractor asyncGameRunnerInteractor) {
+        return new StartGameInteractorImpl(store, store, asyncGameRunnerInteractor);
     }
 
     @Bean
@@ -57,9 +57,9 @@ public class MainConfiguration {
     }
 
     @Bean
-    public TrackHandler trackHandler(StoreImpl store, Logger logger,
-                                     TetrisStepFactory tetrisStepFactory) {
-        return new TrackHandler(store, store, tetrisStepFactory, logger);
+    public GameIntercator trackHandler(StoreImpl store, Logger logger,
+                                       TetrisStepFactory tetrisStepFactory) {
+        return new GameIntercator(store, store, tetrisStepFactory, logger);
     }
 
     @Bean

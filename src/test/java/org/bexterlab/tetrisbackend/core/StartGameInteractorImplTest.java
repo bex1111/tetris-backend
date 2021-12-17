@@ -4,7 +4,7 @@ package org.bexterlab.tetrisbackend.core;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
-import org.bexterlab.tetrisbackend.core.mock.AsyncGameHandlerSpy;
+import org.bexterlab.tetrisbackend.core.mock.AsyncGameRunnerInteractorSpy;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
@@ -19,13 +19,13 @@ class StartGameInteractorImplTest {
     private GameStoreFake gameStore;
     private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
-    private AsyncGameHandlerSpy asyncGameHandler;
+    private AsyncGameRunnerInteractorSpy asyncGameHandler;
 
     @BeforeEach
     void setUp() {
         gameStore = new GameStoreFake();
         userStore = new UserStoreFake();
-        asyncGameHandler = new AsyncGameHandlerSpy();
+        asyncGameHandler = new AsyncGameRunnerInteractorSpy();
         startGameInteractor = new StartGameInteractorImpl(gameStore, userStore, asyncGameHandler);
     }
 

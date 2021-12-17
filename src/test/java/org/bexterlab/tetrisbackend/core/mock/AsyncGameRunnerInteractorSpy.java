@@ -1,12 +1,12 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
-import org.bexterlab.tetrisbackend.core.AsyncGameHandler;
+import org.bexterlab.tetrisbackend.core.AsyncGameRunnerInteractor;
 
-public class AsyncGameHandlerSpy extends AsyncGameHandler {
+public class AsyncGameRunnerInteractorSpy extends AsyncGameRunnerInteractor {
 
     public boolean isStartGameCalled;
 
-    public AsyncGameHandlerSpy() {
+    public AsyncGameRunnerInteractorSpy() {
         super(null, null, null, null, null, null);
     }
 

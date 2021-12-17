@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
-public class TrackHandler {
+public class GameIntercator {
 
     private final GameStore gameStore;
     private final UserStore userStore;
@@ -19,8 +19,8 @@ public class TrackHandler {
     private final Logger logger;
 
 
-    public TrackHandler(GameStore gameStore, UserStore userStore,
-                        TetrisStepFactory tetrisStepFactory, Logger logger) {
+    public GameIntercator(GameStore gameStore, UserStore userStore,
+                          TetrisStepFactory tetrisStepFactory, Logger logger) {
         this.gameStore = gameStore;
         this.userStore = userStore;
         this.tetrisStepFactory = tetrisStepFactory;
@@ -48,11 +48,11 @@ public class TrackHandler {
         track = tetrisStepFactory.collideElement(track);
         track = tetrisStepFactory.clearFullRow(track);
         if (isNotTetrisElementInTheTrack(track)) {
+            userStore.storePoint(game, tetrisStepFactory.countPoints(track));
             track = tetrisStepFactory.spawnNewElement(track, game.tetrisElements().next());
             TetrisElement tetrisElement =
                     tetrisStepFactory.drawTetrisElement();
             game = gameStore.storeNewTetrisElement(game, tetrisElement);
-            userStore.storePoint(game, tetrisStepFactory.countPoints(track));
         }
         gameStore.storeNewTrack(game, track);
         logTrackForDevelop(game);
