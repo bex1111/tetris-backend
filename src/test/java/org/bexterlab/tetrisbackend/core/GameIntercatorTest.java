@@ -36,7 +36,7 @@ class GameIntercatorTest {
         userStoreFake = new UserStoreFake();
         gameIntercator = new GameIntercator(gameStoreFake,
                 userStoreFake, tetrisStepFactoryFake,
-                LoggerFactory.getLogger("Tetris logger"));
+                LoggerFactory.getLogger("Tetris logger"), 1);
     }
 
     @Test
@@ -97,16 +97,36 @@ class GameIntercatorTest {
                         "moveDown",
                         "collideElement",
                         "clearFullRow",
+                        "countPoints",
                         "spawnNewElement",
-                        "drawTetrisElement",
-                        "countPoints"
+                        "drawTetrisElement"
                 ),
                 tetrisStepFactoryFake.steps);
         Assertions.assertEquals(tetrisStepFactoryFake.spawnNewTetrisElement, LEFT_L);
         Assertions.assertEquals(tetrisStepFactoryFake.draw, gameStoreFake.tetrisNewElement);
         Assertions.assertEquals(userStoreFake.game, gameStoreFake.game);
         Assertions.assertEquals(tetrisStepFactoryFake.count, userStoreFake.point);
+    }
 
+    @Test
+    void endGameTest() {
+        tetrisStepFactoryFake.draw = LEFT_PYRAMID;
+        tetrisStepFactoryFake.count = 10L;
+        gameStoreFake.game = createGame(MOVE_LEFT, EMPTY, TetrisElement.SQUARE, TetrisElement.LEFT_L);
+        gameIntercator.maintenanceTracks();
+        Assertions.assertEquals(List.of("moveLeft",
+                        "moveDown",
+                        "collideElement",
+                        "clearFullRow",
+                        "countPoints",
+                        "spawnNewElement",
+                        "drawTetrisElement"
+                ),
+                tetrisStepFactoryFake.steps);
+        Assertions.assertEquals(tetrisStepFactoryFake.spawnNewTetrisElement, LEFT_L);
+        Assertions.assertEquals(tetrisStepFactoryFake.draw, gameStoreFake.tetrisNewElement);
+        Assertions.assertEquals(userStoreFake.game, gameStoreFake.game);
+        Assertions.assertEquals(tetrisStepFactoryFake.count, userStoreFake.point);
     }
 
     private Game createGame(Movement movement) {

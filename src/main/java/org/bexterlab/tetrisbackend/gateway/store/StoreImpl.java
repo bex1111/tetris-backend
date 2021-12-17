@@ -11,13 +11,16 @@ import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class StoreImpl implements GameStore, MovementStore, UserStore {
 
-    private final List<Game> gameList;
+    private final CopyOnWriteArrayList<Game> gameList;
+    private final CopyOnWriteArrayList<User> scoreBoard;
 
-    public StoreImpl(List<Game> gameList) {
+    public StoreImpl(CopyOnWriteArrayList<Game> gameList, CopyOnWriteArrayList<User> scoreBoard) {
         this.gameList = gameList;
+        this.scoreBoard = scoreBoard;
     }
 
     @Override
@@ -62,6 +65,11 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
+    public void removeGame(Game game) {
+        gameList.remove(game);
+    }
+
+    @Override
     public boolean hasGameWithUserAndToken(String username, String token) {
         return gameList.stream()
                 .anyMatch(x -> x.user().username().equals(username) &&
@@ -79,6 +87,11 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
                 game.movementQueue(),
                 game.tetrisElements()));
         gameList.remove(game);
+    }
+
+    @Override
+    public void addPlayerIntoScoreBoard(User user) {
+        scoreBoard.add(user);
     }
 
     @Override

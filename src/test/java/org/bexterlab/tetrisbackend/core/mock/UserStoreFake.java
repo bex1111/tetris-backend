@@ -2,6 +2,7 @@ package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.UserStore;
 import org.bexterlab.tetrisbackend.entity.Game;
+import org.bexterlab.tetrisbackend.entity.User;
 
 public class UserStoreFake implements UserStore {
     public boolean hasGameWithUser = false;
@@ -27,5 +28,10 @@ public class UserStoreFake implements UserStore {
     public void storePoint(Game game, Long point) {
         this.game = game;
         this.point = point;
+    }
+
+    @Override
+    public void addPlayerIntoScoreBoard(User user) {
+        
     }
 }

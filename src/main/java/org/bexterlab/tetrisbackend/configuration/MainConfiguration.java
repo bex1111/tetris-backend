@@ -59,12 +59,14 @@ public class MainConfiguration {
     @Bean
     public GameIntercator trackHandler(StoreImpl store, Logger logger,
                                        TetrisStepFactory tetrisStepFactory) {
-        return new GameIntercator(store, store, tetrisStepFactory, logger);
+        //TOdo dead row index from config
+        return new GameIntercator(store, store, tetrisStepFactory, logger, 3);
     }
 
     @Bean
     public StoreImpl gameStore() {
-        return new StoreImpl(new CopyOnWriteArrayList<>());
+        return new StoreImpl(new CopyOnWriteArrayList<>(),
+                new CopyOnWriteArrayList<>());
     }
 
     @Bean

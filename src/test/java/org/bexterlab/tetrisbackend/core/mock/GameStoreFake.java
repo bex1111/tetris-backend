@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GameStoreFake implements GameStore {
 
- 
+
     public boolean hasGame = false;
     public Game game;
     public TetrisElement tetrisNewElement;
@@ -38,5 +38,10 @@ public class GameStoreFake implements GameStore {
     @Override
     public boolean hasGame() {
         return hasGame;
+    }
+
+    @Override
+    public void removeGame(Game game) {
+
     }
 }

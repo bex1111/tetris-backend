@@ -17,14 +17,16 @@ public class GameIntercator {
     private final UserStore userStore;
     private final TetrisStepFactory tetrisStepFactory;
     private final Logger logger;
+    private final int deadRowIndex;
 
 
     public GameIntercator(GameStore gameStore, UserStore userStore,
-                          TetrisStepFactory tetrisStepFactory, Logger logger) {
+                          TetrisStepFactory tetrisStepFactory, Logger logger, int deadRowIndex) {
         this.gameStore = gameStore;
         this.userStore = userStore;
         this.tetrisStepFactory = tetrisStepFactory;
         this.logger = logger;
+        this.deadRowIndex = deadRowIndex;
     }
 
     public void maintenanceTracks() {
@@ -54,8 +56,16 @@ public class GameIntercator {
                     tetrisStepFactory.drawTetrisElement();
             game = gameStore.storeNewTetrisElement(game, tetrisElement);
         }
+        if (isGameFinish(track)) {
+            gameStore.removeGame(game);
+            userStore.addPlayerIntoScoreBoard(game.user());
+        }
         gameStore.storeNewTrack(game, track);
         logTrackForDevelop(game);
+    }
+
+    private boolean isGameFinish(TrackElement[][] track) {
+        return Arrays.stream(track[deadRowIndex]).anyMatch(y -> y == TrackElement.POINT);
     }
 
     //Todo delete me
@@ -89,6 +99,7 @@ public class GameIntercator {
                                 .noneMatch(column -> column.isNotFix));
     }
 
+    //Fixme refact me
     private TrackElement[][] controlElement(ConcurrentLinkedQueue<Movement> movements, TrackElement[][] track) {
         if (!movements.isEmpty()) {
             switch (movements.poll()) {
@@ -103,6 +114,9 @@ public class GameIntercator {
                 }
                 case MOVE_LEFT -> {
                     return tetrisStepFactory.moveLeft(track);
+                }
+                case null -> {
+                    //Do nothing
                 }
                 default -> throw new AssertionError("Not implemented movement");
             }

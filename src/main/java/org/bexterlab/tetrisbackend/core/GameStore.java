@@ -16,4 +16,6 @@ public interface GameStore {
     void storeNewTrack(Game game, TrackElement[][] track);
 
     boolean hasGame();
+
+    void removeGame(Game game);
 }

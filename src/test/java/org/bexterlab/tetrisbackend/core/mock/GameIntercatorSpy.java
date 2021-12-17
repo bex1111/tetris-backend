@@ -10,7 +10,7 @@ public class GameIntercatorSpy extends GameIntercator {
 
     public GameIntercatorSpy() {
         super(null, null,
-                null, null);
+                null, null, 0);
     }
 
     @Override
