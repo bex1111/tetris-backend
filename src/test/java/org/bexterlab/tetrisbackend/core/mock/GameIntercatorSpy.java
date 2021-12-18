@@ -10,7 +10,7 @@ public class GameIntercatorSpy extends GameIntercator {
 
     public GameIntercatorSpy() {
         super(null, null,
-                null, null, 0);
+                gameEndSteps, null, notTetrisElementInTrackSteps, null, 0, baseSteps);
     }
 
     @Override

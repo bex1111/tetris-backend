@@ -60,7 +60,7 @@ public class MainConfiguration {
     public GameIntercator trackHandler(StoreImpl store, Logger logger,
                                        TetrisStepFactory tetrisStepFactory) {
         //TOdo dead row index from config
-        return new GameIntercator(store, store, tetrisStepFactory, logger, 3);
+        return new GameIntercator(store, store, gameEndSteps, tetrisStepFactory, notTetrisElementInTrackSteps, logger, 3, baseSteps);
     }
 
     @Bean

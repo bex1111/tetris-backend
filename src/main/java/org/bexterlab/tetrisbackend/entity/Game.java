@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.entity;
 
+import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.concurrent.ConcurrentLinkedQueue;

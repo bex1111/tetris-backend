@@ -4,12 +4,12 @@ import org.bexterlab.tetrisbackend.core.exception.NotYourGameException;
 import org.bexterlab.tetrisbackend.core.exception.TooManyMovementException;
 import org.bexterlab.tetrisbackend.core.mock.MovementStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
-import org.bexterlab.tetrisbackend.entity.Movement;
+import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.bexterlab.tetrisbackend.entity.Movement.MOVE_LEFT;
+import static org.bexterlab.tetrisbackend.core.move.Movement.MOVE_LEFT;
 
 class ControlInteractorImplTest {
 

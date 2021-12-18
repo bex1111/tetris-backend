@@ -4,9 +4,9 @@ import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.TetrisStepFactoryFake;
 import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
+import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
-import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +18,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_L;
 import static org.bexterlab.tetrisbackend.core.maintenance.TetrisElement.LEFT_PYRAMID;
+import static org.bexterlab.tetrisbackend.core.move.Movement.*;
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.entity.Movement.*;
 
 class GameIntercatorTest {
 
@@ -35,8 +35,8 @@ class GameIntercatorTest {
         gameStoreFake = new GameStoreFake();
         userStoreFake = new UserStoreFake();
         gameIntercator = new GameIntercator(gameStoreFake,
-                userStoreFake, tetrisStepFactoryFake,
-                LoggerFactory.getLogger("Tetris logger"), 1);
+                userStoreFake, gameEndSteps, tetrisStepFactoryFake,
+                notTetrisElementInTrackSteps, LoggerFactory.getLogger("Tetris logger"), 1, baseSteps);
     }
 
     @Test
