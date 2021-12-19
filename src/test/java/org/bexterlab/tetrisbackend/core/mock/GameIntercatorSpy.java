@@ -9,8 +9,8 @@ public class GameIntercatorSpy extends GameIntercator {
     public AtomicInteger maintenanceCallCount = new AtomicInteger(0);
 
     public GameIntercatorSpy() {
-        super(null, null,
-                gameEndSteps, null, notTetrisElementInTrackSteps, null, 0, baseSteps);
+        super(null, null, null,
+                null, null);
     }
 
     @Override

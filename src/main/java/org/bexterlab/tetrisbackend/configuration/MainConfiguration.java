@@ -2,6 +2,9 @@ package org.bexterlab.tetrisbackend.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bexterlab.tetrisbackend.core.*;
+import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
+import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
+import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
 import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
@@ -58,10 +61,32 @@ public class MainConfiguration {
 
     @Bean
     public GameIntercator trackHandler(StoreImpl store, Logger logger,
-                                       TetrisStepFactory tetrisStepFactory) {
-        //TOdo dead row index from config
-        return new GameIntercator(store, store, gameEndSteps, tetrisStepFactory, notTetrisElementInTrackSteps, logger, 3, baseSteps);
+                                       GameEndSteps gameEndSteps,
+                                       BaseSteps baseSteps,
+                                       NotTetrisElementInTrackSteps notTetrisElementInTrackSteps) {
+        return new GameIntercator(store, gameEndSteps,
+                notTetrisElementInTrackSteps, baseSteps,
+                logger);
     }
+
+    @Bean
+    public BaseSteps baseSteps(StoreImpl store,
+                               TetrisStepFactory tetrisStepFactory) {
+        return new BaseSteps(tetrisStepFactory, store);
+    }
+
+    @Bean
+    public GameEndSteps gameEndSteps(StoreImpl store) {
+        return new GameEndSteps(store, store, 3);
+    }
+
+    @Bean
+    public NotTetrisElementInTrackSteps notTetrisElementInTrackSteps(StoreImpl store,
+                                                                     TetrisStepFactory tetrisStepFactory) {
+        return new NotTetrisElementInTrackSteps(tetrisStepFactory, store, store);
+    }
+
+    //TOdo dead row index from config
 
     @Bean
     public StoreImpl gameStore() {

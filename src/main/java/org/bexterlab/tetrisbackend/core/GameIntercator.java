@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 
 public class GameIntercator {
 
-    private final GameStore gameStore;
     private final UserStore userStore;
     private final GameEndSteps gameEndSteps;
     private final NotTetrisElementInTrackSteps notTetrisElementInTrackSteps;
@@ -16,12 +15,11 @@ public class GameIntercator {
     private final BaseSteps baseSteps;
 
 
-    public GameIntercator(GameStore gameStore, UserStore userStore,
+    public GameIntercator(UserStore userStore,
                           GameEndSteps gameEndSteps,
                           NotTetrisElementInTrackSteps notTetrisElementInTrackSteps,
-                          Logger logger,
-                          BaseSteps baseSteps) {
-        this.gameStore = gameStore;
+                          BaseSteps baseSteps,
+                          Logger logger) {
         this.userStore = userStore;
         this.gameEndSteps = gameEndSteps;
         this.baseSteps = baseSteps;
