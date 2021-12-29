@@ -14,6 +14,7 @@ public class NotTetrisElementInTrackSteps {
     private final GameStore gameStore;
     private final UserStore userStore;
 
+    //FIXME test me
     public NotTetrisElementInTrackSteps(TetrisStepFactory tetrisStepFactory,
                                         GameStore gameStore, UserStore userStore) {
         this.tetrisStepFactory = tetrisStepFactory;

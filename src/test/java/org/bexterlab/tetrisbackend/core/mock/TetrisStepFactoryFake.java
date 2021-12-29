@@ -13,6 +13,10 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     public TetrisElement draw;
     public TetrisElement spawnNewTetrisElement;
     public Long count;
+    public TrackElement[][] rotateLeftTrackElement, rotateRightTrackElement,
+            moveLeftTrackElement, moveRightTrackElement,
+            moveDownTrackElement, collideElementTrackElement,
+            clearFullRowTrackElement, spawnNewElementTrackElement;
 
     public TetrisStepFactoryFake() {
         this.steps = new ArrayList<>();
@@ -20,72 +24,60 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
 
     @Override
     public TrackElement[][] rotateLeft(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.rotateLeftTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] rotateRight(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.rotateRightTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] moveLeft(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.moveLeftTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] moveRight(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.moveRightTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] moveDown(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.moveDownTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] collideElement(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.collideElementTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] clearFullRow(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
+        this.clearFullRowTrackElement = track;
         return track;
     }
 
     @Override
     public TrackElement[][] spawnNewElement(TrackElement[][] track, TetrisElement tetrisElement) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        spawnNewTetrisElement = tetrisElement;
+        this.spawnNewTetrisElement = tetrisElement;
+        this.spawnNewElementTrackElement = track;
         return track;
     }
 
     @Override
     public TetrisElement drawTetrisElement() {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
         return draw;
     }
 
     @Override
     public Long countPoints(TrackElement[][] track) {
-        steps.add(this.getClass().getSimpleName() + "|" + new Object() {
-        }.getClass().getEnclosingMethod().getName());
         return count;
     }
 }

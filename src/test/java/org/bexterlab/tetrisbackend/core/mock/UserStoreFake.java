@@ -14,6 +14,7 @@ public class UserStoreFake implements UserStore {
     public String token;
     public Long point;
     public Game game;
+    public String addPlayerIntoScoreBoardUsername;
 
     @Override
     public boolean hasGameWithUser(String username) {
@@ -50,6 +51,6 @@ public class UserStoreFake implements UserStore {
 
     @Override
     public void addPlayerIntoScoreBoard(String username) {
-
+        this.addPlayerIntoScoreBoardUsername = username;
     }
 }

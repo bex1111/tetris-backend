@@ -26,6 +26,9 @@ public class BaseSteps {
 
     private TrackElement[][] controlElement(TrackElement[][] track, Movement movement) {
         switch (movement) {
+            case null -> {
+                return track;
+            }
             case ROTATE_RIGHT -> {
                 return tetrisStepFactory.rotateRight(track);
             }
