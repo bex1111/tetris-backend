@@ -13,11 +13,12 @@ public class GameStoreFake implements GameStore {
 
     public boolean hasGame = false;
     public Game game;
-    public TetrisElement tetrisNewElement;
+    public TetrisElement storeNewTetrisElement, findNextTetrisElement;
     public Movement findNextMovement;
     public TrackElement[][] findTrackByUser, storeNewTrack;
     public String findTrackByUserUsername, findNextMovementUsername,
-            storeNewTrackUsername, removeGameUsername;
+            storeNewTrackUsername, removeGameUsername,
+            findNextTetrisElementUsername, storeNewTetrisElementUsername;
 
     @Override
     public void createNewGame(Game game) {
@@ -30,19 +31,9 @@ public class GameStoreFake implements GameStore {
     }
 
     @Override
-    public Game storeNewTetrisElement(Game game, TetrisElement tetrisElement) {
-        this.tetrisNewElement = tetrisElement;
-        return game;
-    }
-
-    @Override
     public void storeNewTetrisElement(String username, TetrisElement tetrisElement) {
-
-    }
-
-    @Override
-    public void storeNewTrack(Game game, TrackElement[][] track) {
-
+        this.storeNewTetrisElementUsername = username;
+        this.storeNewTetrisElement = tetrisElement;
     }
 
     @Override
@@ -54,11 +45,6 @@ public class GameStoreFake implements GameStore {
     @Override
     public boolean hasGame() {
         return hasGame;
-    }
-
-    @Override
-    public void removeGame(Game game) {
-
     }
 
     @Override
@@ -80,6 +66,7 @@ public class GameStoreFake implements GameStore {
 
     @Override
     public TetrisElement findNextTetrisElement(String username) {
-        return null;
+        this.findNextTetrisElementUsername = username;
+        return findNextTetrisElement;
     }
 }

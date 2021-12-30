@@ -3,7 +3,6 @@ package org.bexterlab.tetrisbackend.core.steps;
 import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.UserStore;
-import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.Arrays;
@@ -28,9 +27,7 @@ public class NotTetrisElementInTrackSteps {
             userStore.storePoint(username, tetrisStepFactory.countPoints(track));
             track = tetrisStepFactory.spawnNewElement(track, gameStore.findNextTetrisElement(username));
             gameStore.storeNewTrack(username, track);
-            TetrisElement tetrisElement =
-                    tetrisStepFactory.drawTetrisElement();
-            gameStore.storeNewTetrisElement(username, tetrisElement);
+            gameStore.storeNewTetrisElement(username, tetrisStepFactory.drawTetrisElement());
         }
     }
 

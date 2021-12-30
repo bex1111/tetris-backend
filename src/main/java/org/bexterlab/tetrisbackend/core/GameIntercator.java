@@ -35,17 +35,13 @@ public class GameIntercator {
 
     private void maintenanceTrack(String username) {
         try {
-            doSteps(username);
+            baseSteps.execute(username);
+            notTetrisElementInTrackSteps.execute(username);
+            gameEndSteps.execute(username);
         } catch (CoreException e) {
             logger.debug("Core exception occurred while maintenance track: ", e);
         } catch (Exception e) {
             logger.error("Exception occurred while maintenance track: ", e);
         }
-    }
-
-    private void doSteps(String username) {
-        baseSteps.execute(username);
-        notTetrisElementInTrackSteps.execute(username);
-        gameEndSteps.execute(username);
     }
 }

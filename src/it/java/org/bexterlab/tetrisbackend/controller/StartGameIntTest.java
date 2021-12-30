@@ -18,9 +18,13 @@ import static org.springframework.http.HttpStatus.OK;
 
 class StartGameIntTest {
 
-    public static final String UUID_REGEXP = "[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$";
-    private final RestTemplate restTemplate = new RestTemplate();
+    private final RestTemplate restTemplate;
+
     private ConfigurableApplicationContext configurableApplicationContext;
+
+    public StartGameIntTest() {
+        this.restTemplate = new RestTemplate();
+    }
 
     @BeforeEach
     void setUp() {
@@ -37,6 +41,7 @@ class StartGameIntTest {
         ResponseEntity<String> responseEntity =
                 callStartGameWithTestUser();
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
+        Assertions.assertNotNull(responseEntity.getBody());
         Assertions.assertDoesNotThrow(() -> UUID.fromString(responseEntity.getBody()), responseEntity.getBody());
     }
 

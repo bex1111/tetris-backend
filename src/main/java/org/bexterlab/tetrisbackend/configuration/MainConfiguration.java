@@ -1,6 +1,7 @@
 package org.bexterlab.tetrisbackend.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bexterlab.tetrisbackend.controller.ControlInteractor;
 import org.bexterlab.tetrisbackend.core.*;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
@@ -87,7 +88,6 @@ public class MainConfiguration {
     }
 
     //TOdo dead row index from config
-
     @Bean
     public StoreImpl gameStore() {
         return new StoreImpl(new CopyOnWriteArrayList<>(),
@@ -97,6 +97,11 @@ public class MainConfiguration {
     @Bean
     public ObjectMapper objectMapper() {
         return new Jackson2ObjectMapperBuilder().createXmlMapper(false).build();
+    }
+
+    @Bean
+    public ControlInteractor controlInteractor(MovementStore movementStore, UserStore userStore) {
+        return new ControlInteractorImpl(movementStore, userStore);
     }
 
 }

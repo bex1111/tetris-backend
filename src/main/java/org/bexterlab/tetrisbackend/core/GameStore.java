@@ -8,21 +8,16 @@ import org.bexterlab.tetrisbackend.entity.Game;
 import java.util.List;
 
 public interface GameStore {
+
     void createNewGame(Game game);
 
     List<Game> getGames();
 
-    Game storeNewTetrisElement(Game game, TetrisElement tetrisElement);
-
     void storeNewTetrisElement(String username, TetrisElement tetrisElement);
-
-    void storeNewTrack(Game game, TrackElement[][] track);
 
     void storeNewTrack(String username, TrackElement[][] track);
 
     boolean hasGame();
-
-    void removeGame(Game game);
 
     void removeGame(String username);
 

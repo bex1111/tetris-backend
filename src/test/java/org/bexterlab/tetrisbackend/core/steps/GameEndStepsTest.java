@@ -13,38 +13,38 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.POINT;
 class GameEndStepsTest {
 
 
-    private GameStoreFake gameStore;
+    private GameStoreFake gameStoreFake;
     private GameEndSteps gameEndSteps;
     private String username;
-    private UserStoreFake userStore;
+    private UserStoreFake userStoreFake;
 
     @BeforeEach
     void setUp() {
         this.username = "test";
-        this.gameStore = new GameStoreFake();
-        this.userStore = new UserStoreFake();
-        this.gameEndSteps = new GameEndSteps(gameStore, userStore, 0);
+        this.gameStoreFake = new GameStoreFake();
+        this.userStoreFake = new UserStoreFake();
+        this.gameEndSteps = new GameEndSteps(gameStoreFake, userStoreFake, 0);
     }
 
     @Test
     void notFinishTest() {
-        gameStore.findTrackByUser = new TrackElement[][]{
+        gameStoreFake.findTrackByUser = new TrackElement[][]{
                 new TrackElement[]{EMPTY}
         };
         gameEndSteps.execute(username);
-        Assertions.assertEquals(username, gameStore.findTrackByUserUsername);
-        Assertions.assertNull(gameStore.removeGameUsername);
-        Assertions.assertNull(userStore.addPlayerIntoScoreBoardUsername);
+        Assertions.assertEquals(username, gameStoreFake.findTrackByUserUsername);
+        Assertions.assertNull(gameStoreFake.removeGameUsername);
+        Assertions.assertNull(userStoreFake.addPlayerIntoScoreBoardUsername);
     }
 
     @Test
     void finishTest() {
-        gameStore.findTrackByUser = new TrackElement[][]{
+        gameStoreFake.findTrackByUser = new TrackElement[][]{
                 new TrackElement[]{POINT}
         };
         gameEndSteps.execute(username);
-        Assertions.assertEquals(username, gameStore.findTrackByUserUsername);
-        Assertions.assertEquals(username, gameStore.removeGameUsername);
-        Assertions.assertEquals(username, userStore.addPlayerIntoScoreBoardUsername);
+        Assertions.assertEquals(username, gameStoreFake.findTrackByUserUsername);
+        Assertions.assertEquals(username, gameStoreFake.removeGameUsername);
+        Assertions.assertEquals(username, userStoreFake.addPlayerIntoScoreBoardUsername);
     }
 }

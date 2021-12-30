@@ -54,7 +54,7 @@ class ControlInteractorImplTest {
         controlInteractor.addMovement(username, token, moveLeft);
         Assertions.assertEquals(username, movementStore.username);
         Assertions.assertEquals(moveLeft, movementStore.movement);
-        Assertions.assertEquals(username, userStore.username);
+        Assertions.assertEquals(username, userStore.hasGameWithUserAndTokenUsername);
         Assertions.assertEquals(token, userStore.token);
     }
 }

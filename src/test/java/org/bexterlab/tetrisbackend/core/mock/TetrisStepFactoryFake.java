@@ -16,7 +16,8 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     public TrackElement[][] rotateLeftTrackElement, rotateRightTrackElement,
             moveLeftTrackElement, moveRightTrackElement,
             moveDownTrackElement, collideElementTrackElement,
-            clearFullRowTrackElement, spawnNewElementTrackElement;
+            clearFullRowTrackElement, spawnNewElementTrackElement,
+            countPointsTrackElement;
 
     public TetrisStepFactoryFake() {
         this.steps = new ArrayList<>();
@@ -78,6 +79,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
 
     @Override
     public Long countPoints(TrackElement[][] track) {
+        this.countPointsTrackElement = track;
         return count;
     }
 }
