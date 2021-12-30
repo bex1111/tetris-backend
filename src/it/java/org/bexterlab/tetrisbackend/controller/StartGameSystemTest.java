@@ -16,13 +16,13 @@ import java.util.UUID;
 
 import static org.springframework.http.HttpStatus.OK;
 
-class StartGameIntTest {
+class StartGameSystemTest {
 
     private final RestTemplate restTemplate;
 
     private ConfigurableApplicationContext configurableApplicationContext;
 
-    public StartGameIntTest() {
+    public StartGameSystemTest() {
         this.restTemplate = new RestTemplate();
     }
 
