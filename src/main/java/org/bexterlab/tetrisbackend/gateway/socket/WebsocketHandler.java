@@ -43,11 +43,11 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        if (isNull(session.getHandshakeHeaders().get("x-user-name"))) {
-            throw new IllegalArgumentException("x-user-name headers required");
+        if (isNull(session.getHandshakeHeaders().get("x-username"))) {
+            throw new IllegalArgumentException("x-username headers required");
         }
         SocketDto socketDto = new SocketDto(String.join("",
-                session.getHandshakeHeaders().get("x-user-name")),
+                session.getHandshakeHeaders().get("x-username")),
                 session.getId(), session);
         logger.info("Connected ... " + socketDto);
         socketDtoList.add(socketDto);
@@ -62,7 +62,7 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
 
     private void sendMessage(String text, SocketDto socketDto) {
         try {
-            TextMessage textMessage = new TextMessage(text);
+            TextMessage textMessage = new TextMessage(text, true);
             socketDto.webSocketSession().sendMessage(textMessage);
         } catch (IOException e) {
             logger.error("Error occurred while send socket message:", e);

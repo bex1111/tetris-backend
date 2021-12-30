@@ -30,28 +30,4 @@ public class GameEndSteps {
     private boolean isGameFinish(TrackElement[][] track) {
         return Arrays.stream(track[deadRowIndex]).anyMatch(y -> y == TrackElement.POINT);
     }
-
-//    //Todo delete me
-//    private void logTrackForDevelop(TrackElement[][] track) {
-//        logger.info("\n" + "-".repeat(track.length) + "\n" +
-//                Arrays.stream(track)
-//                        .map(row -> Arrays.stream(row)
-//                                .map(column -> {
-//                                            switch (column) {
-//                                                case POINT -> {
-//                                                    return "P";
-//                                                }
-//                                                case EMPTY -> {
-//                                                    return " ";
-//                                                }
-//                                                default -> {
-//                                                    return "X";
-//                                                }
-//                                            }
-//                                        }
-//                                )
-//                                .collect(Collectors.joining(" ")))
-//                        .collect(Collectors.joining("|\n")) +
-//                "\n" + "-".repeat(track.length) + "\n");
-//    }
 }
