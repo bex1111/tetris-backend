@@ -11,6 +11,7 @@ import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
 import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -30,9 +31,10 @@ public class MainConfiguration {
     public AsyncGameRunnerInteractor asyncGameHandler(GameIntercator gameIntercator,
                                                       StoreImpl store,
                                                       Logger logger,
-                                                      WebsocketHandler trackSender
-    ) {
-        return new AsyncGameRunnerInteractor(trackSender, Executors.newSingleThreadExecutor(),
+                                                      WebsocketHandler trackSender,
+                                                      @Value("tetris.gameTickTime") Long gameTickTime) {
+        return new AsyncGameRunnerInteractor(trackSender,
+                Executors.newSingleThreadExecutor(),
                 gameIntercator, store,
                 logger, new Delayer(500L, logger));
     }

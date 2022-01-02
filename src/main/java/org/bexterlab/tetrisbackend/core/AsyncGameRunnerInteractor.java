@@ -54,7 +54,7 @@ public class AsyncGameRunnerInteractor {
     private void runGame() {
         while (gameStore.hasGame()) {
             gameIntercator.maintenanceTracks();
-            gameStore.getGames().forEach(trackSender::sendTrackForUser);
+            trackSender.sendTrackForUser(gameStore.getGames());
             delayer.delay();
         }
     }

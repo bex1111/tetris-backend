@@ -13,6 +13,7 @@ public abstract class BaseSideMover {
         return Arrays.stream(track).map(TrackElement[]::clone).toArray(x -> track.clone());
     }
 
+    //TODO jobbra nem jól megy
     private TrackElement[][] moveToSide(TrackElement[][] track, int direction) {
         TrackElement[][] movedTrack = deepCopy(track);
         for (int i = 0; i < movedTrack.length; i++) {

@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend;
 
+import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.gamer.GamerAppRunner;
 import org.bexterlab.tetrisbackend.helper.RestHelper;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,9 @@ public class PlayTetrisSystemTest {
         TetrisAppRunner tetrisAppRunner = new TetrisAppRunner();
         GamerAppRunner gamerAppRunner = new GamerAppRunner();
         RestHelper restHelper = new RestHelper();
-        restHelper.callStartGameWithTestUser(TEST_USER);
-        Thread.sleep(10000);
+        String token = restHelper.callStartGameWithTestUser(TEST_USER);
+        restHelper.callControlWithTestUserAndToken(TEST_USER, token, Movement.ROTATE_LEFT);
+        restHelper.callControlWithTestUserAndToken(TEST_USER, token, Movement.MOVE_RIGHT);
+        Thread.sleep(100000);
     }
 }

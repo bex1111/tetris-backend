@@ -6,18 +6,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.util.concurrent.ListenableFuture;
-import org.springframework.web.socket.WebSocketHttpHeaders;
-import org.springframework.web.socket.client.WebSocketClient;
-import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
 
-import java.util.concurrent.ExecutionException;
-
-import static org.bexterlab.tetrisbackend.TestConstants.TEST_USER;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Configuration
 @Profile("Gamer")
@@ -33,35 +25,13 @@ public class GamerAppConfig {
         return LoggerFactory.getLogger("Gamer App Logger");
     }
 
+    //TODO event kezelés
     @Bean
-    public GamerAppStompSessionHandler gamerAppWebsocketHandler(Logger gamerAppLogger, ObjectMapper gamerAppObjectMapper) {
-        return new GamerAppStompSessionHandler(gamerAppLogger, gamerAppObjectMapper);
+    public WebsocketClientEndpoint websocketClientEndpoint(ObjectMapper gamerAppObjectMapper,
+                                                           Logger gamerAppLogger) throws URISyntaxException {
+        return new WebsocketClientEndpoint(
+                new URI("ws://localhost:8080/tetris"),
+                gamerAppObjectMapper,
+                gamerAppLogger);
     }
-
-    @Bean
-    public WebSocketClient webSocketClient() {
-        return new StandardWebSocketClient();
-    }
-
-    @Bean
-    public WebSocketStompClient webSocketStompClient(WebSocketClient webSocketClient,
-                                                     GamerAppStompSessionHandler gamerAppStompSessionHandler) throws ExecutionException, InterruptedException {
-        WebSocketStompClient stompClient = new WebSocketStompClient(webSocketClient);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("x-username", TEST_USER);
-        WebSocketHttpHeaders webSocketHttpHeaders = new WebSocketHttpHeaders(httpHeaders);
-
-        ListenableFuture<StompSession> stompSessionListenableFuture = stompClient.connect("ws://localhost:8080/tetris",
-                webSocketHttpHeaders,
-                gamerAppStompSessionHandler);
-        stompClient.setAutoStartup(true);
-        stompSessionListenableFuture.addCallback(
-                stompSession -> stompSession.subscribe("/tetris", gamerAppStompSessionHandler),
-                Throwable::printStackTrace);
-        stompClient.start();
-        return stompClient;
-    }
-
-
 }
