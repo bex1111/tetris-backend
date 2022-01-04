@@ -114,4 +114,21 @@ class LeftRotatorTest {
         }));
     }
 
+
+    @Test
+    void rotateRotateRightThreeLongCollideElementTest() {
+        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_DOWN_LEFT, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY},
+                new TrackElement[]{POINT, EMPTY, EMPTY}
+        });
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, EMPTY, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
+                new TrackElement[]{EMPTY, EMPTY, THREE_LONG_ELEMENT_DOWN_RIGHT},
+                new TrackElement[]{POINT, EMPTY, EMPTY}
+        };
+        assertTwoTrack(actualTrack, expectedTrack);
+    }
 }

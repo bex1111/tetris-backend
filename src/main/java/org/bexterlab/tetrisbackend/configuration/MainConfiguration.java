@@ -32,7 +32,7 @@ public class MainConfiguration {
                                                       StoreImpl store,
                                                       Logger logger,
                                                       WebsocketHandler trackSender,
-                                                      @Value("tetris.gameTickTime") Long gameTickTime) {
+                                                      @Value("${tetris.gameTickTime}") Long gameTickTime) {
         return new AsyncGameRunnerInteractor(trackSender,
                 Executors.newSingleThreadExecutor(),
                 gameIntercator, store,

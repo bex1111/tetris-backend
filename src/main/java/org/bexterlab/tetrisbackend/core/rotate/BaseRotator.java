@@ -23,7 +23,7 @@ public abstract class BaseRotator {
         for (int i = 0; i < track.length; i++) {
             for (int j = 0; j < track[i].length; j++) {
                 if (track[i][j] != EMPTY) {
-                    checkIsRotetColliedWithPoint(track, rotatedTrack, i, j);
+                    checkIsRotateColliedWithPoint(track, rotatedTrack, i, j);
                     rotatedTrack = replaceElement(rotatedTrack, track, i, j);
                 }
             }
@@ -31,7 +31,7 @@ public abstract class BaseRotator {
         return rotatedTrack;
     }
 
-    private void checkIsRotetColliedWithPoint(TrackElement[][] track, TrackElement[][] rotatedTrack, int i, int j) {
+    private void checkIsRotateColliedWithPoint(TrackElement[][] track, TrackElement[][] rotatedTrack, int i, int j) {
         if (rotatedTrack
                 [i + track[i][j].rotateLeftRowIndex]
                 [j + track[i][j].rotateLeftColumnIndex] == POINT) {

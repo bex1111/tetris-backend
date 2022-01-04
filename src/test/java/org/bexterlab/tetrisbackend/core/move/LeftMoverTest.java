@@ -61,4 +61,14 @@ class LeftMoverTest {
         };
         assertTwoTrack(expectedTrack, actualTrack);
     }
+
+    @Test
+    void moveLeftDoublePointTest() {
+        TrackElement[][] actualTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT}};
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{SQUARE_POINT, SQUARE_POINT, EMPTY}
+        };
+        assertTwoTrack(expectedTrack, leftMover.moveLeft(actualTrack));
+    }
 }

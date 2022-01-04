@@ -20,6 +20,7 @@ public class GamerAppConfig {
         return new Jackson2ObjectMapperBuilder().createXmlMapper(false).build();
     }
 
+    //lehet érdemes majd vmi neved ani a logoknak
     @Bean
     public Logger gamerAppLogger() {
         return LoggerFactory.getLogger("Gamer App Logger");

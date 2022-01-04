@@ -5,6 +5,8 @@ import org.bexterlab.tetrisbackend.gamer.GamerAppRunner;
 import org.bexterlab.tetrisbackend.helper.RestHelper;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 import static org.bexterlab.tetrisbackend.TestConstants.TEST_USER;
 
 public class PlayTetrisSystemTest {
@@ -15,8 +17,10 @@ public class PlayTetrisSystemTest {
         GamerAppRunner gamerAppRunner = new GamerAppRunner();
         RestHelper restHelper = new RestHelper();
         String token = restHelper.callStartGameWithTestUser(TEST_USER);
-        restHelper.callControlWithTestUserAndToken(TEST_USER, token, Movement.ROTATE_LEFT);
-        restHelper.callControlWithTestUserAndToken(TEST_USER, token, Movement.MOVE_RIGHT);
-        Thread.sleep(100000);
+        while (true) {
+            restHelper.callControlWithTestUserAndToken(TEST_USER, token,
+                    Movement.values()[new Random().nextInt(Movement.values().length)]);
+            Thread.sleep(1000);
+        }
     }
 }
