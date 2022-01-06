@@ -1,12 +1,16 @@
 package org.bexterlab.tetrisbackend.gateway.socket;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameToSocketTextMapper {
 
@@ -16,17 +20,21 @@ public class GameToSocketTextMapper {
         this.objectMapper = objectMapper;
     }
 
-    public String map(Game game) {
-
+    public String map(List<Game> games) {
         try {
-            return objectMapper.writeValueAsString(
-                    new TrackDto(mapTrack(game.track()),
-                            game.tetrisElements().current(),
-                            game.tetrisElements().next()));
+            return objectMapper.writeValueAsString(maopGameToTrackDto(games));
         } catch (JsonProcessingException e) {
             //FIXME handle
             throw new RuntimeException(e);
         }
+    }
+
+    private List<TrackDto> maopGameToTrackDto(List<Game> games) {
+        return games.stream().map(game ->
+                        new TrackDto(mapTrack(game.track()),
+                                game.tetrisElements().current(),
+                                game.tetrisElements().next()))
+                .collect(Collectors.toList());
     }
 
     private TrackElementDto[][] mapTrack(TrackElement[][] track) {
@@ -50,7 +58,7 @@ public class GameToSocketTextMapper {
         return mappedTrack;
     }
 
-    private enum TrackElementDto {
+    public enum TrackElementDto {
         EMPTY,
         POINT,
         ELEMENT;
@@ -58,7 +66,8 @@ public class GameToSocketTextMapper {
 
     @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
     @JsonSerialize
-    private record TrackDto(TrackElementDto[][] track, TetrisElement current,
-                            TetrisElement next) {
+    public record TrackDto(@JsonProperty("track") TrackElementDto[][] track,
+                           @JsonProperty("current") TetrisElement current,
+                           @JsonProperty("next") TetrisElement next) {
     }
 }

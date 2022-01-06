@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 class StoreImplTest {
 
@@ -17,7 +17,8 @@ class StoreImplTest {
 
     @BeforeEach
     void setUp() {
-        gameStore = new StoreImpl(new ArrayList<>());
+        gameStore = new StoreImpl(new CopyOnWriteArrayList<>(),
+                new CopyOnWriteArrayList<>());
     }
 
     @Test

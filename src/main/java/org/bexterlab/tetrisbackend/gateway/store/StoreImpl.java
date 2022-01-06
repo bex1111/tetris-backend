@@ -4,20 +4,24 @@ import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.core.MovementStore;
 import org.bexterlab.tetrisbackend.core.UserStore;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
+import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
-import org.bexterlab.tetrisbackend.entity.Movement;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 public class StoreImpl implements GameStore, MovementStore, UserStore {
 
-    private final List<Game> gameList;
+    private final CopyOnWriteArrayList<Game> gameList;
+    private final CopyOnWriteArrayList<User> scoreBoard;
 
-    public StoreImpl(List<Game> gameList) {
+    public StoreImpl(CopyOnWriteArrayList<Game> gameList, CopyOnWriteArrayList<User> scoreBoard) {
         this.gameList = gameList;
+        this.scoreBoard = scoreBoard;
     }
 
     @Override
@@ -36,7 +40,8 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public Game storeNewTetrisElement(Game game, TetrisElement nextTetrisElement) {
+    public void storeNewTetrisElement(String username, TetrisElement nextTetrisElement) {
+        Game game = findGameByUsername(username);
         gameList.add(new Game(game.user(),
                 game.track(),
                 game.movementQueue(),
@@ -44,11 +49,11 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
                         game.tetrisElements().next(),
                         nextTetrisElement)));
         gameList.remove(game);
-        return game;
     }
 
     @Override
-    public void storeNewTrack(Game game, TrackElement[][] track) {
+    public void storeNewTrack(String username, TrackElement[][] track) {
+        Game game = findGameByUsername(username);
         gameList.add(new Game(game.user(),
                 track,
                 game.movementQueue(),
@@ -60,6 +65,26 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     public boolean hasGame() {
         return !gameList.isEmpty();
     }
+    
+    @Override
+    public void removeGame(String username) {
+        gameList.remove(findGameByUsername(username));
+    }
+
+    @Override
+    public Movement findNextMovement(String username) {
+        return findGameByUsername(username).movementQueue().poll();
+    }
+
+    @Override
+    public TrackElement[][] findTrackByUser(String username) {
+        return findGameByUsername(username).track();
+    }
+
+    @Override
+    public TetrisElement findNextTetrisElement(String username) {
+        return findGameByUsername(username).tetrisElements().next();
+    }
 
     @Override
     public boolean hasGameWithUserAndToken(String username, String token) {
@@ -69,7 +94,14 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public void storePoint(Game game, Long point) {
+    public List<String> findUsernames() {
+        return gameList.stream().map(x -> x.user().username()).collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void storePoint(String username, Long point) {
+        Game game = findGameByUsername(username);
         gameList.add(new Game(
                 new User(
                         game.user().username(),
@@ -82,16 +114,21 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
+    public void addPlayerIntoScoreBoard(String username) {
+        scoreBoard.add(findGameByUsername(username).user());
+    }
+
+    @Override
     public void addNew(String username, Movement movement) {
-        findUser(username).movementQueue().add(movement);
+        findGameByUsername(username).movementQueue().add(movement);
     }
 
     @Override
     public int count(String username) {
-        return findUser(username).movementQueue().size();
+        return findGameByUsername(username).movementQueue().size();
     }
 
-    private Game findUser(String username) {
+    private Game findGameByUsername(String username) {
         return gameList.stream().filter(x -> x.user().username().equals(username))
                 .findFirst().orElseThrow(() -> new AssertionError("Not find user"));
     }

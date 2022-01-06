@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.MovementStore;
-import org.bexterlab.tetrisbackend.entity.Movement;
+import org.bexterlab.tetrisbackend.core.move.Movement;
 
 public class MovementStoreFake implements MovementStore {
 

@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.entity.Movement;
+import org.bexterlab.tetrisbackend.core.move.Movement;
 
 public interface MovementStore {
 

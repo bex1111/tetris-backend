@@ -1,12 +1,17 @@
 package org.bexterlab.tetrisbackend.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.bexterlab.tetrisbackend.controller.ControlInteractor;
 import org.bexterlab.tetrisbackend.core.*;
+import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
+import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
+import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
 import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -23,13 +28,14 @@ public class MainConfiguration {
     }
 
     @Bean
-    public AsyncGameHandler asyncGameHandler(TrackHandler trackHandler,
-                                             StoreImpl store,
-                                             Logger logger,
-                                             WebsocketHandler trackSender
-    ) {
-        return new AsyncGameHandler(trackSender, Executors.newSingleThreadExecutor(),
-                trackHandler, store,
+    public AsyncGameRunnerInteractor asyncGameHandler(GameIntercator gameIntercator,
+                                                      StoreImpl store,
+                                                      Logger logger,
+                                                      WebsocketHandler trackSender,
+                                                      @Value("${tetris.gameTickTime}") Long gameTickTime) {
+        return new AsyncGameRunnerInteractor(trackSender,
+                Executors.newSingleThreadExecutor(),
+                gameIntercator, store,
                 logger, new Delayer(500L, logger));
     }
 
@@ -47,8 +53,8 @@ public class MainConfiguration {
 
     @Bean
     public StartGameInteractorImpl startGameInteractor(StoreImpl store,
-                                                       AsyncGameHandler asyncGameHandler) {
-        return new StartGameInteractorImpl(store, store, asyncGameHandler);
+                                                       AsyncGameRunnerInteractor asyncGameRunnerInteractor) {
+        return new StartGameInteractorImpl(store, store, asyncGameRunnerInteractor);
     }
 
     @Bean
@@ -57,19 +63,47 @@ public class MainConfiguration {
     }
 
     @Bean
-    public TrackHandler trackHandler(StoreImpl store, Logger logger,
-                                     TetrisStepFactory tetrisStepFactory) {
-        return new TrackHandler(store, store, tetrisStepFactory, logger);
+    public GameIntercator trackHandler(StoreImpl store, Logger logger,
+                                       GameEndSteps gameEndSteps,
+                                       BaseSteps baseSteps,
+                                       NotTetrisElementInTrackSteps notTetrisElementInTrackSteps) {
+        return new GameIntercator(store, gameEndSteps,
+                notTetrisElementInTrackSteps, baseSteps,
+                logger);
     }
 
     @Bean
+    public BaseSteps baseSteps(StoreImpl store,
+                               TetrisStepFactory tetrisStepFactory) {
+        return new BaseSteps(tetrisStepFactory, store);
+    }
+
+    @Bean
+    public GameEndSteps gameEndSteps(StoreImpl store) {
+        return new GameEndSteps(store, store, 3);
+    }
+
+    @Bean
+    public NotTetrisElementInTrackSteps notTetrisElementInTrackSteps(StoreImpl store,
+                                                                     TetrisStepFactory tetrisStepFactory) {
+        return new NotTetrisElementInTrackSteps(tetrisStepFactory, store, store);
+    }
+
+    //TOdo dead row index from config
+    @Bean
     public StoreImpl gameStore() {
-        return new StoreImpl(new CopyOnWriteArrayList<>());
+        return new StoreImpl(new CopyOnWriteArrayList<>(),
+                new CopyOnWriteArrayList<>());
     }
 
     @Bean
     public ObjectMapper objectMapper() {
         return new Jackson2ObjectMapperBuilder().createXmlMapper(false).build();
+    }
+
+    @Bean
+    public ControlInteractor controlInteractor(MovementStore movementStore, UserStore userStore) {
+        return new ControlInteractorImpl(movementStore, userStore);
     }
 
 }

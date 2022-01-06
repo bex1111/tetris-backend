@@ -1,15 +1,15 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
-import org.bexterlab.tetrisbackend.core.TrackHandler;
+import org.bexterlab.tetrisbackend.core.GameIntercator;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class TrackHandlerSpy extends TrackHandler {
+public class GameIntercatorSpy extends GameIntercator {
 
     public AtomicInteger maintenanceCallCount = new AtomicInteger(0);
 
-    public TrackHandlerSpy() {
-        super(null, null,
+    public GameIntercatorSpy() {
+        super(null, null, null,
                 null, null);
     }
 

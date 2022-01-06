@@ -18,10 +18,10 @@ public class TrackSenderFake implements TrackSender {
     }
 
     @Override
-    public void sendTrackForUser(Game game) {
+    public void sendTrackForUser(List<Game> game) {
         if (nonNull(exception)) {
             throw exception;
         }
-        gameList.add(game);
+        gameList.addAll(game);
     }
 }

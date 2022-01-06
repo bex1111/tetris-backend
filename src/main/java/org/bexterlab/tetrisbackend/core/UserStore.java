@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.entity.Game;
+import java.util.List;
 
 public interface UserStore {
 
@@ -8,5 +8,9 @@ public interface UserStore {
 
     boolean hasGameWithUserAndToken(String username, String token);
 
-    void storePoint(Game game, Long point);
+    List<String> findUsernames();
+
+    void storePoint(String username, Long point);
+    
+    void addPlayerIntoScoreBoard(String username);
 }

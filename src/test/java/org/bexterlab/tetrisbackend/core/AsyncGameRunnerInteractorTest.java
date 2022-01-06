@@ -14,23 +14,23 @@ import java.util.concurrent.TimeUnit;
 
 import static org.awaitility.Awaitility.await;
 
-class AsyncGameHandlerTest {
+class AsyncGameRunnerInteractorTest {
 
-    private TrackHandlerSpy trackHandlerSpy;
+    private GameIntercatorSpy trackHandlerSpy;
     private GameStoreFake gameStoreFake;
     private TrackSenderFake trackSenderFake;
     private ExecuterServiceSpy executorServiceSpy;
-    private AsyncGameHandler asyncGameHandler;
+    private AsyncGameRunnerInteractor asyncGameRunnerInteractor;
     private int gameTickTime;
 
     @BeforeEach
     void setUp() {
         executorServiceSpy = new ExecuterServiceSpy();
-        trackHandlerSpy = new TrackHandlerSpy();
+        trackHandlerSpy = new GameIntercatorSpy();
         gameStoreFake = new GameStoreFake();
         trackSenderFake = new TrackSenderFake();
         gameTickTime = 100;
-        asyncGameHandler = new AsyncGameHandler(trackSenderFake,
+        asyncGameRunnerInteractor = new AsyncGameRunnerInteractor(trackSenderFake,
                 executorServiceSpy,
                 trackHandlerSpy,
                 gameStoreFake,
@@ -44,7 +44,7 @@ class AsyncGameHandlerTest {
         gameStoreFake.hasGame = true;
         gameStoreFake.game = new Game(null, null, null, null);
         int callCount = 5;
-        asyncGameHandler.startGame();
+        asyncGameRunnerInteractor.startGame();
         pollDelay()
                 .atLeast((callCount - 1L) * gameTickTime, TimeUnit.MILLISECONDS)
                 .atMost((callCount + 1L) * gameTickTime, TimeUnit.MILLISECONDS)
@@ -66,7 +66,7 @@ class AsyncGameHandlerTest {
     @Test
     void notStartGameTest() {
         gameStoreFake.hasGame = false;
-        asyncGameHandler.startGame();
+        asyncGameRunnerInteractor.startGame();
         await().pollDelay(gameTickTime * 2L, TimeUnit.MILLISECONDS)
                 .atMost(gameTickTime * 5L + 1L, TimeUnit.MILLISECONDS)
                 .until(() -> trackHandlerSpy.maintenanceCallCount.get() == 0);
@@ -80,7 +80,7 @@ class AsyncGameHandlerTest {
         trackSenderFake.exception = new RuntimeException("Hups");
         gameStoreFake.hasGame = true;
         gameStoreFake.game = new Game(null, null, null, null);
-        asyncGameHandler.startGame();
+        asyncGameRunnerInteractor.startGame();
         await().pollDelay(gameTickTime * 2L, TimeUnit.MILLISECONDS)
                 .atMost(gameTickTime * 5L + 1L, TimeUnit.MILLISECONDS)
                 .until(() -> trackHandlerSpy.maintenanceCallCount.get() > 0);
