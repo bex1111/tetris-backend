@@ -25,7 +25,6 @@ public abstract class BaseControllerTest {
     }
 
     protected void localSetUp() {
-
     }
 
     @AfterEach

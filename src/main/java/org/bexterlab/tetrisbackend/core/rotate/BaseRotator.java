@@ -5,9 +5,6 @@ import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.Arrays;
 
-import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
-import static org.bexterlab.tetrisbackend.core.move.TrackElement.POINT;
-
 public abstract class BaseRotator {
 
     public TrackElement[][] rotate(TrackElement[][] track) {
@@ -22,24 +19,24 @@ public abstract class BaseRotator {
         TrackElement[][] rotatedTrack = deepCopy(track);
         for (int i = 0; i < track.length; i++) {
             for (int j = 0; j < track[i].length; j++) {
-                if (track[i][j] != EMPTY) {
-                    checkIsRotateColliedWithPoint(track, rotatedTrack, i, j);
-                    rotatedTrack = replaceElement(rotatedTrack, track, i, j);
+                if (track[i][j].isNotFix) {
+                    checkIsRotateColliedWithPoint(rotatedTrack, i, j);
+                    rotatedTrack = replaceElement(rotatedTrack, i, j);
                 }
             }
         }
         return rotatedTrack;
     }
 
-    private void checkIsRotateColliedWithPoint(TrackElement[][] track, TrackElement[][] rotatedTrack, int i, int j) {
-        if (rotatedTrack
-                [i + track[i][j].rotateLeftRowIndex]
-                [j + track[i][j].rotateLeftColumnIndex] == POINT) {
+    private void checkIsRotateColliedWithPoint(TrackElement[][] rotatedTrack, int i, int j) {
+        if (isRotateColliedWithPoint(rotatedTrack, i, j)) {
             throw new CanNotRotateException();
         }
     }
 
-    protected abstract TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, TrackElement[][] track, int i, int j);
+    protected abstract boolean isRotateColliedWithPoint(TrackElement[][] rotatedTrack, int i, int j);
+
+    protected abstract TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, int i, int j);
 
     private TrackElement[][] deepCopy(TrackElement[][] track) {
         return Arrays.stream(track).map(TrackElement[]::clone).toArray(x -> track.clone());

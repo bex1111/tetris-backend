@@ -12,6 +12,7 @@ import static org.bexterlab.tetrisbackend.TestConstants.TEST_USER;
 public class PlayTetrisSystemTest {
 
     @Test
+        //@Disabled
     void name() throws InterruptedException {
         TetrisAppRunner tetrisAppRunner = new TetrisAppRunner();
         GamerAppRunner gamerAppRunner = new GamerAppRunner();

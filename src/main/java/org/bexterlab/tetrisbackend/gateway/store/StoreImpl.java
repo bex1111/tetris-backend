@@ -19,7 +19,8 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     private final CopyOnWriteArrayList<Game> gameList;
     private final CopyOnWriteArrayList<User> scoreBoard;
 
-    public StoreImpl(CopyOnWriteArrayList<Game> gameList, CopyOnWriteArrayList<User> scoreBoard) {
+    public StoreImpl(CopyOnWriteArrayList<Game> gameList,
+                     CopyOnWriteArrayList<User> scoreBoard) {
         this.gameList = gameList;
         this.scoreBoard = scoreBoard;
     }
@@ -65,7 +66,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     public boolean hasGame() {
         return !gameList.isEmpty();
     }
-    
+
     @Override
     public void removeGame(String username) {
         gameList.remove(findGameByUsername(username));
@@ -97,7 +98,6 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     public List<String> findUsernames() {
         return gameList.stream().map(x -> x.user().username()).collect(Collectors.toList());
     }
-
 
     @Override
     public void storePoint(String username, Long point) {

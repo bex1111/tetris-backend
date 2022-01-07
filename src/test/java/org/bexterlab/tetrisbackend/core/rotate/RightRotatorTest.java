@@ -20,7 +20,7 @@ class RightRotatorTest {
     }
 
     @Test
-    void rotateRightThreeLongElement1Test() {
+    void rotateThreeLongElement1Test() {
         TrackElement[][] actualTrack = rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
@@ -31,12 +31,11 @@ class RightRotatorTest {
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
                 new TrackElement[]{EMPTY, EMPTY, THREE_LONG_ELEMENT_DOWN_RIGHT}
         };
-        assertTwoTrack(actualTrack, expectedTrack);
+        assertTwoTrack(expectedTrack, actualTrack);
     }
 
-
     @Test
-    void rotateRightThreeLongElement2Test() {
+    void rotateThreeLongElement2Test() {
         TrackElement[][] actualTrack = rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
@@ -47,11 +46,11 @@ class RightRotatorTest {
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_DOWN_LEFT, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
         };
-        assertTwoTrack(actualTrack, expectedTrack);
+        assertTwoTrack(expectedTrack, actualTrack);
     }
 
     @Test
-    void rotateRightThreeLongElement3Test() {
+    void rotateThreeLongElement3Test() {
         TrackElement[][] actualTrack = rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
@@ -62,11 +61,11 @@ class RightRotatorTest {
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY}
         };
-        assertTwoTrack(actualTrack, expectedTrack);
+        assertTwoTrack(expectedTrack, actualTrack);
     }
 
     @Test
-    void rotateRightThreeLongElement4Test() {
+    void rotateThreeLongElement4Test() {
         TrackElement[][] actualTrack = rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_LEFT, EMPTY, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
@@ -77,7 +76,7 @@ class RightRotatorTest {
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
         };
-        assertTwoTrack(actualTrack, expectedTrack);
+        assertTwoTrack(expectedTrack, actualTrack);
     }
 
     @Test
@@ -94,11 +93,11 @@ class RightRotatorTest {
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
         };
-        assertTwoTrack(actualTrack, expectedTrack);
+        assertTwoTrack(expectedTrack, actualTrack);
     }
 
     @Test
-    void canNotRotateRightThreeLongElementNoSpaceTest() {
+    void canNotRotateThreeLongElementNoSpaceTest() {
         Assertions.assertThrows(CanNotRotateException.class, () -> rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
@@ -106,13 +105,44 @@ class RightRotatorTest {
         }));
     }
 
-
     @Test
-    void canNotRotateRightThreeLongElementCollideTest() {
+    void canNotRotateThreeLongElementCollideTest() {
         Assertions.assertThrows(CanNotRotateException.class, () -> rightRotator.rotate(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{POINT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
         }));
+    }
+
+    @Test
+    void rotateThreeLongLElementWithPointInTheTrackTest() {
+        TrackElement[][] actualTrack = rightRotator.rotate(new TrackElement[][]{
+                new TrackElement[]{THREE_LONG_ELEMENT_UP_LEFT, EMPTY, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
+                new TrackElement[]{EMPTY, EMPTY, EMPTY},
+                new TrackElement[]{POINT, EMPTY, EMPTY}
+        });
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY},
+                new TrackElement[]{POINT, EMPTY, EMPTY}
+        };
+        assertTwoTrack(expectedTrack, actualTrack);
+    }
+
+    @Test
+    void rotatePyramidElementTest() {
+        TrackElement[][] actualTrack = rightRotator.rotate(new TrackElement[][]{
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
+        });
+        TrackElement[][] expectedTrack = new TrackElement[][]{
+                new TrackElement[]{EMPTY, EMPTY, EMPTY},
+                new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
+                new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
+        };
+        assertTwoTrack(expectedTrack, actualTrack);
     }
 }

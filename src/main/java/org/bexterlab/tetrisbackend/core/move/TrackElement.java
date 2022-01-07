@@ -148,7 +148,6 @@ public enum TrackElement {
         this.isNotFix = isNotFix;
     }
 
-
     public abstract TrackElement getLeftNewType();
 
     public abstract TrackElement getRightNewType();
