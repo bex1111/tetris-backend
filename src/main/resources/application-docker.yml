@@ -1,0 +1,2 @@
+tetris:
+  gameTickTime: ${GAME_TICK_TIME}
