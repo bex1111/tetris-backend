@@ -52,20 +52,23 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring.boot.version}</version>
             </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.pitest</groupId>-->
+            <!--                <artifactId>pitest-maven</artifactId>-->
+            <!--                <version>1.7.3</version>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>17</source>
                     <target>17</target>
-                    <compilerArgs>--enable-preview</compilerArgs>
+                    <compilerArgs>
+                        --enable-preview
+                        <arg>--enable-preview</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
-            <!--            <plugin>-->
-            <!--                <groupId>org.pitest</groupId>-->
-            <!--                <artifactId>pitest-maven</artifactId>-->
-            <!--                <version>1.7.3</version>-->
-            <!--            </plugin>-->
         </plugins>
     </build>
 
