@@ -24,8 +24,7 @@ public class GameToSocketTextMapper {
         try {
             return objectMapper.writeValueAsString(maopGameToTrackDto(games));
         } catch (JsonProcessingException e) {
-            //FIXME handle
-            throw new RuntimeException(e);
+            throw new CannotGenerateSocketMessageException(e);
         }
     }
 
@@ -69,5 +68,6 @@ public class GameToSocketTextMapper {
     public record TrackDto(@JsonProperty("track") TrackElementDto[][] track,
                            @JsonProperty("current") TetrisElement current,
                            @JsonProperty("next") TetrisElement next) {
+
     }
 }

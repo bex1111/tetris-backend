@@ -21,14 +21,12 @@ public class GamerAppConfig {
     public ObjectMapper gamerAppObjectMapper() {
         return new Jackson2ObjectMapperBuilder().createXmlMapper(false).build();
     }
-
-    //TOD lehet érdemes majd vmi neved adni a logoknak
+    
     @Bean
     public Logger gamerAppLogger() {
         return LoggerFactory.getLogger("Gamer App Logger");
     }
 
-    //TODO event kezelés
     @Bean
     public WebsocketClientEndpoint websocketClientEndpoint(ObjectMapper gamerAppObjectMapper,
                                                            Logger gamerAppLogger) throws URISyntaxException {
