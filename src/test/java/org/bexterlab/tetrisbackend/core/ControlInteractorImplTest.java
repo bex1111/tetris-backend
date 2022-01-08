@@ -13,7 +13,6 @@ import static org.bexterlab.tetrisbackend.core.move.Movement.MOVE_LEFT;
 
 class ControlInteractorImplTest {
 
-
     private UserStoreFake userStore;
     private MovementStoreFake movementStore;
 

@@ -1,6 +1,5 @@
 package org.bexterlab.tetrisbackend.core;
 
-
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;

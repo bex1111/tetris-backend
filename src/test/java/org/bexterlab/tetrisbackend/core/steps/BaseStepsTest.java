@@ -8,21 +8,25 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class BaseStepsTest {
 
-
-    GameStoreFake gameStore;
-    TetrisStepFactoryFake tetrisStepFactory;
-    BaseSteps baseSteps;
+    private GameStoreFake gameStore;
+    private TetrisStepFactoryFake tetrisStepFactory;
+    private BaseSteps baseSteps;
     private TrackElement[][] track;
     private String username;
+    private List<String> callMethodName;
 
     @BeforeEach
     void setUp() {
+        this.callMethodName = new ArrayList<>();
         this.track = new TrackElement[0][];
         this.username = "test";
-        this.gameStore = new GameStoreFake();
-        this.tetrisStepFactory = new TetrisStepFactoryFake();
+        this.gameStore = new GameStoreFake(callMethodName);
+        this.tetrisStepFactory = new TetrisStepFactoryFake(callMethodName);
         this.baseSteps = new BaseSteps(tetrisStepFactory, gameStore);
         this.gameStore.findTrackByUser = track;
     }
@@ -42,6 +46,15 @@ class BaseStepsTest {
         Assertions.assertNull(tetrisStepFactory.rotateRightTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveRightTrackElement);
+
+
+        final List<String> callMethodOrder = List.of("findTrackByUser",
+                "findNextMovement",
+                "collideElement",
+                "moveDown",
+                "clearFullRow",
+                "storeNewTrack");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 
     @Test
@@ -59,6 +72,15 @@ class BaseStepsTest {
         Assertions.assertNull(tetrisStepFactory.rotateRightTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveRightTrackElement);
+
+        final List<String> callMethodOrder = List.of("findTrackByUser",
+                "findNextMovement",
+                "rotateLeft",
+                "collideElement",
+                "moveDown",
+                "clearFullRow",
+                "storeNewTrack");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 
     @Test
@@ -76,6 +98,15 @@ class BaseStepsTest {
         Assertions.assertNull(tetrisStepFactory.rotateLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveRightTrackElement);
+
+        final List<String> callMethodOrder = List.of("findTrackByUser",
+                "findNextMovement",
+                "rotateRight",
+                "collideElement",
+                "moveDown",
+                "clearFullRow",
+                "storeNewTrack");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 
     @Test
@@ -93,6 +124,15 @@ class BaseStepsTest {
         Assertions.assertNull(tetrisStepFactory.rotateLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.rotateRightTrackElement);
+
+        final List<String> callMethodOrder = List.of("findTrackByUser",
+                "findNextMovement",
+                "moveRight",
+                "collideElement",
+                "moveDown",
+                "clearFullRow",
+                "storeNewTrack");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 
     @Test
@@ -110,5 +150,14 @@ class BaseStepsTest {
         Assertions.assertNull(tetrisStepFactory.rotateLeftTrackElement);
         Assertions.assertNull(tetrisStepFactory.moveRightTrackElement);
         Assertions.assertNull(tetrisStepFactory.rotateRightTrackElement);
+
+        final List<String> callMethodOrder = List.of("findTrackByUser",
+                "findNextMovement",
+                "moveLeft",
+                "collideElement",
+                "moveDown",
+                "clearFullRow",
+                "storeNewTrack");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 }

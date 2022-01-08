@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.THREE_LONG_ELEMENT_UP_MIDDLE;
 
@@ -19,14 +22,15 @@ class NotTetrisElementInTrackStepsTest {
     private GameStoreFake gameStoreFake;
     private UserStoreFake userStoreFake;
     private NotTetrisElementInTrackSteps notTetrisElementInTrackSteps;
-
+    private List<String> callMethodName;
 
     @BeforeEach
     void setUp() {
-        tetrisStepFactoryFake = new TetrisStepFactoryFake();
-        gameStoreFake = new GameStoreFake();
-        userStoreFake = new UserStoreFake();
-        notTetrisElementInTrackSteps =
+        this.callMethodName = new ArrayList<>();
+        this.tetrisStepFactoryFake = new TetrisStepFactoryFake(callMethodName);
+        this.gameStoreFake = new GameStoreFake(callMethodName);
+        this.userStoreFake = new UserStoreFake(callMethodName);
+        this.notTetrisElementInTrackSteps =
                 new NotTetrisElementInTrackSteps(tetrisStepFactoryFake,
                         gameStoreFake,
                         userStoreFake);
@@ -55,6 +59,16 @@ class NotTetrisElementInTrackStepsTest {
         Assertions.assertEquals(tetrisStepFactoryFake.count, userStoreFake.point);
         Assertions.assertEquals(gameStoreFake.findNextTetrisElement, tetrisStepFactoryFake.spawnNewTetrisElement);
         Assertions.assertEquals(tetrisStepFactoryFake.draw, gameStoreFake.storeNewTetrisElement);
+
+        final List<String> callMethodOrder = List.of("findTrackByUser",
+                "countPoints",
+                "storePoint",
+                "findNextTetrisElement",
+                "spawnNewElement",
+                "storeNewTrack",
+                "drawTetrisElement",
+                "storeNewTetrisElement");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 
     @Test
@@ -76,5 +90,8 @@ class NotTetrisElementInTrackStepsTest {
         Assertions.assertNull(userStoreFake.point);
         Assertions.assertNull(tetrisStepFactoryFake.spawnNewTetrisElement);
         Assertions.assertNull(gameStoreFake.storeNewTetrisElement);
+
+        final List<String> callMethodOrder = List.of("findTrackByUser");
+        Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 }

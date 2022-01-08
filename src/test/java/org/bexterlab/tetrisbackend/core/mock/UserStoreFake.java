@@ -2,9 +2,11 @@ package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.UserStore;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserStoreFake implements UserStore {
+
     public boolean hasGameWithUser = false;
     public boolean hasGameWithUserAndToken = false;
     public List<String> usernameList;
@@ -12,14 +14,27 @@ public class UserStoreFake implements UserStore {
     public String token;
     public Long point;
     public String addPlayerIntoScoreBoardUsername;
+    private final List<String> callMethodName;
+
+    public UserStoreFake(List<String> callMethodName) {
+        this.callMethodName = callMethodName;
+    }
+
+    public UserStoreFake() {
+        this.callMethodName = new ArrayList<>();
+    }
 
     @Override
     public boolean hasGameWithUser(String username) {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
         return hasGameWithUser;
     }
 
     @Override
     public boolean hasGameWithUserAndToken(String username, String token) {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
         this.hasGameWithUserAndTokenUsername = username;
         this.token = token;
         return hasGameWithUserAndToken;
@@ -27,18 +42,23 @@ public class UserStoreFake implements UserStore {
 
     @Override
     public List<String> findUsernames() {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
         return usernameList;
     }
 
-
     @Override
     public void storePoint(String username, Long point) {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
         this.storePointUserName = username;
         this.point = point;
     }
 
     @Override
     public void addPlayerIntoScoreBoard(String username) {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
         this.addPlayerIntoScoreBoardUsername = username;
     }
 }

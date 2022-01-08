@@ -10,7 +10,8 @@ public class BaseSteps {
     private final TetrisStepFactory tetrisStepFactory;
     private final GameStore gameStore;
 
-    public BaseSteps(TetrisStepFactory tetrisStepFactory, GameStore gameStore) {
+    public BaseSteps(TetrisStepFactory tetrisStepFactory,
+                     GameStore gameStore) {
         this.tetrisStepFactory = tetrisStepFactory;
         this.gameStore = gameStore;
     }
@@ -18,7 +19,7 @@ public class BaseSteps {
     public void execute(String username) {
         TrackElement[][] track = gameStore.findTrackByUser(username);
         track = controlElement(track, gameStore.findNextMovement(username));
-        track = tetrisStepFactory.collideElement(track); //FIXME testsztelni azt, hogy ha forgatom akkor már ütközhet így nem eshet lejebb
+        track = tetrisStepFactory.collideElement(track);
         track = tetrisStepFactory.moveDown(track);
         track = tetrisStepFactory.clearFullRow(track);
         gameStore.storeNewTrack(username, track);

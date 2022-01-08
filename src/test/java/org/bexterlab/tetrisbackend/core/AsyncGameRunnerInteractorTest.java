@@ -62,7 +62,6 @@ class AsyncGameRunnerInteractorTest {
                 .until(() -> executorServiceSpy.future.isDone());
     }
 
-
     @Test
     void notStartGameTest() {
         gameStoreFake.hasGame = false;
