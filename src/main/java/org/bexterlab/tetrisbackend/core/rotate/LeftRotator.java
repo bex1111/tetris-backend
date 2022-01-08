@@ -7,19 +7,17 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.POINT;
 public class LeftRotator extends BaseRotator {
 
     @Override
-    protected boolean isRotateColliedWithPoint(TrackElement[][] rotatedTrack, int i, int j) {
-        return rotatedTrack
-                [i + rotatedTrack[i][j].rotateLeftRowIndex]
-                [j + rotatedTrack[i][j].rotateLeftColumnIndex] == POINT;
+    protected boolean isRotateColliedWithPoint(TrackElement[][] track, int i, int j) {
+        return track
+                [i + track[i][j].rotateLeftRowIndex]
+                [j + track[i][j].rotateLeftColumnIndex] == POINT;
     }
 
     @Override
-    protected TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, int i, int j) {
-        final int newRowPosition = i + rotatedTrack[i][j].rotateLeftRowIndex;
-        final int newColumnPosition = j + rotatedTrack[i][j].rotateLeftColumnIndex;
-        TrackElement tempTrackElement = rotatedTrack[newRowPosition][newColumnPosition];
-        rotatedTrack[newRowPosition][newColumnPosition] = rotatedTrack[i][j].getLeftNewType();
-        rotatedTrack[i][j] = tempTrackElement;
+    protected TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, TrackElement[][] track, int i, int j) {
+        final int newRowPosition = i + track[i][j].rotateLeftRowIndex;
+        final int newColumnPosition = j + track[i][j].rotateLeftColumnIndex;
+        rotatedTrack[newRowPosition][newColumnPosition] = track[i][j].getLeftNewType();
         return rotatedTrack;
     }
 

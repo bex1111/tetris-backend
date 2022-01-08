@@ -18,8 +18,8 @@ public class BaseSteps {
     public void execute(String username) {
         TrackElement[][] track = gameStore.findTrackByUser(username);
         track = controlElement(track, gameStore.findNextMovement(username));
+        track = tetrisStepFactory.collideElement(track); //FIXME testsztelni azt, hogy ha forgatom akkor már ütközhet így nem eshet lejebb
         track = tetrisStepFactory.moveDown(track);
-        track = tetrisStepFactory.collideElement(track);
         track = tetrisStepFactory.clearFullRow(track);
         gameStore.storeNewTrack(username, track);
     }

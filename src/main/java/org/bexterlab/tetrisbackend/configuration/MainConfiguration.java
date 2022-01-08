@@ -36,7 +36,7 @@ public class MainConfiguration {
         return new AsyncGameRunnerInteractor(trackSender,
                 Executors.newSingleThreadExecutor(),
                 gameIntercator, store,
-                logger, new Delayer(500L, logger));
+                logger, new Delayer(gameTickTime, logger));
     }
 
     @Bean

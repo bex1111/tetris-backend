@@ -3,7 +3,7 @@ package org.bexterlab.tetrisbackend.core.rotate;
 import org.bexterlab.tetrisbackend.core.exception.CanNotRotateException;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
-import java.util.Arrays;
+import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
 public abstract class BaseRotator {
 
@@ -16,29 +16,36 @@ public abstract class BaseRotator {
     }
 
     private TrackElement[][] rotateIterator(TrackElement[][] track) {
-        TrackElement[][] rotatedTrack = deepCopy(track);
+        TrackElement[][] rotatedTrack = deepCopyPointInTheTrack(track);
         for (int i = 0; i < track.length; i++) {
             for (int j = 0; j < track[i].length; j++) {
                 if (track[i][j].isNotFix) {
-                    checkIsRotateColliedWithPoint(rotatedTrack, i, j);
-                    rotatedTrack = replaceElement(rotatedTrack, i, j);
+                    checkIsRotateColliedWithPoint(track, i, j);
+                    rotatedTrack = replaceElement(rotatedTrack, track, i, j);
                 }
             }
         }
         return rotatedTrack;
     }
 
-    private void checkIsRotateColliedWithPoint(TrackElement[][] rotatedTrack, int i, int j) {
-        if (isRotateColliedWithPoint(rotatedTrack, i, j)) {
+    private void checkIsRotateColliedWithPoint(TrackElement[][] track, int i, int j) {
+        if (isRotateColliedWithPoint(track, i, j)) {
             throw new CanNotRotateException();
         }
     }
 
     protected abstract boolean isRotateColliedWithPoint(TrackElement[][] rotatedTrack, int i, int j);
 
-    protected abstract TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, int i, int j);
+    protected abstract TrackElement[][] replaceElement(TrackElement[][] rotatedTrack, TrackElement[][] track, int i, int j);
 
-    private TrackElement[][] deepCopy(TrackElement[][] track) {
-        return Arrays.stream(track).map(TrackElement[]::clone).toArray(x -> track.clone());
+    private TrackElement[][] deepCopyPointInTheTrack(TrackElement[][] track) {
+        TrackElement[][] cloneTrack = new TrackElement[track.length][];
+        for (int i = 0; i < track.length; i++) {
+            cloneTrack[i] = new TrackElement[track[i].length];
+            for (int j = 0; j < track[i].length; j++) {
+                cloneTrack[i][j] = track[i][j].isNotFix ? EMPTY : track[i][j];
+            }
+        }
+        return cloneTrack;
     }
 }

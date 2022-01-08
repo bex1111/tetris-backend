@@ -3,6 +3,7 @@ package org.bexterlab.tetrisbackend;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.gamer.GamerAppRunner;
 import org.bexterlab.tetrisbackend.helper.RestHelper;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
@@ -12,7 +13,7 @@ import static org.bexterlab.tetrisbackend.TestConstants.TEST_USER;
 public class PlayTetrisSystemTest {
 
     @Test
-        //@Disabled
+    @Disabled
     void name() throws InterruptedException {
         TetrisAppRunner tetrisAppRunner = new TetrisAppRunner();
         GamerAppRunner gamerAppRunner = new GamerAppRunner();

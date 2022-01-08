@@ -1,10 +1,6 @@
-# Backlog (Hungarian)
+# Tetris backend
 
-- Max 30 user-t játszhasson egyszerre
-- Pit test
-- PlayTetrisSystemTest fejlesztése
-- List score end point
-- StoreImpl tesztelés
+[Project board](https://github.com/bex1111/tetris-backend/projects/1)
 
 # Elements:
 
@@ -35,5 +31,5 @@ O
 
 O\
 OO\
- O
+O
 
