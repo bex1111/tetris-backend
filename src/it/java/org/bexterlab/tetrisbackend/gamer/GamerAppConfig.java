@@ -11,6 +11,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import static org.bexterlab.tetrisbackend.TestConstants.BASE_URL;
+
 @Configuration
 @Profile("Gamer")
 public class GamerAppConfig {
@@ -31,7 +33,7 @@ public class GamerAppConfig {
     public WebsocketClientEndpoint websocketClientEndpoint(ObjectMapper gamerAppObjectMapper,
                                                            Logger gamerAppLogger) throws URISyntaxException {
         return new WebsocketClientEndpoint(
-                new URI("ws://localhost:8080/tetris"),
+                new URI("ws://" + BASE_URL + "/tetris"),
                 gamerAppObjectMapper,
                 gamerAppLogger);
     }

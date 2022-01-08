@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 
+import static org.bexterlab.tetrisbackend.TestConstants.HTTP_BASE_URL;
 import static org.springframework.http.HttpStatus.OK;
 
 public class RestHelper {
@@ -23,7 +24,7 @@ public class RestHelper {
     }
 
     public String callStartGameWithTestUser(String username) {
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://localhost:8080/startGame",
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(HTTP_BASE_URL + "/startGame",
                 new StartGameDto(username), String.class);
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity.getBody());
@@ -31,7 +32,7 @@ public class RestHelper {
     }
 
     public void callHeath() {
-        ResponseEntity<Void> responseEntity = restTemplate.getForEntity("http://localhost:8080/health", Void.class);
+        ResponseEntity<Void> responseEntity = restTemplate.getForEntity(HTTP_BASE_URL + "/health", Void.class);
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
     }
 
@@ -40,7 +41,7 @@ public class RestHelper {
                 new MultiValueMapAdapter<>(Map.of("x-username", List.of(username),
                         "x-token", List.of(token))));
         ResponseEntity<Void> responseEntity = restTemplate.exchange(UriComponentsBuilder
-                        .fromHttpUrl("http://localhost:8080/control")
+                        .fromHttpUrl(HTTP_BASE_URL + "/control")
                         .queryParam("movement", movement)
                         .build()
                         .toUri(),

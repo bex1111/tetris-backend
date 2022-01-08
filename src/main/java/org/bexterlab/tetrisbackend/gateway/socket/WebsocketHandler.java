@@ -43,7 +43,7 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        logger.info("Connected ... " + session.toString());
+        logger.info("Connected " + session.toString());
         socketDtoList.add(session);
     }
 
