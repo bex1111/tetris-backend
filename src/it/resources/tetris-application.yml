@@ -3,6 +3,7 @@ server:
 
 tetris:
   gameTickTime: 200
+  deadRowIndex: 3
 
 #logging:
 #  level:

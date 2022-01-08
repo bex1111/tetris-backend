@@ -1,2 +1,3 @@
 tetris:
   gameTickTime: 500
+  deadRowIndex: 3

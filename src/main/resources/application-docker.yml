@@ -1,2 +1,3 @@
 tetris:
   gameTickTime: ${GAME_TICK_TIME}
+  deadRowIndex: ${DEAD_ROW_INDEX}

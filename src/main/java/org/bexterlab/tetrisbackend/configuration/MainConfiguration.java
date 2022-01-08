@@ -78,8 +78,9 @@ public class MainConfiguration {
         return new BaseSteps(tetrisStepFactory, store);
     }
 
+    //Todo dead row index from config
     @Bean
-    public GameEndSteps gameEndSteps(StoreImpl store) {
+    public GameEndSteps gameEndSteps(StoreImpl store, @Value("${tetris.deadRowIndex}") Long gameTickTime) {
         return new GameEndSteps(store, store, 3);
     }
 
@@ -89,7 +90,6 @@ public class MainConfiguration {
         return new NotTetrisElementInTrackSteps(tetrisStepFactory, store, store);
     }
 
-    //TOdo dead row index from config
     @Bean
     public StoreImpl gameStore() {
         return new StoreImpl(new CopyOnWriteArrayList<>(),
