@@ -30,6 +30,11 @@ public class RestHelper {
         return responseEntity.getBody();
     }
 
+    public void callHeath() {
+        ResponseEntity<Void> responseEntity = restTemplate.getForEntity("http://localhost:8080/health", Void.class);
+        Assertions.assertEquals(OK, responseEntity.getStatusCode());
+    }
+
     public <T> void callControlWithTestUserAndToken(String username, String token, T movement) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(
                 new MultiValueMapAdapter<>(Map.of("x-username", List.of(username),
