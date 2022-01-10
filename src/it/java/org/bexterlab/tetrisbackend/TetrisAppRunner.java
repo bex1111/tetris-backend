@@ -8,7 +8,7 @@ public class TetrisAppRunner {
     private final ConfigurableApplicationContext tetrisApp;
 
     public TetrisAppRunner() {
-        this.tetrisApp = SpringApplication.run(TetrisApplication.class,
-                "--spring.config.location=classpath:/tetris-application.yml");
+        this.tetrisApp = SpringApplication.run(new Class[]{TetrisApplication.class},
+                new String[]{"--spring.config.location=src/it/resources/tetris-application.yml"});
     }
 }
