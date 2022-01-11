@@ -80,7 +80,8 @@ public class MainConfiguration {
 
     @Bean
     public GameEndSteps gameEndSteps(StoreImpl store, @Value("${tetris.deadRowIndex}") Long gameTickTime) {
-        return new GameEndSteps(store, store, gameTickTime.intValue());
+        //FIXME: itt nem paraméterből kellene jönnie az értéknek?
+        return new GameEndSteps(store, store, 3);
     }
 
     @Bean
