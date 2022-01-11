@@ -9,6 +9,7 @@ public class UserStoreFake implements UserStore {
 
     public boolean hasGameWithUser = false;
     public boolean hasGameWithUserAndToken = false;
+    public boolean canNewPlayerStartGame = true;
     public List<String> usernameList;
     public String hasGameWithUserAndTokenUsername, storePointUserName;
     public String token;
@@ -60,5 +61,12 @@ public class UserStoreFake implements UserStore {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.addPlayerIntoScoreBoardUsername = username;
+    }
+
+    @Override
+    public boolean canNewPlayerStartGame() {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        return this.canNewPlayerStartGame;
     }
 }

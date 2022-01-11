@@ -80,7 +80,7 @@ public class MainConfiguration {
 
     @Bean
     public GameEndSteps gameEndSteps(StoreImpl store, @Value("${tetris.deadRowIndex}") Long gameTickTime) {
-        return new GameEndSteps(store, store, 3);
+        return new GameEndSteps(store, store, gameTickTime.intValue());
     }
 
     @Bean
@@ -90,9 +90,9 @@ public class MainConfiguration {
     }
 
     @Bean
-    public StoreImpl gameStore() {
+    public StoreImpl gameStore(@Value("${tetris.maxUserNum}") int maxUserNum) {
         return new StoreImpl(new CopyOnWriteArrayList<>(),
-                new CopyOnWriteArrayList<>());
+                new CopyOnWriteArrayList<>(), maxUserNum);
     }
 
     @Bean

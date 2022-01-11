@@ -8,6 +8,8 @@ public interface UserStore {
 
     boolean hasGameWithUserAndToken(String username, String token);
 
+    boolean canNewPlayerStartGame();
+
     List<String> findUsernames();
 
     void storePoint(String username, Long point);

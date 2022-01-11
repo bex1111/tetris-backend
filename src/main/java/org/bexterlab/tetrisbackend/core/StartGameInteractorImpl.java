@@ -12,6 +12,7 @@ import org.bexterlab.tetrisbackend.entity.User;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
@@ -31,6 +32,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     }
 
     public String start(String username) {
+        checkUserLimitReached();
         validateUserName(username);
         checkPlayHasAlreadyAGame(username);
         Game game = createNewGame(username);
@@ -64,6 +66,12 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private void validateUserName(String username) {
         if (!username.matches(USER_NAME_VALIDATOR_REGEXP)) {
             throw new InvalidUsernameException();
+        }
+    }
+
+    private void checkUserLimitReached() {
+        if (!userStore.canNewPlayerStartGame()) {
+            throw new MaxUserCountReachedException();
         }
     }
 }

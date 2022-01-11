@@ -2,6 +2,7 @@ package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
+import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.mock.AsyncGameRunnerInteractorSpy;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
@@ -56,5 +57,18 @@ class StartGameInteractorImplTest {
                                 .allMatch(y -> y == TrackElement.EMPTY)),
                 Arrays.deepToString(gameStore.game.track()));
         Assertions.assertTrue(asyncGameHandler.isStartGameCalled);
+    }
+
+    @Test
+    public void newPlayerCanStartGameWhenPlayerNumberIsUnderLimit() {
+        userStore.canNewPlayerStartGame = true;
+        String token = startGameInteractor.start("valid_user");
+        Assertions.assertNotNull(token);
+    }
+
+    @Test
+    public void newPlayerCanNotStartGameWhenPlayerNumberReachedMaxLimit() {
+        userStore.canNewPlayerStartGame = false;
+        Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
     }
 }
