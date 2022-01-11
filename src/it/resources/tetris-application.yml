@@ -4,7 +4,7 @@ server:
 tetris:
   gameTickTime: 200
   deadRowIndex: 3
-  maxUserNum: 30
+  maxUserCount: 30
 
 #logging:
 #  level:

@@ -1,4 +1,4 @@
 tetris:
   gameTickTime: 500
   deadRowIndex: 3
-  maxUserNum: 30
+  maxUserCount: 30

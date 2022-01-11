@@ -90,9 +90,9 @@ public class MainConfiguration {
     }
 
     @Bean
-    public StoreImpl gameStore(@Value("${tetris.maxUserNum}") int maxUserNum) {
+    public StoreImpl gameStore(@Value("${tetris.maxUserCount}") int maxUserCount) {
         return new StoreImpl(new CopyOnWriteArrayList<>(),
-                new CopyOnWriteArrayList<>(), maxUserNum);
+                new CopyOnWriteArrayList<>(), maxUserCount);
     }
 
     @Bean
