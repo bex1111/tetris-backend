@@ -6,6 +6,7 @@ import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.slf4j.Logger;
 
 import javax.websocket.*;
+import java.io.IOException;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -19,11 +20,15 @@ public class WebsocketClientEndpoint {
     public WebsocketClientEndpoint(URI endpointURI, ObjectMapper objectMapper, Logger logger) {
         this.objectMapper = objectMapper;
         this.logger = logger;
+        connectToServer(endpointURI);
+    }
+
+    private void connectToServer(URI endpointURI) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
             container.connectToServer(this, endpointURI);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException | DeploymentException e) {
+            throw new AssertionError(e);
         }
     }
 

@@ -36,7 +36,7 @@ public class RestHelper {
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
     }
 
-    public <T> void callControlWithTestUserAndToken(String username, String token, T movement) {
+    public <T> ResponseEntity<Void> callControlWithTestUserAndToken(String username, String token, T movement) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(
                 new MultiValueMapAdapter<>(Map.of("x-username", List.of(username),
                         "x-token", List.of(token))));
@@ -47,6 +47,7 @@ public class RestHelper {
                         .toUri(),
                 HttpMethod.POST, httpEntity, Void.class);
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
+        return responseEntity;
     }
 
 

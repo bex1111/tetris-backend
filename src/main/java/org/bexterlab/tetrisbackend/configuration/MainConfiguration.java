@@ -32,12 +32,18 @@ public class MainConfiguration {
                                                       StoreImpl store,
                                                       Logger logger,
                                                       WebsocketHandler trackSender,
-                                                      @Value("${tetris.gameTickTime}") Long gameTickTime) {
+                                                      Delayer delayer) {
         return new AsyncGameRunnerInteractor(trackSender,
                 Executors.newSingleThreadExecutor(),
                 gameIntercator, store,
-                logger, new Delayer(gameTickTime, logger));
+                logger, delayer);
     }
+
+    @Bean
+    public Delayer delayer(Logger logger, @Value("${tetris.gameTickTime}") Long gameTickTime) {
+        return new Delayer(gameTickTime, logger);
+    }
+
 
     @Bean
     public WebsocketHandler websocketHandler(Logger logger,
@@ -79,8 +85,8 @@ public class MainConfiguration {
     }
 
     @Bean
-    public GameEndSteps gameEndSteps(StoreImpl store, @Value("${tetris.deadRowIndex}") Long gameTickTime) {
-        return new GameEndSteps(store, store, 3);
+    public GameEndSteps gameEndSteps(StoreImpl store, @Value("${tetris.deadRowIndex}") Integer deadRowIndex) {
+        return new GameEndSteps(store, store, deadRowIndex);
     }
 
     @Bean
