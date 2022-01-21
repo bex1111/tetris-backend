@@ -57,8 +57,8 @@ class GameEndStepsTest {
         Assertions.assertEquals(username, userStoreFake.addPlayerIntoScoreBoardUsername);
 
         final List<String> callMethodOrder = List.of("findTrackByUser",
-                "removeGame",
-                "addPlayerIntoScoreBoard");
+                "addPlayerIntoScoreBoard",
+                "removeGame");
         Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 }

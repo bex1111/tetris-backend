@@ -21,8 +21,8 @@ public class GameEndSteps {
     public void execute(String username) {
         TrackElement[][] track = gameStore.findTrackByUser(username);
         if (isGameFinish(track)) {
-            gameStore.removeGame(username);
             userStore.addPlayerIntoScoreBoard(username);
+            gameStore.removeGame(username);
         }
 
     }
