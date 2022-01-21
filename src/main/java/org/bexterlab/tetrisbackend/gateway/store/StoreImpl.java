@@ -18,14 +18,11 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     private final CopyOnWriteArrayList<Game> gameList;
     private final CopyOnWriteArrayList<User> scoreBoard;
-    private final int maxUserCount;
 
     public StoreImpl(CopyOnWriteArrayList<Game> gameList,
-                     CopyOnWriteArrayList<User> scoreBoard,
-                     int maxUserCount) {
+                     CopyOnWriteArrayList<User> scoreBoard) {
         this.gameList = gameList;
         this.scoreBoard = scoreBoard;
-        this.maxUserCount = maxUserCount;
     }
 
     @Override
@@ -132,12 +129,8 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public boolean canNewPlayerStartGame() {
-        if (gameList.size() >= maxUserCount) {
-            long actualUserCount = gameList.stream().map(game -> game.user().username()).distinct().count();
-            return actualUserCount < maxUserCount;
-        }
-        return true;
+    public long getUserCount() {
+        return gameList.stream().map(game -> game.user().username()).distinct().count();
     }
 
     private Game findGameByUsername(String username) {

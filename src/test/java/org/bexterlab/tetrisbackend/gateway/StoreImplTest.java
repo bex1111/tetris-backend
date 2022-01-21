@@ -12,13 +12,11 @@ import org.bexterlab.tetrisbackend.entity.User;
 
 class StoreImplTest {
 
-    private final int maxUserLimit = 30;
     private StoreImpl gameStore;
 
     @BeforeEach
     void setUp() {
-        gameStore = new StoreImpl(new CopyOnWriteArrayList<>(),
-                new CopyOnWriteArrayList<>(), maxUserLimit);
+        gameStore = new StoreImpl(new CopyOnWriteArrayList<>(), new CopyOnWriteArrayList<>());
     }
 
     @Test
@@ -35,19 +33,21 @@ class StoreImplTest {
     }
 
     @Test
-    public void canNewPlayerStartGameTestWhenUserCountUnderLimitSingleGame() {
+    public void testUserCountWhenPlayersHaveOneGames() {
+        long expectedUserCount = 29;
         User user;
         for (int i = 0; i < 29; i++) { // berakunk 29 különböző nevű játékost 1-1 játékkal
             user = new User("valid_user_" + i, "token", 0L);
             gameStore.createNewGame(new Game(user, null, null, null));
         }
-        boolean canBeNewPlayerAdded = gameStore.canNewPlayerStartGame();
+        long actualUserCount = gameStore.getUserCount();
 
-        Assertions.assertTrue(canBeNewPlayerAdded);
+        Assertions.assertEquals(expectedUserCount, actualUserCount);
     }
 
     @Test
-    public void canNewPlayerStartGameTestWhenUserCountUnderLimitMultipleGames() {
+    public void testUserCountWhenPlayersHaveMultipleGames() {
+        long expectedUserCount = 3;
         User user1 = new User("valid_user_1", "token", 0L);
         User user2 = new User("valid_user_2", "token", 0L);
         User user3 = new User("valid_user_3", "token", 0L);
@@ -57,34 +57,9 @@ class StoreImplTest {
             gameStore.createNewGame(new Game(user3, null, null, null));
         }
 
-        boolean canBeNewPlayerAdded = gameStore.canNewPlayerStartGame();
+        long actualUserCount = gameStore.getUserCount();
 
-        Assertions.assertTrue(canBeNewPlayerAdded);
+        Assertions.assertEquals(expectedUserCount, actualUserCount);
     }
 
-    @Test
-    public void canNewPlayerStartGameTestWhenMaxUserCountReached() {
-        User user;
-        for (int i = 0; i < maxUserLimit; i++) { // berakunk max limitnyi különböző nevű játékost 1-1 játékkal
-            user = new User("valid_user_" + i, "token", 0L);
-            gameStore.createNewGame(new Game(user, null, null, null));
-        }
-
-        boolean canBeNewPlayerAdded = gameStore.canNewPlayerStartGame();
-
-        Assertions.assertFalse(canBeNewPlayerAdded);
-    }
-
-    @Test
-    public void canNewPlayerStartGameTestWhenUserCountGreaterThenUserLimit() {
-        User user;
-        for (int i = 0; i < maxUserLimit + 5; i++) { // berakunk max limit + 5 különböző nevű játékost 1-1 játékkal
-            user = new User("valid_user_" + i, "token", 0L);
-            gameStore.createNewGame(new Game(user, null, null, null));
-        }
-
-        boolean canBeNewPlayerAdded = gameStore.canNewPlayerStartGame();
-
-        Assertions.assertFalse(canBeNewPlayerAdded);
-    }
 }

@@ -22,13 +22,16 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private final GameStore gameStore;
     private final UserStore userStore;
     private final AsyncGameRunnerInteractor asyncGameRunnerInteractor;
+    private final long maxUserCount;
 
     public StartGameInteractorImpl(GameStore gameStore,
                                    UserStore userStore,
-                                   AsyncGameRunnerInteractor asyncGameRunnerInteractor) {
+                                   AsyncGameRunnerInteractor asyncGameRunnerInteractor,
+                                   long maxUserCount) {
         this.gameStore = gameStore;
         this.userStore = userStore;
         this.asyncGameRunnerInteractor = asyncGameRunnerInteractor;
+        this.maxUserCount = maxUserCount;
     }
 
     public String start(String username) {
@@ -70,7 +73,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     }
 
     private void checkUserLimitReached() {
-        if (!userStore.canNewPlayerStartGame()) {
+        if (userStore.getUserCount() >= maxUserCount) {
             throw new MaxUserCountReachedException();
         }
     }

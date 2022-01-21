@@ -8,7 +8,7 @@ public interface UserStore {
 
     boolean hasGameWithUserAndToken(String username, String token);
 
-    boolean canNewPlayerStartGame();
+    long getUserCount();
 
     List<String> findUsernames();
 

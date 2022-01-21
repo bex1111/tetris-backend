@@ -53,8 +53,9 @@ public class MainConfiguration {
 
     @Bean
     public StartGameInteractorImpl startGameInteractor(StoreImpl store,
-                                                       AsyncGameRunnerInteractor asyncGameRunnerInteractor) {
-        return new StartGameInteractorImpl(store, store, asyncGameRunnerInteractor);
+                                                       AsyncGameRunnerInteractor asyncGameRunnerInteractor,
+                                                       @Value("${tetris.maxUserCount}") long maxUserCount) {
+        return new StartGameInteractorImpl(store, store, asyncGameRunnerInteractor, maxUserCount);
     }
 
     @Bean
@@ -91,9 +92,8 @@ public class MainConfiguration {
     }
 
     @Bean
-    public StoreImpl gameStore(@Value("${tetris.maxUserCount}") int maxUserCount) {
-        return new StoreImpl(new CopyOnWriteArrayList<>(),
-                new CopyOnWriteArrayList<>(), maxUserCount);
+    public StoreImpl gameStore() {
+        return new StoreImpl(new CopyOnWriteArrayList<>(), new CopyOnWriteArrayList<>());
     }
 
     @Bean

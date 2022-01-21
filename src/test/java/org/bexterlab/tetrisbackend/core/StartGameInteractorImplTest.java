@@ -16,6 +16,7 @@ import java.util.Arrays;
 
 class StartGameInteractorImplTest {
 
+    private final long maxUserLimit = 30;
     private GameStoreFake gameStore;
     private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
@@ -26,7 +27,7 @@ class StartGameInteractorImplTest {
         gameStore = new GameStoreFake();
         userStore = new UserStoreFake();
         asyncGameHandler = new AsyncGameRunnerInteractorSpy();
-        startGameInteractor = new StartGameInteractorImpl(gameStore, userStore, asyncGameHandler);
+        startGameInteractor = new StartGameInteractorImpl(gameStore, userStore, asyncGameHandler, maxUserLimit);
     }
 
     @Test
@@ -61,14 +62,20 @@ class StartGameInteractorImplTest {
 
     @Test
     public void newPlayerCanStartGameWhenPlayerNumberIsUnderLimit() {
-        userStore.canNewPlayerStartGame = true;
+        userStore.userCount = 29;
         String token = startGameInteractor.start("valid_user");
         Assertions.assertNotNull(token);
     }
 
     @Test
+    public void newPlayerCanNotStartGameWhenPlayerNumberEqualsLimit() {
+        userStore.userCount = 30;
+        Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
+    }
+
+    @Test
     public void newPlayerCanNotStartGameWhenPlayerNumberReachedMaxLimit() {
-        userStore.canNewPlayerStartGame = false;
+        userStore.userCount = 31;
         Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
     }
 }
