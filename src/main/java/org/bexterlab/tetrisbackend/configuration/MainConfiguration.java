@@ -110,5 +110,4 @@ public class MainConfiguration {
     public ControlInteractor controlInteractor(MovementStore movementStore, UserStore userStore) {
         return new ControlInteractorImpl(movementStore, userStore);
     }
-
 }

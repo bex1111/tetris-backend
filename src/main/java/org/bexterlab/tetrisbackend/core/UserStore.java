@@ -13,6 +13,6 @@ public interface UserStore {
     List<String> findUsernames();
 
     void storePoint(String username, Long point);
-    
+
     void addPlayerIntoScoreBoard(String username);
 }
