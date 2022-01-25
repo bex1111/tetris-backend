@@ -130,7 +130,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     @Override
     public long getUserCount() {
-        return gameList.stream().map(game -> game.user().username()).distinct().count();
+        return gameList.size();
     }
 
     private Game findGameByUsername(String username) {
