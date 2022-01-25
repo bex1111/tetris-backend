@@ -41,15 +41,20 @@ public class StartGameInteractorImpl implements StartGameInteractor {
         Game game = createNewGame(username);
         gameStore.createNewGame(game);
         asyncGameRunnerInteractor.startGame();
-        return game.user().token();
+        return game.getUser().getToken();
     }
 
     private Game createNewGame(String username) {
-        return new Game(new User(username,
-                UUID.randomUUID().toString(),
-                0L),
-                createEmptyTrack(), new ConcurrentLinkedQueue<>(),
-                new TetrisElements(new TetrisElementLottery().draw(), new TetrisElementLottery().draw()));
+        return new Game()
+            .setUser(new User()
+                    .setUsername(username)
+                    .setToken(UUID.randomUUID().toString())
+                    .setPoints(0L))
+                    .setTrack(createEmptyTrack())
+                    .setMovementQueue(new ConcurrentLinkedQueue<>())
+                                    .setTetrisElements(new TetrisElements()
+                                                        .setCurrent(new TetrisElementLottery().draw())
+                                                        .setNext(new TetrisElementLottery().draw()));
     }
 
     private TrackElement[][] createEmptyTrack() {

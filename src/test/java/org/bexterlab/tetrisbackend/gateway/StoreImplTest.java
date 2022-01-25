@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import org.bexterlab.tetrisbackend.entity.User;
 
 class StoreImplTest {
 
@@ -21,7 +20,7 @@ class StoreImplTest {
 
     @Test
     public void hasGameWithUserTest() {
-        Game game = new Game(null, null, null, null);
+        Game game = new Game();
         gameStore.createNewGame(game);
         Assertions.assertEquals(game, gameStore.getGames().get(0));
     }
@@ -35,10 +34,8 @@ class StoreImplTest {
     @Test
     public void testUserCountWhenPlayersHaveOneGames() {
         long expectedUserCount = 29;
-        User user;
         for (int i = 0; i < 29; i++) {
-            user = new User("valid_user_" + i, "token", 0L);
-            gameStore.createNewGame(new Game(user, null, null, null));
+            gameStore.createNewGame(new Game());
         }
         long actualUserCount = gameStore.getUserCount();
 

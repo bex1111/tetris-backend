@@ -1,10 +1,7 @@
 package org.bexterlab.tetrisbackend.gateway.socket;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
@@ -30,9 +27,10 @@ public class GameToSocketTextMapper {
 
     private List<TrackDto> maopGameToTrackDto(List<Game> games) {
         return games.stream().map(game ->
-                        new TrackDto(mapTrack(game.track()),
-                                game.tetrisElements().current(),
-                                game.tetrisElements().next()))
+                        new TrackDto()
+                            .setTrack(mapTrack(game.getTrack()))
+                            .setCurrent(game.getTetrisElements().getCurrent())
+                            .setNext(game.getTetrisElements().getNext()))
                 .collect(Collectors.toList());
     }
 
@@ -42,15 +40,12 @@ public class GameToSocketTextMapper {
             mappedTrack[i] = new TrackElementDto[track[i].length];
             for (int j = 0; j < track[i].length; j++) {
                 switch (track[i][j]) {
-                    case POINT -> {
-                        mappedTrack[i][j] = TrackElementDto.POINT;
-                    }
-                    case EMPTY -> {
-                        mappedTrack[i][j] = TrackElementDto.EMPTY;
-                    }
-                    default -> {
+                    case POINT:
+                        mappedTrack[i][j] = TrackElementDto.POINT; break;
+                    case EMPTY:
+                        mappedTrack[i][j] = TrackElementDto.EMPTY; break;
+                    default :
                         mappedTrack[i][j] = TrackElementDto.ELEMENT;
-                    }
                 }
             }
         }
@@ -63,11 +58,36 @@ public class GameToSocketTextMapper {
         ELEMENT;
     }
 
-    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-    @JsonSerialize
-    public record TrackDto(@JsonProperty("track") TrackElementDto[][] track,
-                           @JsonProperty("current") TetrisElement current,
-                           @JsonProperty("next") TetrisElement next) {
+    public class TrackDto {
+        private TrackElementDto[][] track;
+        private TetrisElement current;
+        private TetrisElement next;
 
+        public TetrisElement getCurrent() {
+            return current;
+        }
+
+        public TrackDto setCurrent(TetrisElement current) {
+            this.current = current;
+            return this;
+        }
+
+        public TetrisElement getNext() {
+            return next;
+        }
+
+        public TrackDto setNext(TetrisElement next) {
+            this.next = next;
+            return this;
+        }
+
+        public TrackElementDto[][] getTrack() {
+            return track;
+        }
+
+        public TrackDto setTrack(TrackElementDto[][] track) {
+            this.track = track;
+            return this;
+        }
     }
 }

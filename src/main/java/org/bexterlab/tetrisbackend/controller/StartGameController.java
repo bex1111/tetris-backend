@@ -20,6 +20,6 @@ public class StartGameController {
     @PostMapping("/startGame")
     public String startGame(@RequestBody StartGameDto startGameDto) {
         logger.info(startGameDto.toString());
-        return startGameInteractor.start(startGameDto.username());
+        return startGameInteractor.start(startGameDto.getUsername());
     }
 }

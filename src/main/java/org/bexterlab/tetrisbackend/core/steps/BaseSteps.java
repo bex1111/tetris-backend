@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.core.steps;
 
+import java.util.Objects;
 import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.move.Movement;
@@ -26,25 +27,21 @@ public class BaseSteps {
     }
 
     private TrackElement[][] controlElement(TrackElement[][] track, Movement movement) {
+        // fixme: legyen szebb
+        if (Objects.isNull(movement)) {
+            return  track;
+        }
         switch (movement) {
-            case null -> {
-                return track;
-            }
-            case ROTATE_RIGHT -> {
+            case ROTATE_RIGHT:
                 return tetrisStepFactory.rotateRight(track);
-            }
-            case ROTATE_LEFT -> {
+            case ROTATE_LEFT:
                 return tetrisStepFactory.rotateLeft(track);
-            }
-            case MOVE_RIGHT -> {
+            case MOVE_RIGHT:
                 return tetrisStepFactory.moveRight(track);
-            }
-            case MOVE_LEFT -> {
+            case MOVE_LEFT:
                 return tetrisStepFactory.moveLeft(track);
-            }
-            default -> {
+            default:
                 return track;
-            }
         }
     }
 }

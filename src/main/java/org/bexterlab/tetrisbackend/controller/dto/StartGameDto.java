@@ -1,6 +1,16 @@
 package org.bexterlab.tetrisbackend.controller.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record StartGameDto(@JsonProperty("username") String username) {
+public class StartGameDto {
+
+    private String username;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public StartGameDto setUsername(String username) {
+        this.username = username;
+        return this;
+    }
 }

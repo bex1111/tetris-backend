@@ -51,12 +51,12 @@ class StartGameInteractorImplTest {
     public void successTest() {
         userStore.hasGameWithUser = false;
         String token = startGameInteractor.start("valid_user");
-        Assertions.assertNotNull(token, gameStore.game.user().token());
-        Assertions.assertEquals("valid_user", gameStore.game.user().username());
-        Assertions.assertTrue(Arrays.stream(gameStore.game.track())
+        Assertions.assertNotNull(token, gameStore.game.getUser().getToken());
+        Assertions.assertEquals("valid_user", gameStore.game.getUser().getUsername());
+        Assertions.assertTrue(Arrays.stream(gameStore.game.getTrack())
                         .allMatch(x -> Arrays.stream(x)
                                 .allMatch(y -> y == TrackElement.EMPTY)),
-                Arrays.deepToString(gameStore.game.track()));
+                Arrays.deepToString(gameStore.game.getTrack()));
         Assertions.assertTrue(asyncGameHandler.isStartGameCalled);
     }
 

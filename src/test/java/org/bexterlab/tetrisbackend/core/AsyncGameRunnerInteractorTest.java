@@ -42,7 +42,7 @@ class AsyncGameRunnerInteractorTest {
     @Test
     void startGameTest() {
         gameStoreFake.hasGame = true;
-        gameStoreFake.game = new Game(null, null, null, null);
+        gameStoreFake.game = new Game();
         int callCount = 5;
         asyncGameRunnerInteractor.startGame();
         pollDelay()
@@ -78,7 +78,7 @@ class AsyncGameRunnerInteractorTest {
     void unexpectedGameStopExceptionTest() {
         trackSenderFake.exception = new RuntimeException("Hups");
         gameStoreFake.hasGame = true;
-        gameStoreFake.game = new Game(null, null, null, null);
+        gameStoreFake.game = new Game();
         asyncGameRunnerInteractor.startGame();
         await().pollDelay(gameTickTime * 2L, TimeUnit.MILLISECONDS)
                 .atMost(gameTickTime * 5L + 1L, TimeUnit.MILLISECONDS)

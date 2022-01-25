@@ -18,12 +18,12 @@ class GameToSocketTextMapperTest {
         Assertions.assertEquals("[{\"track\":[[\"EMPTY\"],[\"ELEMENT\"],[\"POINT\"]]," +
                         "\"current\":\"SQUARE\",\"next\":\"LEFT_PYRAMID\"}]",
                 new GameToSocketTextMapper(new MainConfiguration().objectMapper())
-                        .map(List.of(new Game(null,
-                                new TrackElement[][]{new TrackElement[]{TrackElement.EMPTY},
+                        .map(List.of(new Game()
+                            .setTrack(new TrackElement[][]{new TrackElement[]{TrackElement.EMPTY},
                                         new TrackElement[]{TrackElement.THREE_LONG_ELEMENT_MIDDLE_MIDDLE},
-                                        new TrackElement[]{TrackElement.POINT}},
-                                null,
-                                new TetrisElements(TetrisElement.SQUARE,
-                                        TetrisElement.LEFT_PYRAMID)))));
+                                        new TrackElement[]{TrackElement.POINT}})
+                            .setTetrisElements(new TetrisElements()
+                                    .setCurrent(TetrisElement.SQUARE)
+                                    .setNext(TetrisElement.LEFT_PYRAMID)))));
     }
 }

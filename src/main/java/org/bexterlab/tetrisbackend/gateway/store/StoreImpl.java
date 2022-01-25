@@ -27,7 +27,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     @Override
     public boolean hasGameWithUser(String username) {
-        return gameList.stream().anyMatch(x -> x.user().username().equals(username));
+        return gameList.stream().anyMatch(x -> x.getUser().getUsername().equals(username));
     }
 
     @Override
@@ -43,22 +43,24 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     @Override
     public void storeNewTetrisElement(String username, TetrisElement nextTetrisElement) {
         Game game = findGameByUsername(username);
-        gameList.add(new Game(game.user(),
-                game.track(),
-                game.movementQueue(),
-                new TetrisElements(
-                        game.tetrisElements().next(),
-                        nextTetrisElement)));
+        gameList.add(new Game()
+            .setUser(game.getUser())
+            .setTrack(game.getTrack())
+            .setMovementQueue(game.getMovementQueue())
+            .setTetrisElements(new TetrisElements()
+                                .setCurrent(game.getTetrisElements().getNext())
+                                .setNext(nextTetrisElement)));
         gameList.remove(game);
     }
 
     @Override
     public void storeNewTrack(String username, TrackElement[][] track) {
         Game game = findGameByUsername(username);
-        gameList.add(new Game(game.user(),
-                track,
-                game.movementQueue(),
-                game.tetrisElements()));
+        gameList.add(new Game()
+                .setUser(game.getUser())
+                .setTrack(track)
+                .setMovementQueue(game.getMovementQueue())
+                .setTetrisElements(game.getTetrisElements()));
         gameList.remove(game);
     }
 
@@ -74,58 +76,58 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     @Override
     public Movement findNextMovement(String username) {
-        return findGameByUsername(username).movementQueue().poll();
+        return findGameByUsername(username).getMovementQueue().poll();
     }
 
     @Override
     public TrackElement[][] findTrackByUser(String username) {
-        return findGameByUsername(username).track();
+        return findGameByUsername(username).getTrack();
     }
 
     @Override
     public TetrisElement findNextTetrisElement(String username) {
-        return findGameByUsername(username).tetrisElements().next();
+        return findGameByUsername(username).getTetrisElements().getNext();
     }
 
     @Override
     public boolean hasGameWithUserAndToken(String username, String token) {
         return gameList.stream()
-                .anyMatch(x -> x.user().username().equals(username) &&
-                        x.user().token().equals(token));
+                .anyMatch(x -> x.getUser().getUsername().equals(username) &&
+                        x.getUser().getToken().equals(token));
     }
 
     @Override
     public List<String> findUsernames() {
-        return gameList.stream().map(x -> x.user().username()).collect(Collectors.toList());
+        return gameList.stream().map(x -> x.getUser().getUsername()).collect(Collectors.toList());
     }
 
     @Override
     public void storePoint(String username, Long point) {
         Game game = findGameByUsername(username);
-        gameList.add(new Game(
-                new User(
-                        game.user().username(),
-                        game.user().token(),
-                        game.user().points() + point),
-                game.track(),
-                game.movementQueue(),
-                game.tetrisElements()));
+        gameList.add(new Game()
+            .setUser(new User()
+                    .setUsername(game.getUser().getUsername())
+                    .setToken(game.getUser().getToken())
+                    .setPoints(game.getUser().getPoints() + point))
+            .setTrack(game.getTrack())
+            .setMovementQueue(game.getMovementQueue())
+            .setTetrisElements(game.getTetrisElements()));
         gameList.remove(game);
     }
 
     @Override
     public void addPlayerIntoScoreBoard(String username) {
-        scoreBoard.add(findGameByUsername(username).user());
+        scoreBoard.add(findGameByUsername(username).getUser());
     }
 
     @Override
     public void addNew(String username, Movement movement) {
-        findGameByUsername(username).movementQueue().add(movement);
+        findGameByUsername(username).getMovementQueue().add(movement);
     }
 
     @Override
     public int count(String username) {
-        return findGameByUsername(username).movementQueue().size();
+        return findGameByUsername(username).getMovementQueue().size();
     }
 
     @Override
@@ -134,7 +136,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     private Game findGameByUsername(String username) {
-        return gameList.stream().filter(x -> x.user().username().equals(username))
+        return gameList.stream().filter(x -> x.getUser().getUsername().equals(username))
                 .findFirst().orElseThrow(() -> new AssertionError("Not find user"));
     }
 }

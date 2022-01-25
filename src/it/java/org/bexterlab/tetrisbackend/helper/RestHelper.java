@@ -25,7 +25,7 @@ public class RestHelper {
 
     public String callStartGameWithTestUser(String username) {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(HTTP_BASE_URL + "/startGame",
-                new StartGameDto(username), String.class);
+                new StartGameDto().setUsername(username), String.class);
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity.getBody());
         return responseEntity.getBody();

@@ -59,7 +59,7 @@ public class WebsocketClientEndpoint {
             List<GameToSocketTextMapper.TrackDto> trackDtoList =
                     objectMapper.readValue(message, new TypeReference<>() {
                     });
-            trackDtoList.forEach(x -> logTrackForDebug(x.track()));
+            trackDtoList.forEach(x -> logTrackForDebug(x.getTrack()));
         } catch (Exception e) {
             logger.error("handleFrame", e);
         }
@@ -71,15 +71,12 @@ public class WebsocketClientEndpoint {
             finalText.append("\n");
             for (GameToSocketTextMapper.TrackElementDto column : row) {
                 switch (column) {
-                    case EMPTY -> {
-                        finalText.append(" ");
-                    }
-                    case POINT -> {
-                        finalText.append("P");
-                    }
-                    case ELEMENT -> {
-                        finalText.append("E");
-                    }
+                    case EMPTY :
+                        finalText.append(" "); break;
+                    case POINT :
+                        finalText.append("P"); break;
+                    case ELEMENT :
+                        finalText.append("E"); break;
                 }
             }
         }
