@@ -128,6 +128,11 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
         return findGameByUsername(username).movementQueue().size();
     }
 
+    @Override
+    public long getUserCount() {
+        return gameList.size();
+    }
+
     private Game findGameByUsername(String username) {
         return gameList.stream().filter(x -> x.user().username().equals(username))
                 .findFirst().orElseThrow(() -> new AssertionError("Not find user"));

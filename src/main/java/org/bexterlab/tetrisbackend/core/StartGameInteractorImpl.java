@@ -12,6 +12,7 @@ import org.bexterlab.tetrisbackend.entity.User;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
@@ -21,16 +22,20 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private final GameStore gameStore;
     private final UserStore userStore;
     private final AsyncGameRunnerInteractor asyncGameRunnerInteractor;
+    private final long maxUserCount;
 
     public StartGameInteractorImpl(GameStore gameStore,
                                    UserStore userStore,
-                                   AsyncGameRunnerInteractor asyncGameRunnerInteractor) {
+                                   AsyncGameRunnerInteractor asyncGameRunnerInteractor,
+                                   long maxUserCount) {
         this.gameStore = gameStore;
         this.userStore = userStore;
         this.asyncGameRunnerInteractor = asyncGameRunnerInteractor;
+        this.maxUserCount = maxUserCount;
     }
 
     public String start(String username) {
+        checkUserLimitReached();
         validateUserName(username);
         checkPlayHasAlreadyAGame(username);
         Game game = createNewGame(username);
@@ -64,6 +69,12 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private void validateUserName(String username) {
         if (!username.matches(USER_NAME_VALIDATOR_REGEXP)) {
             throw new InvalidUsernameException();
+        }
+    }
+
+    private void checkUserLimitReached() {
+        if (userStore.getUserCount() >= maxUserCount) {
+            throw new MaxUserCountReachedException();
         }
     }
 }
