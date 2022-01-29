@@ -2,7 +2,6 @@ package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.core.exception.UnexpectedGameStopException;
 import org.bexterlab.tetrisbackend.exception.TetrisException;
-import org.slf4j.Logger;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;

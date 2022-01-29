@@ -4,7 +4,6 @@ import org.bexterlab.tetrisbackend.core.exception.CoreException;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
-import org.slf4j.Logger;
 
 public class GameIntercator {
 

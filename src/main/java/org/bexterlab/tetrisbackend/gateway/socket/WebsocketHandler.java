@@ -1,8 +1,8 @@
 package org.bexterlab.tetrisbackend.gateway.socket;
 
+import org.bexterlab.tetrisbackend.core.Logger;
 import org.bexterlab.tetrisbackend.core.TrackSender;
 import org.bexterlab.tetrisbackend.entity.Game;
-import org.slf4j.Logger;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -43,7 +43,7 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        logger.info("Connected " + session.toString());
+        logger.info("Connected " + session);
         socketDtoList.add(session);
     }
 

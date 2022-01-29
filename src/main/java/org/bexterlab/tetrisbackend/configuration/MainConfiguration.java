@@ -6,10 +6,10 @@ import org.bexterlab.tetrisbackend.core.*;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
+import org.bexterlab.tetrisbackend.gateway.log.LoggerImpl;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
 import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +23,8 @@ import java.util.concurrent.Executors;
 public class MainConfiguration {
 
     @Bean
-    public Logger logger() {
-        return LoggerFactory.getLogger("Tetris Logger");
+    public Logger logger(ObjectMapper objectMapper) {
+        return new LoggerImpl(LoggerFactory.getLogger("Tetris Logger"), objectMapper);
     }
 
     @Bean

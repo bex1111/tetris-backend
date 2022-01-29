@@ -1,7 +1,5 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.slf4j.Logger;
-
 public class Delayer {
 
     private final long gameTickTime;

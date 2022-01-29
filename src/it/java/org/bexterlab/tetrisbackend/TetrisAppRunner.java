@@ -11,4 +11,8 @@ public class TetrisAppRunner {
         this.tetrisApp = SpringApplication.run(new Class[]{TetrisApplication.class},
                 new String[]{"--spring.config.location=src/it/resources/tetris-application.yml"});
     }
+
+    public void stop() {
+        tetrisApp.stop();
+    }
 }

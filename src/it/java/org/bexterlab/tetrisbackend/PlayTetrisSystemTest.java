@@ -3,7 +3,9 @@ package org.bexterlab.tetrisbackend;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.gamer.GamerAppRunner;
 import org.bexterlab.tetrisbackend.helper.RestHelper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestClientResponseException;
@@ -14,11 +16,27 @@ import static org.bexterlab.tetrisbackend.TestConstants.TEST_USER;
 
 public class PlayTetrisSystemTest {
 
+    RestHelper restHelper;
+    TetrisAppRunner tetrisAppRunner;
+    GamerAppRunner gamerAppRunner;
+
+    @BeforeEach
+    void setUp() {
+        restHelper = new RestHelper();
+        tetrisAppRunner = new TetrisAppRunner();
+        gamerAppRunner = new GamerAppRunner();
+    }
+
+    @AfterEach
+    void tearDown() {
+        tetrisAppRunner.stop();
+        gamerAppRunner.stop();
+    }
+
     @Test
     void playWholeGameTestWithRandomMovement() throws InterruptedException {
-        final TetrisAppRunner tetrisAppRunner = new TetrisAppRunner();
-        final GamerAppRunner gamerAppRunner = new GamerAppRunner();
-        final RestHelper restHelper = new RestHelper();
+
+
         final String token = restHelper.callStartGameWithTestUser(TEST_USER);
 
         int responseStatus;
@@ -39,4 +57,5 @@ public class PlayTetrisSystemTest {
             return e.getRawStatusCode();
         }
     }
+
 }

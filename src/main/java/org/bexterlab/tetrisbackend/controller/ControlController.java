@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.controller;
 
+import org.bexterlab.tetrisbackend.core.Logger;
 import org.bexterlab.tetrisbackend.core.move.Movement;
-import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;

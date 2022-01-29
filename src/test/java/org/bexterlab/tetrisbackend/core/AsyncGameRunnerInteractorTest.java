@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.core;
 
 import org.awaitility.core.ConditionFactory;
-import org.bexterlab.tetrisbackend.configuration.MainConfiguration;
+import org.bexterlab.tetrisbackend.commonmock.LoggerSpy;
 import org.bexterlab.tetrisbackend.core.exception.UnexpectedGameStopException;
 import org.bexterlab.tetrisbackend.core.mock.*;
 import org.bexterlab.tetrisbackend.entity.Game;
@@ -34,7 +34,7 @@ class AsyncGameRunnerInteractorTest {
                 executorServiceSpy,
                 trackHandlerSpy,
                 gameStoreFake,
-                new MainConfiguration().logger(),
+                new LoggerSpy(),
                 new DelayerDummy(gameTickTime)
         );
     }
@@ -45,9 +45,9 @@ class AsyncGameRunnerInteractorTest {
         gameStoreFake.game = new Game();
         int callCount = 5;
         asyncGameRunnerInteractor.startGame();
-        pollDelay()
+        pollDelay().pollDelay(gameTickTime / 2, TimeUnit.MILLISECONDS)
                 .atLeast((callCount - 1L) * gameTickTime, TimeUnit.MILLISECONDS)
-                .atMost((callCount + 1L) * gameTickTime, TimeUnit.MILLISECONDS)
+                .atMost((callCount + 2L) * gameTickTime, TimeUnit.MILLISECONDS)
                 .until(() -> trackHandlerSpy.maintenanceCallCount.get() >= callCount);
         gameStoreFake.hasGame = false;
         Assertions.assertTrue(trackSenderFake

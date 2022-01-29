@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
+import org.bexterlab.tetrisbackend.commonmock.LoggerSpy;
 import org.bexterlab.tetrisbackend.core.mock.BaseStepsFake;
 import org.bexterlab.tetrisbackend.core.mock.GameEndStepsFake;
 import org.bexterlab.tetrisbackend.core.mock.NotTetrisElementInTrackStepsFake;
@@ -7,7 +8,6 @@ import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,7 +27,7 @@ class GameIntercatorTest {
                 new GameEndStepsFake(steps),
                 new NotTetrisElementInTrackStepsFake(steps),
                 new BaseStepsFake(steps),
-                LoggerFactory.getLogger("Tetris logger"));
+                new LoggerSpy());
     }
 
     @Test

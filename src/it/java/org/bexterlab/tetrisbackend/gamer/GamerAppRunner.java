@@ -11,4 +11,9 @@ public class GamerAppRunner {
         this.gamerApp = SpringApplication.run(new Class[]{GamerApplication.class},
                 new String[]{"--spring.config.location=src/it/resources/gamer-application.yml"});
     }
+
+
+    public void stop() {
+        gamerApp.stop();
+    }
 }

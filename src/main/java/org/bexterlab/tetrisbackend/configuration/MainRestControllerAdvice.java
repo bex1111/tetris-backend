@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.configuration;
 
+import org.bexterlab.tetrisbackend.core.Logger;
 import org.bexterlab.tetrisbackend.exception.TetrisException;
-import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

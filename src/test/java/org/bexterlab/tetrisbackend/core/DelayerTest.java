@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.configuration.MainConfiguration;
+import org.bexterlab.tetrisbackend.commonmock.LoggerSpy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class DelayerTest {
 
     @Test
     void delayTest() {
-        final Delayer delayer = new Delayer(TICK_TIME, new MainConfiguration().logger());
+        final Delayer delayer = new Delayer(TICK_TIME, new LoggerSpy());
         final long timeout = 100L;
         Assertions.assertTimeout(Duration.ofMillis(timeout * 2), () -> repeatDelay(timeout, delayer));
     }
