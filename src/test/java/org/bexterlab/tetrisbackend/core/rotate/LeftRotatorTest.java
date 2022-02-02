@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.core.rotate;
 
+import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.exception.CanNotRotateException;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
@@ -11,16 +12,17 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class LeftRotatorTest {
 
-    private LeftRotator leftRotator;
+    private TetrisStepFactory tetrisStepFactory;
 
     @BeforeEach
     void setUp() {
-        leftRotator = new LeftRotator();
+        tetrisStepFactory = new TetrisStepFactory();
     }
+
 
     @Test
     void rotateThreeLongElement1Test() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
@@ -35,7 +37,7 @@ class LeftRotatorTest {
 
     @Test
     void rotateThreeLongElement2Test() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_LEFT, EMPTY, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY}
@@ -50,7 +52,7 @@ class LeftRotatorTest {
 
     @Test
     void rotateThreeLongElement3Test() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_DOWN_LEFT, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
@@ -65,7 +67,7 @@ class LeftRotatorTest {
 
     @Test
     void rotateThreeLongElement4Test() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_LEFT, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
                 new TrackElement[]{EMPTY, EMPTY, THREE_LONG_ELEMENT_DOWN_RIGHT}
@@ -80,7 +82,7 @@ class LeftRotatorTest {
 
     @Test
     void rotateSquareTest() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
@@ -97,7 +99,7 @@ class LeftRotatorTest {
 
     @Test
     void canNotRotateThreeLongElementNoSpaceTest() {
-        Assertions.assertThrows(CanNotRotateException.class, () -> leftRotator.rotate(new TrackElement[][]{
+        Assertions.assertThrows(CanNotRotateException.class, () -> tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
@@ -106,7 +108,7 @@ class LeftRotatorTest {
 
     @Test
     void canNotRotateRightThreeLongCollideElementTest() {
-        Assertions.assertThrows(CanNotRotateException.class, () -> leftRotator.rotate(new TrackElement[][]{
+        Assertions.assertThrows(CanNotRotateException.class, () -> tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{POINT, THREE_LONG_ELEMENT_UP_MIDDLE, THREE_LONG_ELEMENT_UP_RIGHT},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}
@@ -115,7 +117,7 @@ class LeftRotatorTest {
 
     @Test
     void rotateThreeLongLElementWithPointInTheTrackTest() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_DOWN_LEFT, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY},
@@ -132,7 +134,7 @@ class LeftRotatorTest {
 
     @Test
     void rotatePyramidElementTest() {
-        TrackElement[][] actualTrack = leftRotator.rotate(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.rotateLeft(new TrackElement[][]{
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_MIDDLE_MIDDLE, THREE_LONG_ELEMENT_MIDDLE_RIGHT},
                 new TrackElement[]{EMPTY, THREE_LONG_ELEMENT_DOWN_MIDDLE, EMPTY}

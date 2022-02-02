@@ -6,7 +6,13 @@
 
 ## Mutation test
 
+### First run
+
 `mvn clean install -DskipTests && mvn org.pitest:pitest-maven:mutationCoverage`
+
+### Second and after
+
+`mvn install -DskipTests && mvn -DwithHistory org.pitest:pitest-maven:mutationCoverage`
 
 # Elements:
 

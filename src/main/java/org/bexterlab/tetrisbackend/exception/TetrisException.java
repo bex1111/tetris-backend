@@ -13,9 +13,4 @@ public abstract class TetrisException extends RuntimeException {
         super(message, cause);
         this.errorMessage = message;
     }
-
-    public TetrisException(Throwable cause) {
-        super(cause);
-        this.errorMessage = "EMPTY";
-    }
 }

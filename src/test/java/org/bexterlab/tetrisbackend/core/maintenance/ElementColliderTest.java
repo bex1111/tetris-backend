@@ -1,6 +1,8 @@
 package org.bexterlab.tetrisbackend.core.maintenance;
 
+import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
@@ -8,10 +10,16 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class ElementColliderTest {
 
+    private TetrisStepFactory tetrisStepFactory;
+
+    @BeforeEach
+    void setUp() {
+        tetrisStepFactory = new TetrisStepFactory();
+    }
+
     @Test
     void collideTest() {
-        ElementCollider elementCollider = new ElementCollider();
-        TrackElement[][] actualTrack = elementCollider.collide(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.collideElement(new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{POINT, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{POINT, POINT, POINT, POINT},
@@ -30,8 +38,7 @@ class ElementColliderTest {
 
     @Test
     void notCollideTest() {
-        ElementCollider elementCollider = new ElementCollider();
-        TrackElement[][] actualTrack = elementCollider.collide(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.collideElement(new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{POINT, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
@@ -50,8 +57,7 @@ class ElementColliderTest {
 
     @Test
     void lastRowCollideTest() {
-        ElementCollider elementCollider = new ElementCollider();
-        TrackElement[][] actualTrack = elementCollider.collide(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.collideElement(new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},

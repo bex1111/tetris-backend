@@ -12,8 +12,4 @@ public abstract class CoreException extends TetrisException {
         super(errorMessage, cause);
 
     }
-
-    public CoreException(Throwable cause) {
-        super(cause);
-    }
 }

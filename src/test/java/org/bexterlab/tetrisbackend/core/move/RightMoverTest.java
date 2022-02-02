@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.core.move;
 
+import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,16 +11,16 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class RightMoverTest {
 
-    RightMover rightMover;
+    private TetrisStepFactory tetrisStepFactory;
 
     @BeforeEach
     void setUp() {
-        rightMover = new RightMover();
+        tetrisStepFactory = new TetrisStepFactory();
     }
 
     @Test
     void moveRight() {
-        TrackElement[][] actualTrack = rightMover.moveRight(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.moveRight(new TrackElement[][]{
                 new TrackElement[]{SQUARE_POINT, EMPTY},
                 new TrackElement[]{POINT, EMPTY}
         });
@@ -38,7 +39,7 @@ class RightMoverTest {
                 new TrackElement[]{POINT, EMPTY}
         };
 
-        Assertions.assertThrows(CanNotMoveException.class, () -> rightMover.moveRight(actualTrack));
+        Assertions.assertThrows(CanNotMoveException.class, () -> tetrisStepFactory.moveRight(actualTrack));
         TrackElement[][] expectedTrack = new TrackElement[][]{
                 new TrackElement[]{SQUARE_POINT, EMPTY},
                 new TrackElement[]{EMPTY, SQUARE_POINT},
@@ -55,7 +56,7 @@ class RightMoverTest {
                 new TrackElement[]{POINT, EMPTY}
         };
 
-        Assertions.assertThrows(CanNotMoveException.class, () -> rightMover.moveRight(actualTrack));
+        Assertions.assertThrows(CanNotMoveException.class, () -> tetrisStepFactory.moveRight(actualTrack));
         TrackElement[][] expectedTrack = new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT},
                 new TrackElement[]{POINT, SQUARE_POINT},
@@ -72,6 +73,6 @@ class RightMoverTest {
         TrackElement[][] expectedTrack = new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT}
         };
-        assertTwoTrack(expectedTrack, rightMover.moveRight(actualTrack));
+        assertTwoTrack(expectedTrack, tetrisStepFactory.moveRight(actualTrack));
     }
 }

@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.core.exception.UnexpectedGameStopException;
 import org.bexterlab.tetrisbackend.exception.TetrisException;
+import org.bexterlab.tetrisbackend.exception.UnexpectedGameStopException;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -31,14 +31,14 @@ public class AsyncGameRunnerInteractor {
 
 
     public void startGame() {
-        if (hasARunningThread()) {
+        if (hasNotRunningThread()) {
             future = executor.submit(() -> {
                 try {
                     runGame();
                 } catch (TetrisException e) {
-                    logger.error("Good exception here: ", e);
+                    logger.error("Known exception while run game: ", e);
                 } catch (Throwable e) {
-                    logger.error("Bad exception here:", e);
+                    logger.error("Not known exception while run game: ", e);
                     throw new UnexpectedGameStopException(e);
                 }
                 return null;
@@ -46,7 +46,7 @@ public class AsyncGameRunnerInteractor {
         }
     }
 
-    private boolean hasARunningThread() {
+    private boolean hasNotRunningThread() {
         return isNull(future) || future.isDone();
     }
 

@@ -67,9 +67,11 @@
                         <version>0.14</version>
                     </dependency>
                 </dependencies>
-                <excludedClasses>
-                    org.bexterlab.tetrisbackend.configuration.MainConfiguration
-                </excludedClasses>
+                <configuration>
+                    <excludedClasses>
+                        <param>org.bexterlab.tetrisbackend.configuration.MainConfiguration</param>
+                    </excludedClasses>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

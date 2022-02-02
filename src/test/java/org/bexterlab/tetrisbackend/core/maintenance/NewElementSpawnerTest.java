@@ -1,6 +1,8 @@
 package org.bexterlab.tetrisbackend.core.maintenance;
 
+import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.bexterlab.tetrisbackend.core.TrackTestUtil.assertTwoTrack;
@@ -9,9 +11,16 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class NewElementSpawnerTest {
 
+    private TetrisStepFactory tetrisStepFactory;
+
+    @BeforeEach
+    void setUp() {
+        tetrisStepFactory = new TetrisStepFactory();
+    }
+
     @Test
     void spawnNewSquareTest() {
-        TrackElement[][] actualTrack = SQUARE.spawnNew(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.spawnNewElement(SQUARE, new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
@@ -29,7 +38,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementRightLTest() {
-        TrackElement[][] actualTrack = RIGHT_L.spawnNew(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.spawnNewElement(RIGHT_L, new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -44,7 +53,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementLeftLTest() {
-        TrackElement[][] actualTrack = LEFT_L.spawnNew(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.spawnNewElement(LEFT_L, new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -59,7 +68,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementRightPyramidTest() {
-        TrackElement[][] actualTrack = RIGHT_PYRAMID.spawnNew(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.spawnNewElement(RIGHT_PYRAMID, new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -74,7 +83,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementLeftPyramidTest() {
-        TrackElement[][] actualTrack = LEFT_PYRAMID.spawnNew(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.spawnNewElement(LEFT_PYRAMID, new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}
@@ -89,7 +98,7 @@ class NewElementSpawnerTest {
 
     @Test
     void spawnNewElementStraightTest() {
-        TrackElement[][] actualTrack = STRAIGHT.spawnNew(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.spawnNewElement(STRAIGHT, new TrackElement[][]{
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY, EMPTY, EMPTY}

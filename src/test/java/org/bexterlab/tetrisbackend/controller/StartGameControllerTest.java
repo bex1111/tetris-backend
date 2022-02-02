@@ -17,6 +17,6 @@ class StartGameControllerTest {
         StartGameDto startGameDto = new StartGameDto().setUsername(username);
         Assertions.assertEquals(startGameInteractor.token, startGameController.startGame(startGameDto));
         Assertions.assertEquals(username, startGameInteractor.username);
-        //FIXME nem egyenlő     Assertions.assertEquals(startGameDto, loggerSpy.object);
+        Assertions.assertEquals(startGameDto, loggerSpy.object);
     }
 }

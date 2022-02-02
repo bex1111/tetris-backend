@@ -79,7 +79,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
     }
 
     @Override
-    public TrackElement[][] spawnNewElement(TrackElement[][] track, TetrisElement tetrisElement) {
+    public TrackElement[][] spawnNewElement(TetrisElement tetrisElement, TrackElement[][] track) {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.spawnNewTetrisElement = tetrisElement;

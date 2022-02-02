@@ -1,7 +1,6 @@
-package org.bexterlab.tetrisbackend.configuration;
+package org.bexterlab.tetrisbackend.exception;
 
 import org.bexterlab.tetrisbackend.core.Logger;
-import org.bexterlab.tetrisbackend.exception.TetrisException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,14 +18,14 @@ public class MainRestControllerAdvice {
     @ExceptionHandler(TetrisException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleCoreException(TetrisException e) {
-        logger.error("Tetris exception occured: ", e);
+        logger.error("Tetris exception occurred: ", e);
         return e.errorMessage;
     }
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleOtherException(Throwable e) {
-        logger.error("Unexpected exception: ", e);
+        logger.error("Unexpected exception occurred: ", e);
         return "CALL_BARNA";
     }
 

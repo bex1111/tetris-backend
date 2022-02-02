@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.core.move;
 
+import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,16 +9,16 @@ import static org.bexterlab.tetrisbackend.core.move.TrackElement.*;
 
 class DownMoverTest {
 
-    private DownMover downMover;
+    private TetrisStepFactory tetrisStepFactory;
 
     @BeforeEach
     void setUp() {
-        downMover = new DownMover();
+        tetrisStepFactory = new TetrisStepFactory();
     }
 
     @Test
     void moveDownPoint2x1Test() {
-        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.moveDown(new TrackElement[][]{
                 new TrackElement[]{POINT},
                 new TrackElement[]{EMPTY}
         });
@@ -30,7 +31,7 @@ class DownMoverTest {
 
     @Test
     void moveDownPoint2x2Test() {
-        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.moveDown(new TrackElement[][]{
                 new TrackElement[]{POINT, POINT},
                 new TrackElement[]{EMPTY, POINT}
         });
@@ -43,7 +44,7 @@ class DownMoverTest {
 
     @Test
     void moveDownPoint4x2Test() {
-        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.moveDown(new TrackElement[][]{
                 new TrackElement[]{POINT, POINT},
                 new TrackElement[]{EMPTY, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY},
@@ -60,7 +61,7 @@ class DownMoverTest {
 
     @Test
     void moveDownElementTest() {
-        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.moveDown(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, EMPTY},
                 new TrackElement[]{EMPTY, EMPTY},
@@ -77,7 +78,7 @@ class DownMoverTest {
 
     @Test
     void moveDownElementAndPointTest() {
-        TrackElement[][] actualTrack = downMover.moveDown(new TrackElement[][]{
+        TrackElement[][] actualTrack = tetrisStepFactory.moveDown(new TrackElement[][]{
                 new TrackElement[]{THREE_LONG_ELEMENT_UP_MIDDLE, EMPTY},
                 new TrackElement[]{THREE_LONG_ELEMENT_MIDDLE_MIDDLE, POINT},
                 new TrackElement[]{EMPTY, EMPTY},

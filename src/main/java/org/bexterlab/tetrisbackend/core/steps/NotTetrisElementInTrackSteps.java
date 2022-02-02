@@ -24,7 +24,7 @@ public class NotTetrisElementInTrackSteps {
         TrackElement[][] track = gameStore.findTrackByUser(username);
         if (isNotTetrisElementInTheTrack(track)) {
             userStore.storePoint(username, tetrisStepFactory.countPoints(track));
-            track = tetrisStepFactory.spawnNewElement(track, gameStore.findNextTetrisElement(username));
+            track = tetrisStepFactory.spawnNewElement(gameStore.findNextTetrisElement(username), track);
             gameStore.storeNewTrack(username, track);
             gameStore.storeNewTetrisElement(username, tetrisStepFactory.drawTetrisElement());
         }

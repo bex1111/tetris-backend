@@ -2,7 +2,6 @@ package org.bexterlab.tetrisbackend.configuration;
 
 
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -11,10 +10,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 
 @Configuration
 @EnableWebSocket
-public class WebSocketConfig implements WebSocketConfigurer, WebSocketMessageBrokerConfigurer {
+public class WebSocketConfiguration implements WebSocketConfigurer, WebSocketMessageBrokerConfigurer {
 
-    @Autowired
-    private WebsocketHandler websocketHandler;
+
+    private final WebsocketHandler websocketHandler;
+
+    public WebSocketConfiguration(WebsocketHandler websocketHandler) {
+        this.websocketHandler = websocketHandler;
+    }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {

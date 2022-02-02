@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.UUID;
 
 class StartGameInteractorImplTest {
 
@@ -52,6 +53,7 @@ class StartGameInteractorImplTest {
         userStore.hasGameWithUser = false;
         String token = startGameInteractor.start("valid_user");
         Assertions.assertNotNull(token, gameStore.game.getUser().getToken());
+        Assertions.assertDoesNotThrow(() -> UUID.fromString(token));
         Assertions.assertEquals("valid_user", gameStore.game.getUser().getUsername());
         Assertions.assertTrue(Arrays.stream(gameStore.game.getTrack())
                         .allMatch(x -> Arrays.stream(x)

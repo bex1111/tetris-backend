@@ -4,6 +4,7 @@ import org.bexterlab.tetrisbackend.core.exception.CoreException;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
+import org.bexterlab.tetrisbackend.exception.UnexpectedGameStopException;
 
 public class GameIntercator {
 
@@ -40,7 +41,8 @@ public class GameIntercator {
         } catch (CoreException e) {
             logger.debug("Core exception occurred while maintenance track: ", e);
         } catch (Exception e) {
-            logger.error("Exception occurred while maintenance track: ", e);
+            logger.error("Unexpected Exception occurred while maintenance track: ", e);
+            throw new UnexpectedGameStopException(e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend.core.maintenance;
 
+import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Test;
 
@@ -10,8 +11,8 @@ class FullRowCleanerTest {
 
     @Test
     void clearRowTest() {
-        FullRowCleaner fullRowCleaner = new FullRowCleaner();
-        TrackElement[][] actualTrack = fullRowCleaner.clean(new TrackElement[][]{
+        TetrisStepFactory tetrisStepFactory = new TetrisStepFactory();
+        TrackElement[][] actualTrack = tetrisStepFactory.clearFullRow(new TrackElement[][]{
                 new TrackElement[]{EMPTY, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{POINT, SQUARE_POINT, SQUARE_POINT, EMPTY},
                 new TrackElement[]{POINT, POINT, POINT, POINT},

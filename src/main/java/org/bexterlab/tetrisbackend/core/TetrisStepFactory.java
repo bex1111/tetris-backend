@@ -39,7 +39,7 @@ public class TetrisStepFactory {
         return new FullRowCleaner().clean(track);
     }
 
-    public TrackElement[][] spawnNewElement(TrackElement[][] track, TetrisElement tetrisElement) {
+    public TrackElement[][] spawnNewElement(TetrisElement tetrisElement, TrackElement[][] track) {
         return tetrisElement.spawnNew(track);
     }
 
