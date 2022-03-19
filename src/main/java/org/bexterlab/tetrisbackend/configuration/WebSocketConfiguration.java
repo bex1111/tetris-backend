@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.configuration;
 
 
-import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
+import org.bexterlab.tetrisbackend.gateway.socket.WebsocketsHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -13,14 +13,14 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfiguration implements WebSocketConfigurer, WebSocketMessageBrokerConfigurer {
 
 
-    private final WebsocketHandler websocketHandler;
+    private final WebsocketsHandler websocketsHandler;
 
-    public WebSocketConfiguration(WebsocketHandler websocketHandler) {
-        this.websocketHandler = websocketHandler;
+    public WebSocketConfiguration(WebsocketsHandler websocketsHandler) {
+        this.websocketsHandler = websocketsHandler;
     }
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(websocketHandler, "/tetris").setAllowedOrigins("*");
+        webSocketHandlerRegistry.addHandler(websocketsHandler, "/tetris").setAllowedOrigins("*");
     }
 }

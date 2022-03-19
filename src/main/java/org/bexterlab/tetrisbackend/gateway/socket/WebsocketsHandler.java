@@ -13,16 +13,16 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-public class WebsocketHandler extends TextWebSocketHandler implements TrackSender {
+public class WebsocketsHandler extends TextWebSocketHandler implements TrackSender {
 
     // fixme test me
     private final CopyOnWriteArrayList<WebSocketSession> socketDtoList;
     private final GameToSocketTextMapper gameToSocketTextMapper;
     private final Logger logger;
 
-    public WebsocketHandler(CopyOnWriteArrayList<WebSocketSession> socketDtoList,
-                            GameToSocketTextMapper gameToSocketTextMapper,
-                            Logger logger) {
+    public WebsocketsHandler(CopyOnWriteArrayList<WebSocketSession> socketDtoList,
+                             GameToSocketTextMapper gameToSocketTextMapper,
+                             Logger logger) {
         this.socketDtoList = socketDtoList;
         this.gameToSocketTextMapper = gameToSocketTextMapper;
         this.logger = logger;
@@ -30,12 +30,12 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable throwable) throws Exception {
-        logger.error("Error occurred at sender " + session, throwable);
+        logger.error("Error occurred at sender! " + session, throwable);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        logger.info(String.format("Session %s closed because of %s", session.getId(), status.getReason()));
+        logger.info(String.format("Session %s closed because of %s close status code", session.getId(), status.getCode()));
         socketDtoList.removeAll(socketDtoList.stream()
                 .filter(x -> x.getId().equals(session.getId()))
                 .collect(Collectors.toList()));
@@ -50,8 +50,7 @@ public class WebsocketHandler extends TextWebSocketHandler implements TrackSende
     @Override
     public void sendTrackForUser(List<Game> games) {
         String gamesString = gameToSocketTextMapper.map(games);
-        socketDtoList
-                .forEach(x -> sendMessage(gamesString, x));
+        socketDtoList.forEach(x -> sendMessage(gamesString, x));
     }
 
     private void sendMessage(String text, WebSocketSession session) {

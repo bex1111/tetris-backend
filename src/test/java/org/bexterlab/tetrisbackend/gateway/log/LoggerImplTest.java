@@ -1,8 +1,9 @@
 package org.bexterlab.tetrisbackend.gateway.log;
 
-import org.bexterlab.tetrisbackend.configuration.MainConfiguration;
+import com.fasterxml.jackson.core.JsonParseException;
 import org.bexterlab.tetrisbackend.controller.dto.StartGameDto;
 import org.bexterlab.tetrisbackend.gateway.log.mock.LoggerSpy;
+import org.bexterlab.tetrisbackend.gateway.log.mock.ObjectMapperFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,14 @@ class LoggerImplTest {
 
     private LoggerImpl logger;
     private LoggerSpy loggerSpy;
+    private ObjectMapperFake objectMapperFake;
 
 
     @BeforeEach
     void setUp() {
         loggerSpy = new LoggerSpy();
-        logger = new LoggerImpl(loggerSpy, new MainConfiguration().objectMapper());
+        objectMapperFake = new ObjectMapperFake();
+        logger = new LoggerImpl(loggerSpy, objectMapperFake);
     }
 
     @Test
@@ -112,5 +115,13 @@ class LoggerImplTest {
         logger.error(List.of(new StartGameDto().setUsername("test")), runtimeException);
         Assertions.assertEquals(logString, loggerSpy.text);
         Assertions.assertEquals(runtimeException, loggerSpy.throwable);
+    }
+
+    @Test
+    void exceptionTest() {
+        objectMapperFake.jsonParseException = new JsonParseException(null, "hupsz");
+        Assertions.assertThrows(RuntimeException.class, () -> logger.info(new Object()));
+        loggerSpy.text = "Exception occurred while generate log message to string.";
+        Assertions.assertEquals(objectMapperFake.jsonParseException, loggerSpy.throwable);
     }
 }

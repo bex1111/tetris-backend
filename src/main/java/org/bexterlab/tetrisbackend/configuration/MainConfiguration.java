@@ -8,7 +8,7 @@ import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
 import org.bexterlab.tetrisbackend.gateway.log.LoggerImpl;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
-import org.bexterlab.tetrisbackend.gateway.socket.WebsocketHandler;
+import org.bexterlab.tetrisbackend.gateway.socket.WebsocketsHandler;
 import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +31,7 @@ public class MainConfiguration {
     public AsyncGameRunnerInteractor asyncGameHandler(GameIntercator gameIntercator,
                                                       StoreImpl store,
                                                       Logger logger,
-                                                      WebsocketHandler trackSender,
+                                                      WebsocketsHandler trackSender,
                                                       Delayer delayer) {
         return new AsyncGameRunnerInteractor(trackSender,
                 Executors.newSingleThreadExecutor(),
@@ -46,9 +46,9 @@ public class MainConfiguration {
 
 
     @Bean
-    public WebsocketHandler websocketHandler(Logger logger,
-                                             GameToSocketTextMapper gameToSocketTextMapper) {
-        return new WebsocketHandler(new CopyOnWriteArrayList<>(),
+    public WebsocketsHandler websocketHandler(Logger logger,
+                                              GameToSocketTextMapper gameToSocketTextMapper) {
+        return new WebsocketsHandler(new CopyOnWriteArrayList<>(),
                 gameToSocketTextMapper, logger);
     }
 

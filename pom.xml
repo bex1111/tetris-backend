@@ -70,6 +70,7 @@
                 <configuration>
                     <excludedClasses>
                         <param>org.bexterlab.tetrisbackend.configuration.MainConfiguration</param>
+                        <param>org.bexterlab.tetrisbackend.core.Delayer</param>
                     </excludedClasses>
                 </configuration>
             </plugin>

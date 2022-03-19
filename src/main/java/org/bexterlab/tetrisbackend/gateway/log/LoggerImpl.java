@@ -1,9 +1,8 @@
 package org.bexterlab.tetrisbackend.gateway.log;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bexterlab.tetrisbackend.core.Logger;
-
-import java.io.IOException;
 
 public class LoggerImpl implements Logger {
 
@@ -46,7 +45,7 @@ public class LoggerImpl implements Logger {
     private String convertObjectToString(Object info) {
         try {
             return objectMapper.writeValueAsString(info);
-        } catch (IOException e) {
+        } catch (JsonProcessingException e) {
             logger.error("Exception occurred while generate log message to string.", e);
             throw new RuntimeException(e);
         }
