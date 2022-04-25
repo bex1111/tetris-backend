@@ -16,17 +16,24 @@ import java.util.Map;
 
 import static java.util.Objects.nonNull;
 
-public class WebsocketSessionSpy implements WebSocketSession {
+public class WebsocketSessionFake implements WebSocketSession {
     public List<WebSocketMessage<?>> websocketMessageList;
     public IOException exception;
+    public String id;
 
-    public WebsocketSessionSpy() {
+    public WebsocketSessionFake() {
         this.websocketMessageList = new ArrayList<>();
+        id = "id";
+    }
+
+    public WebsocketSessionFake(String id) {
+        super();
+        this.id = id;
     }
 
     @Override
     public String getId() {
-        return "id";
+        return id;
     }
 
     @Override

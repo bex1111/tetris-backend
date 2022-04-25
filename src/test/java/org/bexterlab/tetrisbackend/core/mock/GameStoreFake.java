@@ -37,7 +37,7 @@ public class GameStoreFake implements GameStore {
     }
 
     @Override
-    public List<Game> getGames() {
+    public List<Game> findGames() {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         return List.of(game);

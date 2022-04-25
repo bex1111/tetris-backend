@@ -1,9 +1,9 @@
 package org.bexterlab.tetrisbackend.gateway.log;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import org.bexterlab.tetrisbackend.commonmock.ObjectMapperFake;
 import org.bexterlab.tetrisbackend.controller.dto.StartGameDto;
 import org.bexterlab.tetrisbackend.gateway.log.mock.LoggerSpy;
-import org.bexterlab.tetrisbackend.gateway.log.mock.ObjectMapperFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

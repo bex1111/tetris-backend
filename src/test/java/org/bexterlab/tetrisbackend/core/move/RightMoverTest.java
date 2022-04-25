@@ -51,15 +51,15 @@ class RightMoverTest {
     @Test
     void moveRightCollideTest() {
         TrackElement[][] actualTrack = new TrackElement[][]{
-                new TrackElement[]{EMPTY, SQUARE_POINT},
-                new TrackElement[]{POINT, SQUARE_POINT},
+                new TrackElement[]{SQUARE_POINT, EMPTY},
+                new TrackElement[]{SQUARE_POINT, POINT},
                 new TrackElement[]{POINT, EMPTY}
         };
 
         Assertions.assertThrows(CanNotMoveException.class, () -> tetrisStepFactory.moveRight(actualTrack));
         TrackElement[][] expectedTrack = new TrackElement[][]{
-                new TrackElement[]{EMPTY, SQUARE_POINT},
-                new TrackElement[]{POINT, SQUARE_POINT},
+                new TrackElement[]{SQUARE_POINT, EMPTY},
+                new TrackElement[]{SQUARE_POINT, POINT},
                 new TrackElement[]{POINT, EMPTY}
         };
         assertTwoTrack(expectedTrack, actualTrack);

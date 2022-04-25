@@ -2,6 +2,7 @@ package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
+import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElementLottery;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
@@ -12,7 +13,6 @@ import org.bexterlab.tetrisbackend.entity.User;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
@@ -46,15 +46,15 @@ public class StartGameInteractorImpl implements StartGameInteractor {
 
     private Game createNewGame(String username) {
         return new Game()
-            .setUser(new User()
-                    .setUsername(username)
-                    .setToken(UUID.randomUUID().toString())
-                    .setPoints(0L))
-                    .setTrack(createEmptyTrack())
-                    .setMovementQueue(new ConcurrentLinkedQueue<>())
-                                    .setTetrisElements(new TetrisElements()
-                                                        .setCurrent(new TetrisElementLottery().draw())
-                                                        .setNext(new TetrisElementLottery().draw()));
+                .setUser(new User()
+                        .setUsername(username)
+                        .setToken(UUID.randomUUID().toString())
+                        .setPoints(0L))
+                .setTrack(createEmptyTrack())
+                .setMovementQueue(new ConcurrentLinkedQueue<>())
+                .setTetrisElements(new TetrisElements()
+                        .setCurrent(new TetrisElementLottery().draw()) //FIXME from factory
+                        .setNext(new TetrisElementLottery().draw()));//FIXME from factory
     }
 
     private TrackElement[][] createEmptyTrack() {
@@ -78,7 +78,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     }
 
     private void checkUserLimitReached() {
-        if (userStore.getUserCount() >= maxUserCount) {
+        if (userStore.countUser() >= maxUserCount) {
             throw new MaxUserCountReachedException();
         }
     }

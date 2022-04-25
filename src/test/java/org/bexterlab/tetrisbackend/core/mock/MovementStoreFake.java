@@ -30,7 +30,7 @@ public class MovementStoreFake implements MovementStore {
     }
 
     @Override
-    public int count(String username) {
+    public int countMovement(String username) {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         return movementCount;

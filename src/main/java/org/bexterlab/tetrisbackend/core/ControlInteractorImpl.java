@@ -21,7 +21,7 @@ public class ControlInteractorImpl implements ControlInteractor {
         if (!userStore.hasGameWithUserAndToken(username, token)) {
             throw new NotYourGameException();
         }
-        if (movementStore.count(username) > 30) {
+        if (movementStore.countMovement(username) > 30) {
             throw new TooManyMovementException();
         }
         movementStore.addNew(username, movement);

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 public class WebsocketsHandler extends TextWebSocketHandler implements TrackSender {
 
-    // fixme test me
     private final CopyOnWriteArrayList<WebSocketSession> socketDtoList;
     private final GameToSocketTextMapper gameToSocketTextMapper;
     private final Logger logger;

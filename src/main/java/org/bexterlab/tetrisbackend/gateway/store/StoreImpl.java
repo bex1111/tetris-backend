@@ -36,7 +36,7 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public List<Game> getGames() {
+    public List<Game> findGames() {
         return gameList;
     }
 
@@ -44,12 +44,12 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     public void storeNewTetrisElement(String username, TetrisElement nextTetrisElement) {
         Game game = findGameByUsername(username);
         gameList.add(new Game()
-            .setUser(game.getUser())
-            .setTrack(game.getTrack())
-            .setMovementQueue(game.getMovementQueue())
-            .setTetrisElements(new TetrisElements()
-                                .setCurrent(game.getTetrisElements().getNext())
-                                .setNext(nextTetrisElement)));
+                .setUser(game.getUser())
+                .setTrack(game.getTrack())
+                .setMovementQueue(game.getMovementQueue())
+                .setTetrisElements(new TetrisElements()
+                        .setCurrent(game.getTetrisElements().getNext())
+                        .setNext(nextTetrisElement)));
         gameList.remove(game);
     }
 
@@ -105,13 +105,13 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     public void storePoint(String username, Long point) {
         Game game = findGameByUsername(username);
         gameList.add(new Game()
-            .setUser(new User()
-                    .setUsername(game.getUser().getUsername())
-                    .setToken(game.getUser().getToken())
-                    .setPoints(game.getUser().getPoints() + point))
-            .setTrack(game.getTrack())
-            .setMovementQueue(game.getMovementQueue())
-            .setTetrisElements(game.getTetrisElements()));
+                .setUser(new User()
+                        .setUsername(game.getUser().getUsername())
+                        .setToken(game.getUser().getToken())
+                        .setPoints(game.getUser().getPoints() + point))
+                .setTrack(game.getTrack())
+                .setMovementQueue(game.getMovementQueue())
+                .setTetrisElements(game.getTetrisElements()));
         gameList.remove(game);
     }
 
@@ -126,12 +126,12 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public int count(String username) {
+    public int countMovement(String username) {
         return findGameByUsername(username).getMovementQueue().size();
     }
 
     @Override
-    public long getUserCount() {
+    public long countUser() {
         return gameList.size();
     }
 

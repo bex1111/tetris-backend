@@ -6,5 +6,5 @@ public interface MovementStore {
 
     void addNew(String username, Movement movement);
 
-    int count(String username);
+    int countMovement(String username);
 }

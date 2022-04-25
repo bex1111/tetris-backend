@@ -8,7 +8,7 @@ public interface UserStore {
 
     boolean hasGameWithUserAndToken(String username, String token);
 
-    long getUserCount();
+    long countUser();
 
     List<String> findUsernames();
 

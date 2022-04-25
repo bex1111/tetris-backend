@@ -1,4 +1,4 @@
-package org.bexterlab.tetrisbackend.gateway.log.mock;
+package org.bexterlab.tetrisbackend.commonmock;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;

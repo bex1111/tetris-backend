@@ -64,7 +64,7 @@ public class UserStoreFake implements UserStore {
     }
 
     @Override
-    public long getUserCount() {
+    public long countUser() {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         return this.userCount;

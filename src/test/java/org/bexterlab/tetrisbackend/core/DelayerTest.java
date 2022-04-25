@@ -11,12 +11,11 @@ class DelayerTest {
 
     public static final int TICK_TIME = 50;
 
-
     @Test
     void delayTest() {
         final Delayer delayer = new Delayer(TICK_TIME, new LoggerSpy());
         final long timeout = 100L;
-        Assertions.assertTimeout(Duration.ofMillis(timeout * 2), () -> repeatDelay(timeout, delayer));
+        Assertions.assertTimeout(Duration.ofMillis(timeout * 3), () -> repeatDelay(timeout, delayer));
     }
 
     private void repeatDelay(long timeout, Delayer delayer) {

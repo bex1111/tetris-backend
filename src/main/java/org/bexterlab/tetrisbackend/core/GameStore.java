@@ -11,7 +11,7 @@ public interface GameStore {
 
     void createNewGame(Game game);
 
-    List<Game> getGames();
+    List<Game> findGames();
 
     void storeNewTetrisElement(String username, TetrisElement tetrisElement);
 
