@@ -53,8 +53,8 @@ public class MainConfiguration {
     }
 
     @Bean
-    public GameToSocketTextMapper gameToSocketTextMapper(ObjectMapper objectMapper) {
-        return new GameToSocketTextMapper(objectMapper);
+    public GameToSocketTextMapper gameToSocketTextMapper(ObjectMapper objectMapper, @Value("${tetris.deadRowIndex}") Integer deadRowIndex) {
+        return new GameToSocketTextMapper(objectMapper, deadRowIndex);
     }
 
     @Bean

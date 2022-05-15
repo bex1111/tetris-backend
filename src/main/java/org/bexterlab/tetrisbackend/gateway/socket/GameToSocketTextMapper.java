@@ -12,9 +12,11 @@ import java.util.stream.Collectors;
 public class GameToSocketTextMapper {
 
     private final ObjectMapper objectMapper;
+    private final Integer deadRowIndex;
 
-    public GameToSocketTextMapper(ObjectMapper objectMapper) {
+    public GameToSocketTextMapper(ObjectMapper objectMapper, Integer deadRowIndex) {
         this.objectMapper = objectMapper;
+        this.deadRowIndex = deadRowIndex;
     }
 
     public String map(List<Game> games) {
@@ -28,23 +30,28 @@ public class GameToSocketTextMapper {
     private List<TrackDto> maopGameToTrackDto(List<Game> games) {
         return games.stream().map(game ->
                         new TrackDto()
-                            .setTrack(mapTrack(game.getTrack()))
-                            .setCurrent(game.getTetrisElements().getCurrent())
-                            .setNext(game.getTetrisElements().getNext()))
+                                .setTrack(mapTrack(game.getTrack()))
+                                .setCurrent(game.getTetrisElements().getCurrent())
+                                .setNext(game.getTetrisElements().getNext())
+                                .setPoint(game.getUser().getPoints())
+                                .setUsername(game.getUser().getUsername()))
                 .collect(Collectors.toList());
     }
 
     private TrackElementDto[][] mapTrack(TrackElement[][] track) {
-        TrackElementDto[][] mappedTrack = new TrackElementDto[track.length][];
-        for (int i = 0; i < track.length; i++) {
-            mappedTrack[i] = new TrackElementDto[track[i].length];
-            for (int j = 0; j < track[i].length; j++) {
-                switch (track[i][j]) {
+        TrackElementDto[][] mappedTrack = new TrackElementDto[track.length - deadRowIndex][];
+        for (int i = 0; i < track.length - deadRowIndex; i++) {
+            int withoutDeadRowIndex = i + deadRowIndex;
+            mappedTrack[i] = new TrackElementDto[track[withoutDeadRowIndex].length];
+            for (int j = 0; j < track[withoutDeadRowIndex].length; j++) {
+                switch (track[withoutDeadRowIndex][j]) {
                     case POINT:
-                        mappedTrack[i][j] = TrackElementDto.POINT; break;
+                        mappedTrack[i][j] = TrackElementDto.POINT;
+                        break;
                     case EMPTY:
-                        mappedTrack[i][j] = TrackElementDto.EMPTY; break;
-                    default :
+                        mappedTrack[i][j] = TrackElementDto.EMPTY;
+                        break;
+                    default:
                         mappedTrack[i][j] = TrackElementDto.ELEMENT;
                 }
             }
@@ -62,6 +69,27 @@ public class GameToSocketTextMapper {
         private TrackElementDto[][] track;
         private TetrisElement current;
         private TetrisElement next;
+        private String username;
+        private Long point;
+
+        public Long getPoint() {
+            return point;
+        }
+
+        public TrackDto setPoint(Long point) {
+            this.point = point;
+            return this;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public TrackDto setUsername(String username) {
+            this.username = username;
+            return this;
+        }
+
 
         public TetrisElement getCurrent() {
             return current;

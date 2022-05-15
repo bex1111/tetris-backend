@@ -10,7 +10,7 @@ public class GameToSocketTextMapperSpy extends GameToSocketTextMapper {
     public List<Game> games;
 
     public GameToSocketTextMapperSpy() {
-        super(null);
+        super(null, 1);
     }
 
 
