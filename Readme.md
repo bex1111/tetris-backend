@@ -14,34 +14,53 @@
 
 `mvn install -DskipTests && mvn -DwithHistory org.pitest:pitest-maven:mutationCoverage`
 
-# Elements:
+# Leírás
 
-## Square:
+## Általános
+
+- Az elemek mindig középen jönnek létre
+- A pontot az üres elemek számossága adja egy ütközésnél.
+
+## Végpontok
+
+- `/startGame` játék indításához szükséges
+    - **username**-t vár
+    - **token**-t add vissza amivel lehetséges az irányítás
+    - a játékok maximum számossága korlátozva van
+- `/control` az elem iránytását teszi lehetővé
+    - queue alapú működése van maximum 30 lépés határozható meg előre
+    - törlésre nincs lehetőség
+    - ami bent van a queue-ban az a követkző lépésben végre fog hajtódni
+    - **token** és **username** alapján azonosít
+- `/tetris` socketes végpont
+    - az összes játék információját visszadja
+    - csak akkor kommunikál ha van folyamatban játék
+
+## Elemek:
+
+### Square:
 
 OO\
 OO
 
-## L
+### L
 
 O\
 O\
 OO
 
-## Pyramid
+### Pyramid
 
 O\
 OO\
 O
 
-## straight
+### Straight
 
 O\
 O\
 O
 
-## Z
+## Végszó
 
-O\
-OO\
-O
-
+**Ami ezen leírásból nem derül ki arról beszéljen a kód és a tesztek.**
