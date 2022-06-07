@@ -170,6 +170,13 @@ class StoreImplTest {
         Assertions.assertEquals(2L, store.countUser());
     }
 
+    @Test
+    void findUsersTest() {
+        scoreBoard.add(generateBaseGameWithUser().getUser());
+        Assertions.assertEquals(1, store.findUsers().size());
+        Assertions.assertEquals(scoreBoard.get(0), store.findUsers().get(0));
+    }
+
     private Game generateBaseGameWithUser() {
         return new Game().setUser(new User().setUsername(TEST_USERNAME));
     }

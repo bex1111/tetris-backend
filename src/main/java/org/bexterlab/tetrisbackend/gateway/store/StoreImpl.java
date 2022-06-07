@@ -121,6 +121,11 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
+    public List<User> findUsers() {
+        return scoreBoard;
+    }
+
+    @Override
     public void addNew(String username, Movement movement) {
         findGameByUsername(username).getMovementQueue().add(movement);
     }

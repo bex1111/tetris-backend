@@ -1,8 +1,10 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.UserStore;
+import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserStoreFake implements UserStore {
@@ -61,6 +63,13 @@ public class UserStoreFake implements UserStore {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.addPlayerIntoScoreBoardUsername = username;
+    }
+
+    @Override
+    public List<User> findUsers() {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        return Collections.emptyList();
     }
 
     @Override

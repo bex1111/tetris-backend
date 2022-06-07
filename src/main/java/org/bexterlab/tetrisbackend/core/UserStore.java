@@ -1,5 +1,7 @@
 package org.bexterlab.tetrisbackend.core;
 
+import org.bexterlab.tetrisbackend.entity.User;
+
 import java.util.List;
 
 public interface UserStore {
@@ -15,4 +17,6 @@ public interface UserStore {
     void storePoint(String username, Long point);
 
     void addPlayerIntoScoreBoard(String username);
+
+    List<User> findUsers();
 }

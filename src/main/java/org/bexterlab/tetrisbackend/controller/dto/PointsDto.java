@@ -1,16 +1,16 @@
 package org.bexterlab.tetrisbackend.controller.dto;
 
-public class ScoreDto {
+public class PointsDto {
 
     public String username;
     public Long points;
 
-    public ScoreDto setUsername(String username) {
+    public PointsDto setUsername(String username) {
         this.username = username;
         return this;
     }
 
-    public ScoreDto setPoints(Long points) {
+    public PointsDto setPoints(Long points) {
         this.points = points;
         return this;
     }

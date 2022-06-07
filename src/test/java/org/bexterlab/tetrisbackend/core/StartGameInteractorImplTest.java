@@ -17,7 +17,6 @@ import java.util.UUID;
 
 class StartGameInteractorImplTest {
 
-    private final long maxUserLimit = 30;
     private GameStoreFake gameStore;
     private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
@@ -28,6 +27,7 @@ class StartGameInteractorImplTest {
         gameStore = new GameStoreFake();
         userStore = new UserStoreFake();
         asyncGameHandler = new AsyncGameRunnerInteractorSpy();
+        final long maxUserLimit = 30;
         startGameInteractor = new StartGameInteractorImpl(gameStore, userStore, asyncGameHandler, maxUserLimit);
     }
 

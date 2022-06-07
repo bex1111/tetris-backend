@@ -2,6 +2,7 @@ package org.bexterlab.tetrisbackend.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bexterlab.tetrisbackend.controller.ControlInteractor;
+import org.bexterlab.tetrisbackend.controller.ListPointsInteractor;
 import org.bexterlab.tetrisbackend.core.*;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
@@ -43,7 +44,6 @@ public class MainConfiguration {
     public Delayer delayer(Logger logger, @Value("${tetris.gameTickTime}") Long gameTickTime) {
         return new Delayer(gameTickTime, logger);
     }
-
 
     @Bean
     public WebsocketsHandler websocketHandler(Logger logger,
@@ -109,5 +109,10 @@ public class MainConfiguration {
     @Bean
     public ControlInteractor controlInteractor(MovementStore movementStore, UserStore userStore) {
         return new ControlInteractorImpl(movementStore, userStore);
+    }
+
+    @Bean
+    public ListPointsInteractor listPointsInteractor(UserStore userStore) {
+        return new ListPointsInteractorImpl(userStore);
     }
 }
