@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -19,12 +20,12 @@ class StoreImplTest {
     private static final String TEST_USERNAME = "test";
     private StoreImpl store;
     private CopyOnWriteArrayList<Game> gameList;
-    private CopyOnWriteArrayList<User> scoreBoard;
+    private ConcurrentHashMap<String, Long> scoreBoard;
 
     @BeforeEach
     void setUp() {
         gameList = new CopyOnWriteArrayList<>();
-        scoreBoard = new CopyOnWriteArrayList<>();
+        scoreBoard = new ConcurrentHashMap<>();
         store = new StoreImpl(gameList, scoreBoard);
     }
 
@@ -101,6 +102,13 @@ class StoreImplTest {
     }
 
     @Test
+    void notFindUserTest() {
+        TrackElement[][] trackElements = new TrackElement[][]{};
+        gameList.add(generateBaseGameWithUser().setTrack(trackElements));
+        Assertions.assertThrows(AssertionError.class, () -> store.findTrackByUser("INVALID_USER"));
+    }
+
+    @Test
     void findNextTetrisElementTest() {
         gameList.add(generateBaseGameWithUser()
                 .setTetrisElements(new TetrisElements()
@@ -141,7 +149,18 @@ class StoreImplTest {
         gameList.add(game);
         store.addPlayerIntoScoreBoard(TEST_USERNAME);
         Assertions.assertEquals(1L, scoreBoard.size());
-        Assertions.assertEquals(game.getUser(), scoreBoard.get(0));
+        Assertions.assertEquals(game.getUser().getPoints(), scoreBoard.get(game.getUser().getUsername()));
+    }
+
+    @Test
+    void addMultiplyGameIntoScoreBoardTest() {
+        Game game = generateBaseGameWithUser();
+        gameList.add(game);
+        store.addPlayerIntoScoreBoard(TEST_USERNAME);
+        store.addPlayerIntoScoreBoard(TEST_USERNAME);
+        store.addPlayerIntoScoreBoard(TEST_USERNAME);
+        Assertions.assertEquals(1L, scoreBoard.size());
+        Assertions.assertEquals(3L, scoreBoard.get(game.getUser().getUsername()));
     }
 
     @Test
@@ -171,13 +190,14 @@ class StoreImplTest {
     }
 
     @Test
-    void findUsersTest() {
-        scoreBoard.add(generateBaseGameWithUser().getUser());
-        Assertions.assertEquals(1, store.findUsers().size());
-        Assertions.assertEquals(scoreBoard.get(0), store.findUsers().get(0));
+    void findScoreBoardTest() {
+        final User user = generateBaseGameWithUser().getUser();
+        scoreBoard.put(user.getUsername(), user.getPoints());
+        Assertions.assertEquals(1, store.finScoreBoard().size());
+        Assertions.assertEquals(scoreBoard.get(user.getUsername()), store.finScoreBoard().get(user.getUsername()));
     }
 
     private Game generateBaseGameWithUser() {
-        return new Game().setUser(new User().setUsername(TEST_USERNAME));
+        return new Game().setUser(new User().setUsername(TEST_USERNAME).setPoints(1L));
     }
 }

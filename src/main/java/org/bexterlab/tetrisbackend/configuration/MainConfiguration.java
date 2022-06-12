@@ -13,10 +13,12 @@ import org.bexterlab.tetrisbackend.gateway.socket.WebsocketsHandler;
 import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executors;
 
@@ -49,19 +51,26 @@ public class MainConfiguration {
     public WebsocketsHandler websocketHandler(Logger logger,
                                               GameToSocketTextMapper gameToSocketTextMapper) {
         return new WebsocketsHandler(new CopyOnWriteArrayList<>(),
-                gameToSocketTextMapper, logger);
+                gameToSocketTextMapper,
+                logger);
     }
 
     @Bean
-    public GameToSocketTextMapper gameToSocketTextMapper(ObjectMapper objectMapper, @Value("${tetris.deadRowIndex}") Integer deadRowIndex) {
-        return new GameToSocketTextMapper(objectMapper, deadRowIndex);
+    public GameToSocketTextMapper gameToSocketTextMapper(ObjectMapper objectMapper,
+                                                         GameConfiguration gameConfiguration) {
+        return new GameToSocketTextMapper(objectMapper, gameConfiguration.getDeadRowIndex());
     }
 
     @Bean
     public StartGameInteractorImpl startGameInteractor(StoreImpl store,
                                                        AsyncGameRunnerInteractor asyncGameRunnerInteractor,
-                                                       @Value("${tetris.maxUserCount}") long maxUserCount) {
-        return new StartGameInteractorImpl(store, store, asyncGameRunnerInteractor, maxUserCount);
+                                                       TetrisStepFactory tetrisStepFactory,
+                                                       GameConfiguration gameConfiguration) {
+        return new StartGameInteractorImpl(store,
+                store,
+                asyncGameRunnerInteractor,
+                tetrisStepFactory,
+                gameConfiguration);
     }
 
     @Bean
@@ -86,8 +95,8 @@ public class MainConfiguration {
     }
 
     @Bean
-    public GameEndSteps gameEndSteps(StoreImpl store, @Value("${tetris.deadRowIndex}") Integer deadRowIndex) {
-        return new GameEndSteps(store, store, deadRowIndex);
+    public GameEndSteps gameEndSteps(StoreImpl store, GameConfiguration gameConfiguration) {
+        return new GameEndSteps(store, store, gameConfiguration.getDeadRowIndex());
     }
 
     @Bean
@@ -98,12 +107,14 @@ public class MainConfiguration {
 
     @Bean
     public StoreImpl gameStore() {
-        return new StoreImpl(new CopyOnWriteArrayList<>(), new CopyOnWriteArrayList<>());
+        return new StoreImpl(new CopyOnWriteArrayList<>(), new ConcurrentHashMap<>());
     }
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new Jackson2ObjectMapperBuilder().createXmlMapper(false).build();
+        return new Jackson2ObjectMapperBuilder()
+                .createXmlMapper(false)
+                .build();
     }
 
     @Bean
@@ -114,5 +125,11 @@ public class MainConfiguration {
     @Bean
     public ListPointsInteractor listPointsInteractor(UserStore userStore) {
         return new ListPointsInteractorImpl(userStore);
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "tetris")
+    public GameConfiguration gameConfiguration() {
+        return new GameConfiguration();
     }
 }

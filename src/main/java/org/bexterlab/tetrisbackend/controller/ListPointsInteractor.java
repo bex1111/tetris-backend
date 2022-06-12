@@ -1,11 +1,9 @@
 package org.bexterlab.tetrisbackend.controller;
 
-import org.bexterlab.tetrisbackend.entity.User;
-
-import java.util.List;
+import java.util.Map;
 
 public interface ListPointsInteractor {
 
-    List<User> list();
+    Map<String, Long> list();
 
 }

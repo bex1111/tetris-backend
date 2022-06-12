@@ -1,10 +1,10 @@
 package org.bexterlab.tetrisbackend.core;
 
+import org.bexterlab.tetrisbackend.configuration.GameConfiguration;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
-import org.bexterlab.tetrisbackend.core.maintenance.TetrisElementLottery;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
@@ -22,16 +22,19 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private final GameStore gameStore;
     private final UserStore userStore;
     private final AsyncGameRunnerInteractor asyncGameRunnerInteractor;
-    private final long maxUserCount;
+    private final TetrisStepFactory tetrisStepFactory;
+    private final GameConfiguration gameConfiguration;
 
     public StartGameInteractorImpl(GameStore gameStore,
                                    UserStore userStore,
                                    AsyncGameRunnerInteractor asyncGameRunnerInteractor,
-                                   long maxUserCount) {
+                                   TetrisStepFactory tetrisStepFactory,
+                                   GameConfiguration gameConfiguration) {
         this.gameStore = gameStore;
         this.userStore = userStore;
         this.asyncGameRunnerInteractor = asyncGameRunnerInteractor;
-        this.maxUserCount = maxUserCount;
+        this.tetrisStepFactory = tetrisStepFactory;
+        this.gameConfiguration = gameConfiguration;
     }
 
     public String start(String username) {
@@ -53,12 +56,14 @@ public class StartGameInteractorImpl implements StartGameInteractor {
                 .setTrack(createEmptyTrack())
                 .setMovementQueue(new ConcurrentLinkedQueue<>())
                 .setTetrisElements(new TetrisElements()
-                        .setCurrent(new TetrisElementLottery().draw()) //FIXME from factory
-                        .setNext(new TetrisElementLottery().draw()));//FIXME from factory
+                        .setCurrent(tetrisStepFactory.drawTetrisElement()) //FIXME from factory
+                        .setNext(tetrisStepFactory.drawTetrisElement()));//FIXME from factory
     }
 
     private TrackElement[][] createEmptyTrack() {
-        TrackElement[][] track = new TrackElement[24][10];
+        TrackElement[][] track =
+                new TrackElement[gameConfiguration.getTrackHeight()]
+                        [gameConfiguration.getTrackWidth()];
         for (TrackElement[] trackElements : track) {
             Arrays.fill(trackElements, EMPTY);
         }
@@ -78,7 +83,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     }
 
     private void checkUserLimitReached() {
-        if (userStore.countUser() >= maxUserCount) {
+        if (userStore.countUser() >= gameConfiguration.getMaxUserCount()) {
             throw new MaxUserCountReachedException();
         }
     }

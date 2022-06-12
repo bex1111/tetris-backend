@@ -1,18 +1,22 @@
 package org.bexterlab.tetrisbackend.core;
 
+import org.bexterlab.tetrisbackend.configuration.GameConfiguration;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
 import org.bexterlab.tetrisbackend.core.mock.AsyncGameRunnerInteractorSpy;
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
+import org.bexterlab.tetrisbackend.core.mock.TetrisStepFactoryFake;
 import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 class StartGameInteractorImplTest {
@@ -21,14 +25,24 @@ class StartGameInteractorImplTest {
     private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
     private AsyncGameRunnerInteractorSpy asyncGameHandler;
+    private GameConfiguration gameConfiguration;
+    private List<String> calledMethodName;
 
     @BeforeEach
     void setUp() {
+        calledMethodName = new ArrayList<>();
         gameStore = new GameStoreFake();
         userStore = new UserStoreFake();
         asyncGameHandler = new AsyncGameRunnerInteractorSpy();
-        final long maxUserLimit = 30;
-        startGameInteractor = new StartGameInteractorImpl(gameStore, userStore, asyncGameHandler, maxUserLimit);
+        gameConfiguration = new GameConfiguration()
+                .setMaxUserCount(30L)
+                .setTrackHeight(10)
+                .setTrackWidth(11);
+        startGameInteractor = new StartGameInteractorImpl(gameStore,
+                userStore,
+                asyncGameHandler,
+                new TetrisStepFactoryFake(calledMethodName),
+                gameConfiguration);
     }
 
     @Test
@@ -55,11 +69,15 @@ class StartGameInteractorImplTest {
         Assertions.assertNotNull(token, gameStore.game.getUser().getToken());
         Assertions.assertDoesNotThrow(() -> UUID.fromString(token));
         Assertions.assertEquals("valid_user", gameStore.game.getUser().getUsername());
+        Assertions.assertEquals(gameConfiguration.getTrackHeight(), gameStore.game.getTrack().length);
+        Arrays.stream(gameStore.game.getTrack()).forEach(x -> Assertions.assertEquals(x.length, gameConfiguration.getTrackWidth()));
         Assertions.assertTrue(Arrays.stream(gameStore.game.getTrack())
                         .allMatch(x -> Arrays.stream(x)
                                 .allMatch(y -> y == TrackElement.EMPTY)),
                 Arrays.deepToString(gameStore.game.getTrack()));
         Assertions.assertTrue(asyncGameHandler.isStartGameCalled);
+        Assertions.assertEquals(
+                List.of("drawTetrisElement", "drawTetrisElement"), calledMethodName);
     }
 
     @Test

@@ -1,9 +1,8 @@
 package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.controller.ListPointsInteractor;
-import org.bexterlab.tetrisbackend.entity.User;
 
-import java.util.List;
+import java.util.Map;
 
 public class ListPointsInteractorImpl implements ListPointsInteractor {
 
@@ -14,7 +13,7 @@ public class ListPointsInteractorImpl implements ListPointsInteractor {
     }
 
     @Override
-    public List<User> list() {
-        return userStore.findUsers();
+    public Map<String, Long> list() {
+        return userStore.finScoreBoard();
     }
 }

@@ -65,7 +65,8 @@ public class GameToSocketTextMapper {
         ELEMENT;
     }
 
-    public class TrackDto {
+    public static class TrackDto {
+
         private TrackElementDto[][] track;
         private TetrisElement current;
         private TetrisElement next;
@@ -89,7 +90,6 @@ public class GameToSocketTextMapper {
             this.username = username;
             return this;
         }
-
 
         public TetrisElement getCurrent() {
             return current;

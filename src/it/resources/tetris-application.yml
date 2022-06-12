@@ -5,6 +5,8 @@ tetris:
   gameTickTime: 0
   deadRowIndex: 3
   maxUserCount: 30
+  trackWidth: 24
+  trackHeight: 10
 
 #logging:
 #  level:

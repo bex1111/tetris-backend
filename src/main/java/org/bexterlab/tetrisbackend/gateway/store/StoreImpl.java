@@ -11,16 +11,18 @@ import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     private final CopyOnWriteArrayList<Game> gameList;
-    private final CopyOnWriteArrayList<User> scoreBoard;
+    private final ConcurrentHashMap<String, Long> scoreBoard;
 
     public StoreImpl(CopyOnWriteArrayList<Game> gameList,
-                     CopyOnWriteArrayList<User> scoreBoard) {
+                     ConcurrentHashMap<String, Long> scoreBoard) {
         this.gameList = gameList;
         this.scoreBoard = scoreBoard;
     }
@@ -117,11 +119,13 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
 
     @Override
     public void addPlayerIntoScoreBoard(String username) {
-        scoreBoard.add(findGameByUsername(username).getUser());
+        scoreBoard.put(username,
+                scoreBoard.getOrDefault(username, 0L) +
+                        findGameByUsername(username).getUser().getPoints());
     }
 
     @Override
-    public List<User> findUsers() {
+    public Map<String, Long> finScoreBoard() {
         return scoreBoard;
     }
 
