@@ -11,20 +11,15 @@ import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.User;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-public class StoreImpl implements GameStore, MovementStore, UserStore {
+public class GameStoreImpl implements GameStore, MovementStore, UserStore {
 
     private final CopyOnWriteArrayList<Game> gameList;
-    private final ConcurrentHashMap<String, Long> scoreBoard;
 
-    public StoreImpl(CopyOnWriteArrayList<Game> gameList,
-                     ConcurrentHashMap<String, Long> scoreBoard) {
+    public GameStoreImpl(CopyOnWriteArrayList<Game> gameList) {
         this.gameList = gameList;
-        this.scoreBoard = scoreBoard;
     }
 
     @Override
@@ -104,6 +99,21 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
+    public void addNew(String username, Movement movement) {
+        findGameByUsername(username).getMovementQueue().add(movement);
+    }
+
+    @Override
+    public int countMovement(String username) {
+        return findGameByUsername(username).getMovementQueue().size();
+    }
+
+    @Override
+    public long countUser() {
+        return gameList.size();
+    }
+
+    @Override
     public void storePoint(String username, Long point) {
         Game game = findGameByUsername(username);
         gameList.add(new Game()
@@ -118,30 +128,8 @@ public class StoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public void addPlayerIntoScoreBoard(String username) {
-        scoreBoard.put(username,
-                scoreBoard.getOrDefault(username, 0L) +
-                        findGameByUsername(username).getUser().getPoints());
-    }
-
-    @Override
-    public Map<String, Long> finScoreBoard() {
-        return scoreBoard;
-    }
-
-    @Override
-    public void addNew(String username, Movement movement) {
-        findGameByUsername(username).getMovementQueue().add(movement);
-    }
-
-    @Override
-    public int countMovement(String username) {
-        return findGameByUsername(username).getMovementQueue().size();
-    }
-
-    @Override
-    public long countUser() {
-        return gameList.size();
+    public long findPoint(String username) {
+        return findGameByUsername(username).getUser().getPoints();
     }
 
     private Game findGameByUsername(String username) {

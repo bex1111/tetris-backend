@@ -11,22 +11,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-class StoreImplTest {
+class GameStoreImplTest {
 
     private static final String TEST_USERNAME = "test";
-    private StoreImpl store;
+    private GameStoreImpl store;
     private CopyOnWriteArrayList<Game> gameList;
-    private ConcurrentHashMap<String, Long> scoreBoard;
 
     @BeforeEach
     void setUp() {
         gameList = new CopyOnWriteArrayList<>();
-        scoreBoard = new ConcurrentHashMap<>();
-        store = new StoreImpl(gameList, scoreBoard);
+        store = new GameStoreImpl(gameList);
     }
 
     @Test
@@ -144,26 +141,6 @@ class StoreImplTest {
     }
 
     @Test
-    void addPlayerIntoScoreBoardTest() {
-        Game game = generateBaseGameWithUser();
-        gameList.add(game);
-        store.addPlayerIntoScoreBoard(TEST_USERNAME);
-        Assertions.assertEquals(1L, scoreBoard.size());
-        Assertions.assertEquals(game.getUser().getPoints(), scoreBoard.get(game.getUser().getUsername()));
-    }
-
-    @Test
-    void addMultiplyGameIntoScoreBoardTest() {
-        Game game = generateBaseGameWithUser();
-        gameList.add(game);
-        store.addPlayerIntoScoreBoard(TEST_USERNAME);
-        store.addPlayerIntoScoreBoard(TEST_USERNAME);
-        store.addPlayerIntoScoreBoard(TEST_USERNAME);
-        Assertions.assertEquals(1L, scoreBoard.size());
-        Assertions.assertEquals(3L, scoreBoard.get(game.getUser().getUsername()));
-    }
-
-    @Test
     void addNewTest() {
         ConcurrentLinkedQueue<Movement> movementQueue = new ConcurrentLinkedQueue<>();
         gameList.add(generateBaseGameWithUser().setMovementQueue(movementQueue));
@@ -190,14 +167,13 @@ class StoreImplTest {
     }
 
     @Test
-    void findScoreBoardTest() {
-        final User user = generateBaseGameWithUser().getUser();
-        scoreBoard.put(user.getUsername(), user.getPoints());
-        Assertions.assertEquals(1, store.finScoreBoard().size());
-        Assertions.assertEquals(scoreBoard.get(user.getUsername()), store.finScoreBoard().get(user.getUsername()));
+    void findPointTest() {
+        gameList.add(generateBaseGameWithUser());
+        Assertions.assertEquals(1L, store.findPoint(TEST_USERNAME));
     }
 
-    private Game generateBaseGameWithUser() {
+    protected Game generateBaseGameWithUser() {
         return new Game().setUser(new User().setUsername(TEST_USERNAME).setPoints(1L));
     }
+
 }

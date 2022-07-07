@@ -1,7 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
 import java.util.List;
-import java.util.Map;
 
 public interface UserStore {
 
@@ -15,7 +14,5 @@ public interface UserStore {
 
     void storePoint(String username, Long point);
 
-    void addPlayerIntoScoreBoard(String username);
-
-    Map<String, Long> finScoreBoard();
+    long findPoint(String username);
 }

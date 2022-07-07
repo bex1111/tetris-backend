@@ -56,8 +56,8 @@ public class StartGameInteractorImpl implements StartGameInteractor {
                 .setTrack(createEmptyTrack())
                 .setMovementQueue(new ConcurrentLinkedQueue<>())
                 .setTetrisElements(new TetrisElements()
-                        .setCurrent(tetrisStepFactory.drawTetrisElement()) //FIXME from factory
-                        .setNext(tetrisStepFactory.drawTetrisElement()));//FIXME from factory
+                        .setCurrent(tetrisStepFactory.drawTetrisElement())
+                        .setNext(tetrisStepFactory.drawTetrisElement()));
     }
 
     private TrackElement[][] createEmptyTrack() {

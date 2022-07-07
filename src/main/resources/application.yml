@@ -2,5 +2,5 @@ tetris:
   gameTickTime: 500
   deadRowIndex: 3
   maxUserCount: 30
-  trackWidth: 30
-  trackHeight: 15
+  trackWidth: 10
+  trackHeight: 23

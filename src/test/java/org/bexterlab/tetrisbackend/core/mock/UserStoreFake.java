@@ -3,9 +3,7 @@ package org.bexterlab.tetrisbackend.core.mock;
 import org.bexterlab.tetrisbackend.core.UserStore;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class UserStoreFake implements UserStore {
 
@@ -13,10 +11,9 @@ public class UserStoreFake implements UserStore {
     public boolean hasGameWithUserAndToken = false;
     public long userCount = 2;
     public List<String> usernameList;
-    public String hasGameWithUserAndTokenUsername, storePointUserName;
+    public String hasGameWithUserAndTokenUsername, storePointUserName, findPointUsername;
     public String token;
     public Long point;
-    public String addPlayerIntoScoreBoardUsername;
     private final List<String> callMethodName;
 
     public UserStoreFake(List<String> callMethodName) {
@@ -59,17 +56,11 @@ public class UserStoreFake implements UserStore {
     }
 
     @Override
-    public void addPlayerIntoScoreBoard(String username) {
+    public long findPoint(String username) {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
-        this.addPlayerIntoScoreBoardUsername = username;
-    }
-
-    @Override
-    public Map<String, Long> finScoreBoard() {
-        callMethodName.add(new Object() {
-        }.getClass().getEnclosingMethod().getName());
-        return Collections.emptyMap();
+        this.findPointUsername = username;
+        return 1L;
     }
 
     @Override

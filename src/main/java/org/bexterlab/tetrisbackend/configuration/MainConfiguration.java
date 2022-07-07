@@ -10,7 +10,8 @@ import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
 import org.bexterlab.tetrisbackend.gateway.log.LoggerImpl;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketsHandler;
-import org.bexterlab.tetrisbackend.gateway.store.StoreImpl;
+import org.bexterlab.tetrisbackend.gateway.store.GameStoreImpl;
+import org.bexterlab.tetrisbackend.gateway.store.ScoreBoardStoreImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,7 +33,7 @@ public class MainConfiguration {
 
     @Bean
     public AsyncGameRunnerInteractor asyncGameHandler(GameIntercator gameIntercator,
-                                                      StoreImpl store,
+                                                      GameStoreImpl store,
                                                       Logger logger,
                                                       WebsocketsHandler trackSender,
                                                       Delayer delayer) {
@@ -62,7 +63,7 @@ public class MainConfiguration {
     }
 
     @Bean
-    public StartGameInteractorImpl startGameInteractor(StoreImpl store,
+    public StartGameInteractorImpl startGameInteractor(GameStoreImpl store,
                                                        AsyncGameRunnerInteractor asyncGameRunnerInteractor,
                                                        TetrisStepFactory tetrisStepFactory,
                                                        GameConfiguration gameConfiguration) {
@@ -79,7 +80,7 @@ public class MainConfiguration {
     }
 
     @Bean
-    public GameIntercator trackHandler(StoreImpl store, Logger logger,
+    public GameIntercator trackHandler(GameStoreImpl store, Logger logger,
                                        GameEndSteps gameEndSteps,
                                        BaseSteps baseSteps,
                                        NotTetrisElementInTrackSteps notTetrisElementInTrackSteps) {
@@ -89,25 +90,30 @@ public class MainConfiguration {
     }
 
     @Bean
-    public BaseSteps baseSteps(StoreImpl store,
+    public BaseSteps baseSteps(GameStoreImpl store,
                                TetrisStepFactory tetrisStepFactory) {
         return new BaseSteps(tetrisStepFactory, store);
     }
 
     @Bean
-    public GameEndSteps gameEndSteps(StoreImpl store, GameConfiguration gameConfiguration) {
-        return new GameEndSteps(store, store, gameConfiguration.getDeadRowIndex());
+    public GameEndSteps gameEndSteps(GameStoreImpl store, GameConfiguration gameConfiguration, ScoreBoardStoreImpl scoreBoardStore) {
+        return new GameEndSteps(store, store, gameConfiguration.getDeadRowIndex(), scoreBoardStore);
     }
 
     @Bean
-    public NotTetrisElementInTrackSteps notTetrisElementInTrackSteps(StoreImpl store,
+    public NotTetrisElementInTrackSteps notTetrisElementInTrackSteps(GameStoreImpl store,
                                                                      TetrisStepFactory tetrisStepFactory) {
         return new NotTetrisElementInTrackSteps(tetrisStepFactory, store, store);
     }
 
     @Bean
-    public StoreImpl gameStore() {
-        return new StoreImpl(new CopyOnWriteArrayList<>(), new ConcurrentHashMap<>());
+    public GameStoreImpl gameStore() {
+        return new GameStoreImpl(new CopyOnWriteArrayList<>());
+    }
+
+    @Bean
+    public ScoreBoardStoreImpl scoreBoardStore() {
+        return new ScoreBoardStoreImpl(new ConcurrentHashMap<>());
     }
 
     @Bean
@@ -123,8 +129,8 @@ public class MainConfiguration {
     }
 
     @Bean
-    public ListPointsInteractor listPointsInteractor(UserStore userStore) {
-        return new ListPointsInteractorImpl(userStore);
+    public ListPointsInteractor listPointsInteractor(ScoreBoardStoreImpl scoreBoardStore) {
+        return new ListPointsInteractorImpl(scoreBoardStore);
     }
 
     @Bean

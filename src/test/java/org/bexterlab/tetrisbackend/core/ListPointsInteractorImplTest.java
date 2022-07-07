@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core;
 
-import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
+import org.bexterlab.tetrisbackend.core.mock.ScoreBoardStoreFake;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +14,7 @@ class ListPointsInteractorImplTest {
     @Test
     void listTest() {
         List<String> calledMethodNames = new ArrayList<>();
-        UserStoreFake userStore = new UserStoreFake(calledMethodNames);
+        ScoreBoardStoreFake userStore = new ScoreBoardStoreFake(calledMethodNames);
         Map<String, Long> users = new ListPointsInteractorImpl(userStore).list();
         Assertions.assertEquals(Collections.emptyMap(), users);
         Assertions.assertEquals(1, calledMethodNames.size());

@@ -6,14 +6,14 @@ import java.util.Map;
 
 public class ListPointsInteractorImpl implements ListPointsInteractor {
 
-    private final UserStore userStore;
+    private final ScoreBoardStore scoreBoardStore;
 
-    public ListPointsInteractorImpl(UserStore userStore) {
-        this.userStore = userStore;
+    public ListPointsInteractorImpl(ScoreBoardStore scoreBoardStore) {
+        this.scoreBoardStore = scoreBoardStore;
     }
 
     @Override
     public Map<String, Long> list() {
-        return userStore.finScoreBoard();
+        return scoreBoardStore.finScoreBoard();
     }
 }
