@@ -12,7 +12,7 @@ public abstract class BaseControllerTest {
 
     protected static final String TEST_USER = "test_user";
     protected final RestHelper restHelper;
-    private ConfigurableApplicationContext configurableApplicationContext;
+    protected ConfigurableApplicationContext configurableApplicationContext;
 
     public BaseControllerTest() {
         this.restHelper = new RestHelper();

@@ -12,7 +12,7 @@ public class GameEndStepsFake extends GameEndSteps {
     public RuntimeException runtimeException;
 
     public GameEndStepsFake(List<String> steps) {
-        super(null, null, 1, null);
+        super(null, null, 1, null, null);
         this.steps = steps;
     }
 

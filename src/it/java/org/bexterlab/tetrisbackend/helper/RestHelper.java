@@ -1,7 +1,9 @@
 package org.bexterlab.tetrisbackend.helper;
 
+import org.bexterlab.tetrisbackend.controller.dto.PointsDto;
 import org.bexterlab.tetrisbackend.controller.dto.StartGameDto;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.bexterlab.tetrisbackend.TestConstants.HTTP_BASE_URL;
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
 
 public class RestHelper {
@@ -26,6 +29,15 @@ public class RestHelper {
     public String callStartGameWithTestUser(String username) {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(HTTP_BASE_URL + "/startGame",
                 new StartGameDto().setUsername(username), String.class);
+        Assertions.assertEquals(OK, responseEntity.getStatusCode());
+        Assertions.assertNotNull(responseEntity.getBody());
+        return responseEntity.getBody();
+    }
+
+    public List<PointsDto> callListPoints() {
+        ResponseEntity<List<PointsDto>> responseEntity = restTemplate.exchange(HTTP_BASE_URL + "/listPoints",
+                GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {
+                });
         Assertions.assertEquals(OK, responseEntity.getStatusCode());
         Assertions.assertNotNull(responseEntity.getBody());
         return responseEntity.getBody();

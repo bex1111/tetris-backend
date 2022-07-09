@@ -2,6 +2,7 @@ package org.bexterlab.tetrisbackend.core.steps;
 
 import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.ScoreBoardStoreFake;
+import org.bexterlab.tetrisbackend.core.mock.UserInformationStoreFake;
 import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
@@ -21,6 +22,7 @@ class GameEndStepsTest {
     private String username;
     private ScoreBoardStoreFake scoreBoardStoreFake;
     private UserStoreFake userStoreFake;
+    private UserInformationStoreFake userInformationStoreFake;
     public List<String> callMethodName;
 
     @BeforeEach
@@ -30,7 +32,12 @@ class GameEndStepsTest {
         this.gameStoreFake = new GameStoreFake(callMethodName);
         this.scoreBoardStoreFake = new ScoreBoardStoreFake(callMethodName);
         this.userStoreFake = new UserStoreFake(callMethodName);
-        this.gameEndSteps = new GameEndSteps(gameStoreFake, userStoreFake, 0, scoreBoardStoreFake);
+        this.userInformationStoreFake = new UserInformationStoreFake(callMethodName);
+        this.gameEndSteps = new GameEndSteps(gameStoreFake,
+                userStoreFake,
+                0,
+                scoreBoardStoreFake,
+                userInformationStoreFake);
     }
 
     @Test
@@ -44,6 +51,7 @@ class GameEndStepsTest {
         Assertions.assertNull(userStoreFake.findPointUsername);
         Assertions.assertNull(scoreBoardStoreFake.addPlayerIntoScoreBoardUsername);
         Assertions.assertNull(gameStoreFake.removeGameUsername);
+        Assertions.assertNull(userInformationStoreFake.saveRoundUsername);
 
         final List<String> callMethodOrder = List.of("findTrackByUser");
         Assertions.assertEquals(callMethodOrder, callMethodName);
@@ -60,11 +68,13 @@ class GameEndStepsTest {
         Assertions.assertEquals(username, gameStoreFake.removeGameUsername);
         Assertions.assertEquals(username, scoreBoardStoreFake.addPlayerIntoScoreBoardUsername);
         Assertions.assertEquals(username, userStoreFake.findPointUsername);
+        Assertions.assertEquals(username, userInformationStoreFake.saveRoundUsername);
 
         final List<String> callMethodOrder = List.of("findTrackByUser",
                 "findPoint",
                 "addPlayerIntoScoreBoard",
-                "removeGame");
+                "removeGame",
+                "saveRound");
         Assertions.assertEquals(callMethodOrder, callMethodName);
     }
 }

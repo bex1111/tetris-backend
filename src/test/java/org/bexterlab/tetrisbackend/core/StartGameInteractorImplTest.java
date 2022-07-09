@@ -19,6 +19,7 @@ import java.util.UUID;
 
 class StartGameInteractorImplTest {
 
+    public static final String USERNAME = "tetrisMaestro";
     private GameStoreFake gameStore;
     private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
@@ -94,18 +95,19 @@ class StartGameInteractorImplTest {
     @Test
     public void newPlayerCanNotStartGameWhenPlayerNumberEqualsLimitTest() {
         userStore.userCount = 30;
-        Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
+        Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start(USERNAME));
     }
 
     @Test
     public void newPlayerCanNotStartGameWhenPlayerNumberReachedMaxLimitTest() {
         userStore.userCount = 31;
-        Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
+        Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start(USERNAME));
     }
 
     @Test
     public void userHasTooManyRoundTest() {
         userInformationStoreFake.countUserRound = 3;
-        Assertions.assertThrows(OutOfRoundException.class, () -> startGameInteractor.start("tetrisMaestro"));
+        Assertions.assertThrows(OutOfRoundException.class, () -> startGameInteractor.start(USERNAME));
+        Assertions.assertEquals(USERNAME, userInformationStoreFake.countUserRoundUsername);
     }
 }

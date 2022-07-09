@@ -10,6 +10,7 @@ import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
+import org.bexterlab.tetrisbackend.gateway.UserInformationStoreImpl;
 import org.bexterlab.tetrisbackend.gateway.log.LoggerImpl;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketsHandler;
@@ -69,12 +70,14 @@ public class MainConfiguration {
     public StartGameInteractorImpl startGameInteractor(GameStoreImpl store,
                                                        AsyncGameRunnerInteractor asyncGameRunnerInteractor,
                                                        TetrisStepFactory tetrisStepFactory,
-                                                       GameConfiguration gameConfiguration) {
+                                                       GameConfiguration gameConfiguration,
+                                                       UserInformationStoreImpl userInformationStore) {
         return new StartGameInteractorImpl(store,
                 store,
                 asyncGameRunnerInteractor,
                 tetrisStepFactory,
-                gameConfiguration, null);//FIXME
+                gameConfiguration,
+                userInformationStore);
     }
 
     @Bean
@@ -99,8 +102,15 @@ public class MainConfiguration {
     }
 
     @Bean
-    public GameEndSteps gameEndSteps(GameStoreImpl store, GameConfiguration gameConfiguration, ScoreBoardStoreImpl scoreBoardStore) {
-        return new GameEndSteps(store, store, gameConfiguration.getDeadRowIndex(), scoreBoardStore);
+    public GameEndSteps gameEndSteps(GameStoreImpl store,
+                                     GameConfiguration gameConfiguration,
+                                     ScoreBoardStoreImpl scoreBoardStore,
+                                     UserInformationStoreImpl userInformationStore) {
+        return new GameEndSteps(store,
+                store,
+                gameConfiguration.getDeadRowIndex(),
+                scoreBoardStore,
+                userInformationStore);
     }
 
     @Bean
@@ -112,6 +122,11 @@ public class MainConfiguration {
     @Bean
     public GameStoreImpl gameStore() {
         return new GameStoreImpl(new CopyOnWriteArrayList<>());
+    }
+
+    @Bean
+    public UserInformationStoreImpl userInformationStore() {
+        return new UserInformationStoreImpl(new ConcurrentHashMap<>());
     }
 
     @Bean
