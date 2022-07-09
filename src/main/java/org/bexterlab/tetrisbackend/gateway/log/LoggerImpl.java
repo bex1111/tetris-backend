@@ -2,7 +2,7 @@ package org.bexterlab.tetrisbackend.gateway.log;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.bexterlab.tetrisbackend.core.Logger;
+import org.bexterlab.tetrisbackend.core.gateway.Logger;
 
 public class LoggerImpl implements Logger {
 

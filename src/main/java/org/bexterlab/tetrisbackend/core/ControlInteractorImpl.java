@@ -3,6 +3,8 @@ package org.bexterlab.tetrisbackend.core;
 import org.bexterlab.tetrisbackend.controller.ControlInteractor;
 import org.bexterlab.tetrisbackend.core.exception.NotYourGameException;
 import org.bexterlab.tetrisbackend.core.exception.TooManyMovementException;
+import org.bexterlab.tetrisbackend.core.gateway.MovementStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 
 public class ControlInteractorImpl implements ControlInteractor {

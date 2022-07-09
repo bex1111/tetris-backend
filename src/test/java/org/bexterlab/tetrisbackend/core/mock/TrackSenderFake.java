@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
-import org.bexterlab.tetrisbackend.core.TrackSender;
+import org.bexterlab.tetrisbackend.core.gateway.TrackSender;
 import org.bexterlab.tetrisbackend.entity.Game;
 
 import java.util.List;

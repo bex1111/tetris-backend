@@ -4,3 +4,4 @@ tetris:
   maxUserCount: 30
   trackWidth: 10
   trackHeight: 23
+  round: 3

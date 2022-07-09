@@ -4,3 +4,4 @@ tetris:
   maxUserCount: ${MAX_USER_COUNT}
   trackWidth: ${TRACK_WIDTH}
   trackHeight: ${TRACK_HEIGHT}
+  round: ${ROUND}

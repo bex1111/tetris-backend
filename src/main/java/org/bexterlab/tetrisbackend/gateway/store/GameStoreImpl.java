@@ -1,8 +1,8 @@
 package org.bexterlab.tetrisbackend.gateway.store;
 
-import org.bexterlab.tetrisbackend.core.GameStore;
-import org.bexterlab.tetrisbackend.core.MovementStore;
-import org.bexterlab.tetrisbackend.core.UserStore;
+import org.bexterlab.tetrisbackend.core.gateway.GameStore;
+import org.bexterlab.tetrisbackend.core.gateway.MovementStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;

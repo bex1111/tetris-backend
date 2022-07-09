@@ -4,11 +4,9 @@ import org.bexterlab.tetrisbackend.configuration.GameConfiguration;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
+import org.bexterlab.tetrisbackend.core.exception.OutOfRoundException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
-import org.bexterlab.tetrisbackend.core.mock.AsyncGameRunnerInteractorSpy;
-import org.bexterlab.tetrisbackend.core.mock.GameStoreFake;
-import org.bexterlab.tetrisbackend.core.mock.TetrisStepFactoryFake;
-import org.bexterlab.tetrisbackend.core.mock.UserStoreFake;
+import org.bexterlab.tetrisbackend.core.mock.*;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +23,7 @@ class StartGameInteractorImplTest {
     private UserStoreFake userStore;
     private StartGameInteractor startGameInteractor;
     private AsyncGameRunnerInteractorSpy asyncGameHandler;
+    private UserInformationStoreFake userInformationStoreFake;
     private GameConfiguration gameConfiguration;
     private List<String> calledMethodName;
 
@@ -34,15 +33,17 @@ class StartGameInteractorImplTest {
         gameStore = new GameStoreFake();
         userStore = new UserStoreFake();
         asyncGameHandler = new AsyncGameRunnerInteractorSpy();
+        userInformationStoreFake = new UserInformationStoreFake(calledMethodName);
         gameConfiguration = new GameConfiguration()
                 .setMaxUserCount(30L)
                 .setTrackHeight(10)
-                .setTrackWidth(11);
+                .setTrackWidth(11)
+                .setRound(3);
         startGameInteractor = new StartGameInteractorImpl(gameStore,
                 userStore,
                 asyncGameHandler,
                 new TetrisStepFactoryFake(calledMethodName),
-                gameConfiguration);
+                gameConfiguration, userInformationStoreFake);
     }
 
     @Test
@@ -77,25 +78,34 @@ class StartGameInteractorImplTest {
                 Arrays.deepToString(gameStore.game.getTrack()));
         Assertions.assertTrue(asyncGameHandler.isStartGameCalled);
         Assertions.assertEquals(
-                List.of("drawTetrisElement", "drawTetrisElement"), calledMethodName);
+                List.of("countUserRound",
+                        "drawTetrisElement",
+                        "drawTetrisElement"),
+                calledMethodName);
     }
 
     @Test
-    public void newPlayerCanStartGameWhenPlayerNumberIsUnderLimit() {
+    public void newPlayerCanStartGameWhenPlayerNumberIsUnderLimitTest() {
         userStore.userCount = 29;
         String token = startGameInteractor.start("valid_user");
         Assertions.assertNotNull(token);
     }
 
     @Test
-    public void newPlayerCanNotStartGameWhenPlayerNumberEqualsLimit() {
+    public void newPlayerCanNotStartGameWhenPlayerNumberEqualsLimitTest() {
         userStore.userCount = 30;
         Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
     }
 
     @Test
-    public void newPlayerCanNotStartGameWhenPlayerNumberReachedMaxLimit() {
+    public void newPlayerCanNotStartGameWhenPlayerNumberReachedMaxLimitTest() {
         userStore.userCount = 31;
         Assertions.assertThrows(MaxUserCountReachedException.class, () -> startGameInteractor.start("tetrisMaestro"));
+    }
+
+    @Test
+    public void userHasTooManyRoundTest() {
+        userInformationStoreFake.countUserRound = 3;
+        Assertions.assertThrows(OutOfRoundException.class, () -> startGameInteractor.start("tetrisMaestro"));
     }
 }

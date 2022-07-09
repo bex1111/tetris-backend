@@ -11,6 +11,7 @@ public class GameConfiguration {
     private int deadRowIndex;
     private int trackWidth;
     private int trackHeight;
+    private int round;
 
     public Long getMaxUserCount() {
         return maxUserCount;
@@ -60,6 +61,18 @@ public class GameConfiguration {
 
     public GameConfiguration setDeadRowIndex(Integer deadRowIndex) {
         this.deadRowIndex = Objects.requireNonNull(deadRowIndex);
+        return this;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public GameConfiguration setRound(int round) {
+        if (round < 0) {
+            throw new IllegalArgumentException("Round must be higher then zero!");
+        }
+        this.round = round;
         return this;
     }
 }

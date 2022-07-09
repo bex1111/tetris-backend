@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.core.steps;
 
-import org.bexterlab.tetrisbackend.core.GameStore;
 import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
+import org.bexterlab.tetrisbackend.core.gateway.GameStore;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 

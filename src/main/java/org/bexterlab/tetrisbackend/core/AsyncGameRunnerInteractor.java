@@ -1,5 +1,8 @@
 package org.bexterlab.tetrisbackend.core;
 
+import org.bexterlab.tetrisbackend.core.gateway.GameStore;
+import org.bexterlab.tetrisbackend.core.gateway.Logger;
+import org.bexterlab.tetrisbackend.core.gateway.TrackSender;
 import org.bexterlab.tetrisbackend.exception.TetrisException;
 import org.bexterlab.tetrisbackend.exception.UnexpectedGameStopException;
 

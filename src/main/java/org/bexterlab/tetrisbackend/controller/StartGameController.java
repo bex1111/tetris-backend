@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.controller;
 
 import org.bexterlab.tetrisbackend.controller.dto.StartGameDto;
-import org.bexterlab.tetrisbackend.core.Logger;
+import org.bexterlab.tetrisbackend.core.gateway.Logger;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

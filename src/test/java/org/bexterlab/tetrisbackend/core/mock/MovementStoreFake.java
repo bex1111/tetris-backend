@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
-import org.bexterlab.tetrisbackend.core.MovementStore;
+import org.bexterlab.tetrisbackend.core.gateway.MovementStore;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 
 import java.util.ArrayList;

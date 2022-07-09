@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.gateway.store;
 
-import org.bexterlab.tetrisbackend.core.ScoreBoardStore;
+import org.bexterlab.tetrisbackend.core.gateway.ScoreBoardStore;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

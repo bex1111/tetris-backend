@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.commonmock;
 
-import org.bexterlab.tetrisbackend.core.Logger;
+import org.bexterlab.tetrisbackend.core.gateway.Logger;
 
 public class LoggerSpy implements Logger {
 

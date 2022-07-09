@@ -1,4 +1,4 @@
-package org.bexterlab.tetrisbackend.core;
+package org.bexterlab.tetrisbackend.core.gateway;
 
 import org.bexterlab.tetrisbackend.core.move.Movement;
 

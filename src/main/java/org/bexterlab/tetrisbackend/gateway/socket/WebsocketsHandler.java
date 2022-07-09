@@ -1,7 +1,7 @@
 package org.bexterlab.tetrisbackend.gateway.socket;
 
-import org.bexterlab.tetrisbackend.core.Logger;
-import org.bexterlab.tetrisbackend.core.TrackSender;
+import org.bexterlab.tetrisbackend.core.gateway.Logger;
+import org.bexterlab.tetrisbackend.core.gateway.TrackSender;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

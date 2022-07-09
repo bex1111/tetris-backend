@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bexterlab.tetrisbackend.controller.ControlInteractor;
 import org.bexterlab.tetrisbackend.controller.ListPointsInteractor;
 import org.bexterlab.tetrisbackend.core.*;
+import org.bexterlab.tetrisbackend.core.gateway.Logger;
+import org.bexterlab.tetrisbackend.core.gateway.MovementStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
@@ -71,7 +74,7 @@ public class MainConfiguration {
                 store,
                 asyncGameRunnerInteractor,
                 tetrisStepFactory,
-                gameConfiguration);
+                gameConfiguration, null);//FIXME
     }
 
     @Bean

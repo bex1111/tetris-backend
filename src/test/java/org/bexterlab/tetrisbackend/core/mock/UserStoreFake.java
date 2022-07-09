@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
-import org.bexterlab.tetrisbackend.core.UserStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 
 import java.util.ArrayList;
 import java.util.List;

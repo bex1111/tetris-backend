@@ -1,8 +1,8 @@
 package org.bexterlab.tetrisbackend.core.steps;
 
-import org.bexterlab.tetrisbackend.core.GameStore;
-import org.bexterlab.tetrisbackend.core.ScoreBoardStore;
-import org.bexterlab.tetrisbackend.core.UserStore;
+import org.bexterlab.tetrisbackend.core.gateway.GameStore;
+import org.bexterlab.tetrisbackend.core.gateway.ScoreBoardStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.Arrays;

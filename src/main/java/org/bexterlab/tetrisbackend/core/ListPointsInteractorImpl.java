@@ -1,6 +1,7 @@
 package org.bexterlab.tetrisbackend.core;
 
 import org.bexterlab.tetrisbackend.controller.ListPointsInteractor;
+import org.bexterlab.tetrisbackend.core.gateway.ScoreBoardStore;
 
 import java.util.Map;
 

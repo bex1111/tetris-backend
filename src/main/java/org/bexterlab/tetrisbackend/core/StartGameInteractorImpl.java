@@ -4,7 +4,11 @@ import org.bexterlab.tetrisbackend.configuration.GameConfiguration;
 import org.bexterlab.tetrisbackend.controller.StartGameInteractor;
 import org.bexterlab.tetrisbackend.core.exception.InvalidUsernameException;
 import org.bexterlab.tetrisbackend.core.exception.MaxUserCountReachedException;
+import org.bexterlab.tetrisbackend.core.exception.OutOfRoundException;
 import org.bexterlab.tetrisbackend.core.exception.YouAlreadyHaveAGameException;
+import org.bexterlab.tetrisbackend.core.gateway.GameStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserInformationStore;
+import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
@@ -24,23 +28,27 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     private final AsyncGameRunnerInteractor asyncGameRunnerInteractor;
     private final TetrisStepFactory tetrisStepFactory;
     private final GameConfiguration gameConfiguration;
+    private final UserInformationStore userInformationStore;
 
     public StartGameInteractorImpl(GameStore gameStore,
                                    UserStore userStore,
                                    AsyncGameRunnerInteractor asyncGameRunnerInteractor,
                                    TetrisStepFactory tetrisStepFactory,
-                                   GameConfiguration gameConfiguration) {
+                                   GameConfiguration gameConfiguration,
+                                   UserInformationStore userInformationStore) {
         this.gameStore = gameStore;
         this.userStore = userStore;
         this.asyncGameRunnerInteractor = asyncGameRunnerInteractor;
         this.tetrisStepFactory = tetrisStepFactory;
         this.gameConfiguration = gameConfiguration;
+        this.userInformationStore = userInformationStore;
     }
 
     public String start(String username) {
         checkUserLimitReached();
         validateUserName(username);
         checkPlayHasAlreadyAGame(username);
+        checkPlayerPlayAllGames(username);
         Game game = createNewGame(username);
         gameStore.createNewGame(game);
         asyncGameRunnerInteractor.startGame();
@@ -68,6 +76,12 @@ public class StartGameInteractorImpl implements StartGameInteractor {
             Arrays.fill(trackElements, EMPTY);
         }
         return track;
+    }
+
+    private void checkPlayerPlayAllGames(String username) {
+        if (userInformationStore.countUserRound(username) >= gameConfiguration.getRound()) {
+            throw new OutOfRoundException();
+        }
     }
 
     private void checkPlayHasAlreadyAGame(String username) {

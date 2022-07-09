@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
-import org.bexterlab.tetrisbackend.core.ScoreBoardStore;
+import org.bexterlab.tetrisbackend.core.gateway.ScoreBoardStore;
 
 import java.util.Collections;
 import java.util.List;
