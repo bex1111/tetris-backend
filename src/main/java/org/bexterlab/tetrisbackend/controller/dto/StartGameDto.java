@@ -1,6 +1,5 @@
 package org.bexterlab.tetrisbackend.controller.dto;
 
-
 public class StartGameDto {
 
     private String username;

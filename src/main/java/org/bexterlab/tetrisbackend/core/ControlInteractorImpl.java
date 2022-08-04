@@ -26,6 +26,6 @@ public class ControlInteractorImpl implements ControlInteractor {
         if (movementStore.countMovement(username) > 30) {
             throw new TooManyMovementException();
         }
-        movementStore.addNew(username, movement);
+        movementStore.addNewMovement(username, movement);
     }
 }

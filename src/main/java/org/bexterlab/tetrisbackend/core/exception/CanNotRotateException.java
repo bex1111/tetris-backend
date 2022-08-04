@@ -1,14 +1,14 @@
 package org.bexterlab.tetrisbackend.core.exception;
 
-public class CanNotRotateException extends CoreException {
+public class CannotRotateException extends CoreException {
 
     public static final String CAN_NOT_ROTATE_ELEMENT = "CAN_NOT_ROTATE_ELEMENT";
 
-    public CanNotRotateException(IndexOutOfBoundsException e) {
+    public CannotRotateException(IndexOutOfBoundsException e) {
         super(CAN_NOT_ROTATE_ELEMENT, e);
     }
 
-    public CanNotRotateException() {
+    public CannotRotateException() {
         super(CAN_NOT_ROTATE_ELEMENT);
     }
 }

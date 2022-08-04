@@ -1,15 +1,21 @@
 package org.bexterlab.tetrisbackend.core.mock;
 
 import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
+import org.bexterlab.tetrisbackend.core.exception.CannotMoveException;
+import org.bexterlab.tetrisbackend.core.exception.CannotRotateException;
 import org.bexterlab.tetrisbackend.core.maintenance.TetrisElement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import java.util.List;
 
+import static java.util.Objects.nonNull;
+
 public class TetrisStepFactoryFake extends TetrisStepFactory {
 
     public TetrisElement draw;
     public TetrisElement spawnNewTetrisElement;
+    public CannotMoveException cannotMoveException;
+    public CannotRotateException cannotRotateException;
     public Long count;
     private final List<String> callMethodName;
     public TrackElement[][] rotateLeftTrackElement, rotateRightTrackElement,
@@ -27,6 +33,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.rotateLeftTrackElement = track;
+        throwExceptionIfNotNull(cannotRotateException);
         return track;
     }
 
@@ -35,6 +42,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.rotateRightTrackElement = track;
+        throwExceptionIfNotNull(cannotRotateException);
         return track;
     }
 
@@ -43,6 +51,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.moveLeftTrackElement = track;
+        throwExceptionIfNotNull(cannotMoveException);
         return track;
     }
 
@@ -51,6 +60,7 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.moveRightTrackElement = track;
+        throwExceptionIfNotNull(cannotMoveException);
         return track;
     }
 
@@ -100,5 +110,11 @@ public class TetrisStepFactoryFake extends TetrisStepFactory {
         }.getClass().getEnclosingMethod().getName());
         this.countPointsTrackElement = track;
         return count;
+    }
+
+    private void throwExceptionIfNotNull(RuntimeException runtimeException) {
+        if (nonNull(runtimeException)) {
+            throw runtimeException;
+        }
     }
 }

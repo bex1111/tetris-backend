@@ -1,7 +1,7 @@
 tetris:
   gameTickTime: ${GAME_TICK_TIME}
-  deadRowIndex: ${DEAD_ROW_INDEX}
   maxUserCount: ${MAX_USER_COUNT}
   trackWidth: ${TRACK_WIDTH}
   trackHeight: ${TRACK_HEIGHT}
   round: ${ROUND}
+  gameTimeInMinutes: ${GAME_TIME_IN_MINUTES}

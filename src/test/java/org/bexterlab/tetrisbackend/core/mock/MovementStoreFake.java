@@ -22,7 +22,7 @@ public class MovementStoreFake implements MovementStore {
     }
 
     @Override
-    public void addNew(String username, Movement movement) {
+    public void addNewMovement(String username, Movement movement) {
         callMethodName.add(new Object() {
         }.getClass().getEnclosingMethod().getName());
         this.username = username;

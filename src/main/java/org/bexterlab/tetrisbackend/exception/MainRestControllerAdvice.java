@@ -26,8 +26,6 @@ public class MainRestControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String handleOtherException(Throwable e) {
         logger.error("Unexpected exception occurred: ", e);
-        return "CALL_BARNA";
+        return String.format("CALL_BARNA_FOR_MORE_DETAILS|%s", e.getMessage());
     }
-
-
 }

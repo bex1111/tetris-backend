@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.rotate;
 
-import org.bexterlab.tetrisbackend.core.exception.CanNotRotateException;
+import org.bexterlab.tetrisbackend.core.exception.CannotRotateException;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
@@ -11,7 +11,7 @@ public abstract class BaseRotator {
         try {
             return rotateIterator(track);
         } catch (IndexOutOfBoundsException e) {
-            throw new CanNotRotateException(e);
+            throw new CannotRotateException(e);
         }
     }
 
@@ -30,7 +30,7 @@ public abstract class BaseRotator {
 
     private void checkIsRotateColliedWithPoint(TrackElement[][] track, int i, int j) {
         if (isRotateColliedWithPoint(track, i, j)) {
-            throw new CanNotRotateException();
+            throw new CannotRotateException();
         }
     }
 

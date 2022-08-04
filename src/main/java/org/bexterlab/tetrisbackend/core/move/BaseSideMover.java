@@ -1,6 +1,6 @@
 package org.bexterlab.tetrisbackend.core.move;
 
-import org.bexterlab.tetrisbackend.core.exception.CanNotMoveException;
+import org.bexterlab.tetrisbackend.core.exception.CannotMoveException;
 
 import java.util.Arrays;
 
@@ -16,7 +16,7 @@ public abstract class BaseSideMover {
 
     protected void checkIsElementCollideWithPoint(TrackElement[][] track, int direction, int i, int j) {
         if (track[i][j + direction] == POINT) {
-            throw new CanNotMoveException();
+            throw new CannotMoveException();
         }
     }
 
@@ -24,7 +24,7 @@ public abstract class BaseSideMover {
         try {
             return moveToSide(track);
         } catch (IndexOutOfBoundsException e) {
-            throw new CanNotMoveException(e);
+            throw new CannotMoveException(e);
         }
     }
 }

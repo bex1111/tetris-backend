@@ -2,12 +2,12 @@ server:
   port: 8080
 
 tetris:
-  gameTickTime: 0
-  deadRowIndex: 3
+  gameTickTime: 200
   maxUserCount: 30
-  trackWidth: 24
-  trackHeight: 10
+  trackWidth: 8
+  trackHeight: 13
   round: 3
+  gameTimeInMinutes: 100
 
 #logging:
 #  level:

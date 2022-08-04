@@ -3,8 +3,8 @@ package org.bexterlab.tetrisbackend.entity;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
 
 public class Game {
 
@@ -12,6 +12,16 @@ public class Game {
     private TrackElement[][] track;
     private ConcurrentLinkedQueue<Movement> movementQueue;
     private TetrisElements tetrisElements;
+    private LocalDateTime startTime;
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public Game setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+        return this;
+    }
 
     public User getUser() {
         return user;

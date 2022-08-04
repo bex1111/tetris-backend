@@ -42,7 +42,6 @@ public class WebsocketClientEndpoint {
         logger.info("closing websocket" + userSession.toString() + reason.toString());
     }
 
-
     @OnMessage
     public void onMessage(String message) {
         handleMessage(message);
@@ -52,7 +51,6 @@ public class WebsocketClientEndpoint {
     public void onMessage(ByteBuffer bytes) {
         logger.warn("Handle byte buffer" + bytes.toString());
     }
-
 
     public void handleMessage(String message) {
         try {
@@ -68,15 +66,18 @@ public class WebsocketClientEndpoint {
     private void logTrackForDebug(GameToSocketTextMapper.TrackElementDto[][] track) {
         StringBuilder finalText = new StringBuilder();
         for (GameToSocketTextMapper.TrackElementDto[] row : track) {
-            finalText.append("\n");
+            finalText.append("|\n");
             for (GameToSocketTextMapper.TrackElementDto column : row) {
                 switch (column) {
-                    case EMPTY :
-                        finalText.append(" "); break;
-                    case POINT :
-                        finalText.append("P"); break;
-                    case ELEMENT :
-                        finalText.append("E"); break;
+                    case EMPTY:
+                        finalText.append(" ");
+                        break;
+                    case POINT:
+                        finalText.append("P");
+                        break;
+                    case ELEMENT:
+                        finalText.append("E");
+                        break;
                 }
             }
         }

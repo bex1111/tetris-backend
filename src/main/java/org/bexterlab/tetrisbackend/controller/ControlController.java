@@ -23,7 +23,7 @@ public class ControlController {
             @RequestHeader("x-username") String username,
             @RequestHeader("x-token") String token,
             @RequestParam Movement movement) {
-        logger.info(String.format("Username : %s, movement: %s", username, movement));
+        logger.info(String.format("control username : %s movement: %s", username, movement));
         controlInteractor.addMovement(username, token, movement);
     }
 }

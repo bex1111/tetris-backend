@@ -6,6 +6,7 @@ import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,13 +14,15 @@ public class GameStoreFake implements GameStore {
 
     public boolean hasGame = false;
     public Game game;
+    public LocalDateTime startTime;
     private final List<String> callMethodName;
     public TetrisElement storeNewTetrisElement, findNextTetrisElement;
     public Movement findNextMovement;
     public TrackElement[][] findTrackByUser, storeNewTrack;
     public String findTrackByUserUsername, findNextMovementUsername,
             storeNewTrackUsername, removeGameUsername,
-            findNextTetrisElementUsername, storeNewTetrisElementUsername;
+            findNextTetrisElementUsername, storeNewTetrisElementUsername,
+            findStartTimeUserName;
 
     public GameStoreFake(List<String> callMethodName) {
         this.callMethodName = callMethodName;
@@ -95,5 +98,13 @@ public class GameStoreFake implements GameStore {
         }.getClass().getEnclosingMethod().getName());
         this.findNextTetrisElementUsername = username;
         return findNextTetrisElement;
+    }
+
+    @Override
+    public LocalDateTime findStartTime(String username) {
+        callMethodName.add(new Object() {
+        }.getClass().getEnclosingMethod().getName());
+        this.findStartTimeUserName = username;
+        return startTime;
     }
 }

@@ -1,6 +1,7 @@
 package org.bexterlab.tetrisbackend.controller;
 
 import org.bexterlab.tetrisbackend.controller.dto.PointsDto;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,8 @@ public class ListPointsController {
         this.listScoreInteractor = listPointsInteractor;
     }
 
-    @GetMapping("/listPoints")
+    @CrossOrigin
+    @GetMapping("/api/listPoints")
     public List<PointsDto> list() {
         return listScoreInteractor
                 .list()

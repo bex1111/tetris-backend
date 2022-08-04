@@ -14,10 +14,12 @@ import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static java.util.Objects.isNull;
 import static org.bexterlab.tetrisbackend.core.move.TrackElement.EMPTY;
 
 public class StartGameInteractorImpl implements StartGameInteractor {
@@ -65,7 +67,8 @@ public class StartGameInteractorImpl implements StartGameInteractor {
                 .setMovementQueue(new ConcurrentLinkedQueue<>())
                 .setTetrisElements(new TetrisElements()
                         .setCurrent(tetrisStepFactory.drawTetrisElement())
-                        .setNext(tetrisStepFactory.drawTetrisElement()));
+                        .setNext(tetrisStepFactory.drawTetrisElement()))
+                .setStartTime(LocalDateTime.now());
     }
 
     private TrackElement[][] createEmptyTrack() {
@@ -91,7 +94,7 @@ public class StartGameInteractorImpl implements StartGameInteractor {
     }
 
     private void validateUserName(String username) {
-        if (!username.matches(USER_NAME_VALIDATOR_REGEXP)) {
+        if (isNull(username) || !username.matches(USER_NAME_VALIDATOR_REGEXP)) {
             throw new InvalidUsernameException();
         }
     }

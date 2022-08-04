@@ -5,6 +5,7 @@ import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
 import org.bexterlab.tetrisbackend.entity.Game;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface GameStore {
@@ -26,4 +27,6 @@ public interface GameStore {
     TrackElement[][] findTrackByUser(String username);
 
     TetrisElement findNextTetrisElement(String username);
+
+    LocalDateTime findStartTime(String username);
 }

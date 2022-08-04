@@ -10,12 +10,12 @@ import org.bexterlab.tetrisbackend.core.gateway.UserStore;
 import org.bexterlab.tetrisbackend.core.steps.BaseSteps;
 import org.bexterlab.tetrisbackend.core.steps.GameEndSteps;
 import org.bexterlab.tetrisbackend.core.steps.NotTetrisElementInTrackSteps;
-import org.bexterlab.tetrisbackend.gateway.UserInformationStoreImpl;
 import org.bexterlab.tetrisbackend.gateway.log.LoggerImpl;
 import org.bexterlab.tetrisbackend.gateway.socket.GameToSocketTextMapper;
 import org.bexterlab.tetrisbackend.gateway.socket.WebsocketsHandler;
 import org.bexterlab.tetrisbackend.gateway.store.GameStoreImpl;
 import org.bexterlab.tetrisbackend.gateway.store.ScoreBoardStoreImpl;
+import org.bexterlab.tetrisbackend.gateway.store.UserInformationStoreImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -105,12 +105,13 @@ public class MainConfiguration {
     public GameEndSteps gameEndSteps(GameStoreImpl store,
                                      GameConfiguration gameConfiguration,
                                      ScoreBoardStoreImpl scoreBoardStore,
-                                     UserInformationStoreImpl userInformationStore) {
+                                     UserInformationStoreImpl userInformationStore,
+                                     Logger logger) {
         return new GameEndSteps(store,
                 store,
                 gameConfiguration.getDeadRowIndex(),
-                scoreBoardStore,
-                userInformationStore);
+                gameConfiguration.getGameTimeInMinutes(), scoreBoardStore,
+                userInformationStore, logger);
     }
 
     @Bean

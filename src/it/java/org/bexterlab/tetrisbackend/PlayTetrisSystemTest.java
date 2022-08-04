@@ -42,12 +42,12 @@ public class PlayTetrisSystemTest {
         int responseStatus;
 
         do {
-            responseStatus = controllTetris(restHelper, token);
-            Thread.sleep(10);
+            responseStatus = controlTetris(restHelper, token);
+            Thread.sleep(tetrisAppRunner.getDelayTime());
         } while (responseStatus == HttpStatus.OK.value());
     }
 
-    private int controllTetris(RestHelper restHelper, String token) {
+    private int controlTetris(RestHelper restHelper, String token) {
         try {
             return restHelper.callControlWithTestUserAndToken(TEST_USER, token,
                     Movement.values()[new Random().nextInt(Movement.values().length)]).getStatusCodeValue();

@@ -45,7 +45,15 @@ class ControlSystemTest extends BaseControllerTest {
             restHelper.callControlWithTestUserAndToken(TEST_USER, token, "INVALID_MOVEMENT");
         } catch (RestClientResponseException e) {
             Assertions.assertEquals(500, e.getRawStatusCode());
-            Assertions.assertEquals("CALL_BARNA", e.getResponseBodyAsString());
+            Assertions.assertEquals("CALL_BARNA_FOR_MORE_DETAILS|Failed to convert value of type " +
+                            "'java.lang.String' to required type " +
+                            "'org.bexterlab.tetrisbackend.core.move.Movement'; " +
+                            "nested exception is org.springframework.core.convert.ConversionFailedException: " +
+                            "Failed to convert from type [java.lang.String] to type" +
+                            " [@org.springframework.web.bind.annotation.RequestParam org.bexterlab.tetrisbackend.core.move.Movement]" +
+                            " for value 'INVALID_MOVEMENT'; nested exception is java.lang.IllegalArgumentException:" +
+                            " No enum constant org.bexterlab.tetrisbackend.core.move.Movement.INVALID_MOVEMENT",
+                    e.getResponseBodyAsString());
         }
     }
 

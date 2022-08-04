@@ -10,6 +10,7 @@ import org.bexterlab.tetrisbackend.entity.Game;
 import org.bexterlab.tetrisbackend.entity.TetrisElements;
 import org.bexterlab.tetrisbackend.entity.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
@@ -46,7 +47,8 @@ public class GameStoreImpl implements GameStore, MovementStore, UserStore {
                 .setMovementQueue(game.getMovementQueue())
                 .setTetrisElements(new TetrisElements()
                         .setCurrent(game.getTetrisElements().getNext())
-                        .setNext(nextTetrisElement)));
+                        .setNext(nextTetrisElement))
+                .setStartTime(game.getStartTime()));
         gameList.remove(game);
     }
 
@@ -57,7 +59,8 @@ public class GameStoreImpl implements GameStore, MovementStore, UserStore {
                 .setUser(game.getUser())
                 .setTrack(track)
                 .setMovementQueue(game.getMovementQueue())
-                .setTetrisElements(game.getTetrisElements()));
+                .setTetrisElements(game.getTetrisElements())
+                .setStartTime(game.getStartTime()));
         gameList.remove(game);
     }
 
@@ -99,7 +102,7 @@ public class GameStoreImpl implements GameStore, MovementStore, UserStore {
     }
 
     @Override
-    public void addNew(String username, Movement movement) {
+    public void addNewMovement(String username, Movement movement) {
         findGameByUsername(username).getMovementQueue().add(movement);
     }
 
@@ -123,13 +126,19 @@ public class GameStoreImpl implements GameStore, MovementStore, UserStore {
                         .setPoints(game.getUser().getPoints() + point))
                 .setTrack(game.getTrack())
                 .setMovementQueue(game.getMovementQueue())
-                .setTetrisElements(game.getTetrisElements()));
+                .setTetrisElements(game.getTetrisElements())
+                .setStartTime(game.getStartTime()));
         gameList.remove(game);
     }
 
     @Override
     public long findPoint(String username) {
         return findGameByUsername(username).getUser().getPoints();
+    }
+
+    @Override
+    public LocalDateTime findStartTime(String username) {
+        return findGameByUsername(username).getStartTime();
     }
 
     private Game findGameByUsername(String username) {

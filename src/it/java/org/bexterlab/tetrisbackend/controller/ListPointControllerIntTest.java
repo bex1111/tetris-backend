@@ -9,7 +9,6 @@ import java.util.List;
 
 public class ListPointControllerIntTest extends BaseControllerTest {
 
-
     @Test
     void emptyListTest() {
         Assertions.assertEquals(0, restHelper.callListPoints().size());
@@ -20,10 +19,10 @@ public class ListPointControllerIntTest extends BaseControllerTest {
         configurableApplicationContext.getBean(ScoreBoardStoreImpl.class).addPlayerIntoScoreBoard("test", 5000L);
         configurableApplicationContext.getBean(ScoreBoardStoreImpl.class).addPlayerIntoScoreBoard("test2", 6000L);
         List<PointsDto> pointsDtos = restHelper.callListPoints();
-        Assertions.assertEquals(5000, pointsDtos.get(0).points);
-        Assertions.assertEquals("test", pointsDtos.get(0).username);
-        Assertions.assertEquals(56000, pointsDtos.get(1).points);
+        Assertions.assertEquals(6000, pointsDtos.get(0).points);
         Assertions.assertEquals("test2", pointsDtos.get(0).username);
+        Assertions.assertEquals(5000, pointsDtos.get(1).points);
+        Assertions.assertEquals("test", pointsDtos.get(1).username);
 
     }
 }

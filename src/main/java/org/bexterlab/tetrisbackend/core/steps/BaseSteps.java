@@ -1,6 +1,8 @@
 package org.bexterlab.tetrisbackend.core.steps;
 
 import org.bexterlab.tetrisbackend.core.TetrisStepFactory;
+import org.bexterlab.tetrisbackend.core.exception.CannotMoveException;
+import org.bexterlab.tetrisbackend.core.exception.CannotRotateException;
 import org.bexterlab.tetrisbackend.core.gateway.GameStore;
 import org.bexterlab.tetrisbackend.core.move.Movement;
 import org.bexterlab.tetrisbackend.core.move.TrackElement;
@@ -28,17 +30,21 @@ public class BaseSteps {
     }
 
     private TrackElement[][] controlElement(TrackElement[][] track, Movement movement) {
-        if (ROTATE_RIGHT == movement) {
-            return tetrisStepFactory.rotateRight(track);
-        }
-        if (ROTATE_LEFT == movement) {
-            return tetrisStepFactory.rotateLeft(track);
-        }
-        if (MOVE_RIGHT == movement) {
-            return tetrisStepFactory.moveRight(track);
-        }
-        if (MOVE_LEFT == movement) {
-            return tetrisStepFactory.moveLeft(track);
+        try {
+            if (ROTATE_RIGHT == movement) {
+                return tetrisStepFactory.rotateRight(track);
+            }
+            if (ROTATE_LEFT == movement) {
+                return tetrisStepFactory.rotateLeft(track);
+            }
+            if (MOVE_RIGHT == movement) {
+                return tetrisStepFactory.moveRight(track);
+            }
+            if (MOVE_LEFT == movement) {
+                return tetrisStepFactory.moveLeft(track);
+            }
+        } catch (CannotRotateException | CannotMoveException e) {
+            //ignore
         }
         return track;
     }

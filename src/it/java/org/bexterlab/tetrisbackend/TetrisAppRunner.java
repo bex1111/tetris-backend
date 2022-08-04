@@ -1,5 +1,6 @@
 package org.bexterlab.tetrisbackend;
 
+import org.bexterlab.tetrisbackend.configuration.GameConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -14,5 +15,9 @@ public class TetrisAppRunner {
 
     public void stop() {
         tetrisApp.stop();
+    }
+
+    public long getDelayTime() {
+        return tetrisApp.getBean(GameConfiguration.class).getGameTickTime();
     }
 }

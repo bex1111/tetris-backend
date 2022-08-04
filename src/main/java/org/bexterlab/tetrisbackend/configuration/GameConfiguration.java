@@ -6,12 +6,25 @@ import static java.util.Objects.isNull;
 
 public class GameConfiguration {
 
+    private static final int DEAD_ROW_INDEX = 3;
     private long maxUserCount;
     private long gameTickTime;
-    private int deadRowIndex;
     private int trackWidth;
     private int trackHeight;
     private int round;
+    private int gameTimeInMinutes;
+
+    public int getGameTimeInMinutes() {
+        return gameTimeInMinutes;
+    }
+
+    public GameConfiguration setGameTimeInMinutes(int gameTimeInMinutes) {
+        if (gameTimeInMinutes < 1) {
+            throw new AssertionError(String.format("Invalid gameTimeInMinutes %s", gameTimeInMinutes));
+        }
+        this.gameTimeInMinutes = gameTimeInMinutes;
+        return this;
+    }
 
     public Long getMaxUserCount() {
         return maxUserCount;
@@ -56,12 +69,7 @@ public class GameConfiguration {
     }
 
     public int getDeadRowIndex() {
-        return deadRowIndex;
-    }
-
-    public GameConfiguration setDeadRowIndex(Integer deadRowIndex) {
-        this.deadRowIndex = Objects.requireNonNull(deadRowIndex);
-        return this;
+        return DEAD_ROW_INDEX;
     }
 
     public int getRound() {
@@ -69,8 +77,8 @@ public class GameConfiguration {
     }
 
     public GameConfiguration setRound(int round) {
-        if (round < 0) {
-            throw new IllegalArgumentException("Round must be higher then zero!");
+        if (round < 1) {
+            throw new AssertionError("Round must be higher then zero!");
         }
         this.round = round;
         return this;

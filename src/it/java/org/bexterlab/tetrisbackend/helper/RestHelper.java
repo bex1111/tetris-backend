@@ -35,7 +35,7 @@ public class RestHelper {
     }
 
     public List<PointsDto> callListPoints() {
-        ResponseEntity<List<PointsDto>> responseEntity = restTemplate.exchange(HTTP_BASE_URL + "/listPoints",
+        ResponseEntity<List<PointsDto>> responseEntity = restTemplate.exchange(HTTP_BASE_URL + "/api/listPoints",
                 GET, HttpEntity.EMPTY, new ParameterizedTypeReference<>() {
                 });
         Assertions.assertEquals(OK, responseEntity.getStatusCode());

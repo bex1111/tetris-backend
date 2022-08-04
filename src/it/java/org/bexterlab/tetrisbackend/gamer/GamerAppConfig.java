@@ -21,7 +21,7 @@ public class GamerAppConfig {
     public ObjectMapper gamerAppObjectMapper() {
         return new Jackson2ObjectMapperBuilder().createXmlMapper(false).build();
     }
-    
+
     @Bean
     public Logger gamerAppLogger() {
         return LoggerFactory.getLogger("Gamer App Logger");
@@ -31,7 +31,7 @@ public class GamerAppConfig {
     public WebsocketClientEndpoint websocketClientEndpoint(ObjectMapper gamerAppObjectMapper,
                                                            Logger gamerAppLogger) throws URISyntaxException {
         return new WebsocketClientEndpoint(
-                new URI("ws://" + BASE_URL + "/tetris"),
+                new URI("ws://" + BASE_URL + "/api/tetris"),
                 gamerAppObjectMapper,
                 gamerAppLogger);
     }
